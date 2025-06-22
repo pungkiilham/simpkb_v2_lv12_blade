@@ -1,7 +1,7 @@
 <div class="space-y-8">
     <!-- Sertifikasi Kendaraan -->
     <div class="space-y-6">
-        <h2 class="text-lg font-semibold text-gray-800 border-b pb-2">Sertifikasi Kendaraan</h2>
+        <h2 class="text-lg font-bold text-white px-2 py-1 bg-gradient-to-r from-indigo-600 to-blue-500 rounded-lg">2. Sertifikasi Kendaraan</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- SRUT -->
             <div class="md:col-span-2 space-y-4">
@@ -61,7 +61,7 @@
 
     <!-- Kemampuan Kendaraan -->
     <div class="space-y-6">
-        <h2 class="text-lg font-semibold text-gray-800 border-b pb-2">Kemampuan Kendaraan</h2>
+        <h2 class="text-lg font-bold text-white px-2 py-1 bg-gradient-to-r from-indigo-600 to-blue-500 rounded-lg">3. Kemampuan Kendaraan</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Jumlah Berat Yang Diperbolehkan -->
             <div class="md:col-span-2">

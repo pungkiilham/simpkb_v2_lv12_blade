@@ -14,8 +14,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h1 class="text-xl md:text-2xl font-bold text-gray-800">Tambah Data Kendaraan</h1>
-                        <p class="text-sm text-gray-600 mt-1">Menambahkan data kendaraan baru</p>
+                        <h1 class="text-xl md:text-2xl font-bold text-gray-800">Data Kendaraan</h1>
+                        <p class="text-sm text-gray-600 mt-1">Data kendaraan yang sudah tersimpan</p>
                     </div>
                 </div>
                 <a href="/semuakendaraan"

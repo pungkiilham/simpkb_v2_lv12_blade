@@ -107,15 +107,7 @@
                 </svg>
             </button>
             <div x-show="open" class="mt-2 space-y-1">
-                <a href="#"
-                    class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
-                    <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    </svg>
-                    Pendaftaran
-                </a>
-                <a href="#"
+                <a href="/listpendaftaran"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -123,7 +115,7 @@
                     </svg>
                     Pendaftaran
                 </a>
-                <a href="#"
+                <a href="/listpengujian"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -283,7 +275,7 @@
         </div>
 
         <!-- Settings -->
-        <div x-data="{ open: false }" class="pt-4">
+        <div x-data="{ open: true }" class="pt-4">
             <button @click="open = !open"
                 class="flex items-center justify-between w-full px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg">
                 <div class="flex items-center">
@@ -295,7 +287,7 @@
                 </svg>
             </button>
             <div x-show="open" class="mt-2 space-y-1">
-                <a href="#"
+                <a href="/pengaturanuser"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -303,7 +295,7 @@
                     </svg>
                     Manajemen User
                 </a>
-                <a href="#"
+                <a href="/pengaturanrole"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

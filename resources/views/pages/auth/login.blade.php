@@ -13,14 +13,14 @@
 
             <form class="space-y-6">
                 <div>
-                    <label for="username" class="block text-sm font-medium text-gray-700">Username / Email</label>
-                    <input type="text" name="username" id="username"
+                    <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                    <input type="text" name="username" id="username" placeholder="Masukkan Username"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a237e] focus:border-[#1a237e]">
                 </div>
 
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input type="password" name="password" id="password"
+                    <input type="password" name="password" id="password" placeholder="Masukkan Password"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1a237e] focus:border-[#1a237e]">
                 </div>
 
