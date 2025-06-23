@@ -117,7 +117,7 @@
                                     Mobil Bus</td>
                                 <td
                                     class="hidden lg:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
-                                    Numpang Masuk</td>
+                                    Ubah</td>
                                 <td class="px-2 py-2 text-sm text-center whitespace-nowrap">
                                     <span
                                         class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Ditolak</span>

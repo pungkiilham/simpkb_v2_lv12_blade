@@ -43,8 +43,9 @@
                         <select
                             class="text-sm border border-gray-200 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
                             <option value="all">Semua</option>
-                            <option value="approved">Diterima</option>
-                            <option value="rejected">Ditolak</option>
+                            <option value="notyet">Belum</option>
+                            <option value="approved">Ditolak</option>
+                            <option value="rejected">Sudah</option>
                         </select>
                     </div>
                 </div>
