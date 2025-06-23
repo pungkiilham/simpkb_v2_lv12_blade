@@ -17,7 +17,7 @@
 
         <!-- Nama Penguji -->
         <div class="md:col-span-2 space-y-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Nama Penguji</label>
                     <input type="text" name="penerbit_srut"
@@ -43,7 +43,7 @@
         </div>
 
         <div class="md:col-span-2 space-y-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Kuat Pancar Kiri (hcd)</label>
                     <input type="text" name="penerbit_srut"

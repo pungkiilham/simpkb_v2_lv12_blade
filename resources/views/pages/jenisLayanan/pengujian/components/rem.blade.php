@@ -17,7 +17,7 @@
 
         <!-- Nama Penguji -->
         <div class="md:col-span-2 space-y-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Nama Penguji</label>
                     <input type="text" name="penerbit_srut"
@@ -44,7 +44,7 @@
 
         <div class="md:col-span-2 space-y-4">
             <h2 class="text-lg font-semibold text-gray-800 mb-2">Daya Rem (KgF / Nm)</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Sumbu I</label>
                     <input type="text" name="penerbit_srut"
@@ -80,7 +80,7 @@
 
         <div class="md:col-span-2 space-y-4">
             <h2 class="text-lg font-semibold text-gray-800 mb-2">Selisih Daya Rem (%)</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Sumbu I</label>
                     <input type="text" name="penerbit_srut"

@@ -16,7 +16,7 @@
     </div>
 
     <!-- Statistics Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
         <!-- Total Kendaraan -->
         <div class="bg-gradient-to-br from-indigo-500 via-blue-500 to-blue-600 rounded-xl shadow-lg p-4 md:p-6 hover:shadow-xl transition-shadow">
             <div class="flex items-center justify-between mb-3 md:mb-4">

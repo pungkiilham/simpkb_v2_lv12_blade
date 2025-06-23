@@ -77,16 +77,22 @@
                     <div class="flex items-center">
                         <!-- Profile Dropdown -->
                         <div class="relative" x-data="{ open: false }">
-                            <button @click="open = !open" class="flex items-center space-x-2 p-1">
-                                <div class="flex-shrink-0 p-1 ring-2 rounded-xl">
-                                    <svg class="h-4 w-4 md:h-5 md:w-5 text-gray-600" fill="none"
-                                        stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    </svg>
-                                </div>
-                            </button>
+                            <div class="flex items-center">
+                                <button @click="open = !open" class="flex items-center space-x-2 p-1">
+                                    {{-- <div class="flex-shrink-0 p-1 ring-2 rounded-xl"> --}}
+                                    <div class="flex-shrink-0">
+                                        <svg class="h-6 w-auto md:h-8 text-gray-600" fill="currentColor"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" />
+                                          </svg>
+                                    </div>
+                                </button>
 
+                                {{-- <div class="px-2">
+                                    <p class="text-md font-medium">User Name</p>
+                                    <p class="text-sm opacity-70">User Role</p>
+                                </div> --}}
+                            </div>
                             <!-- Dropdown Menu -->
                             <div x-show="open" @click.away="open = false"
                                 class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5 z-50">

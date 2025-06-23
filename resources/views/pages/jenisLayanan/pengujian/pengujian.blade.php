@@ -33,7 +33,7 @@
         <div class="bg-white rounded-xl shadow-lg p-3 md:p-4 mb-8">
 
             <!-- Vehicle Information -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
                 <!-- Left Column -->
                 <div class="space-y-6">
                     {{-- Data kendaraan --}}
@@ -49,7 +49,7 @@
         </div>
 
         <!-- Form foto dan pra uji -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
             <!-- Left Column -->
             <div class="space-y-6">
                 {{-- Data kendaraan --}}
@@ -64,7 +64,7 @@
         </div>
 
         <!-- Form emisi dan pitlift -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
             <!-- Left Column -->
             <div class="space-y-6">
                 {{-- Data kendaraan --}}
@@ -79,7 +79,7 @@
         </div>
 
         <!-- Form lampu dan rem -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
             <!-- Left Column -->
             <div class="space-y-6">
                 {{-- Data kendaraan --}}
@@ -94,7 +94,7 @@
         </div>
 
         <!-- Form kincup dan speedp -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
             <!-- Left Column -->
             <div class="space-y-6">
                 {{-- Data kendaraan --}}

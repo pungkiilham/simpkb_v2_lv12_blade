@@ -35,7 +35,15 @@
                 </svg>
             </button>
             <div x-show="open" class="mt-2 space-y-1">
-                <a href="#"
+                <a href="/dashboardantrian"
+                    class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
+                    <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                    </svg>
+                    Dashboard Antrian
+                </a>
+                <a href="/antrian"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -43,7 +51,7 @@
                     </svg>
                     Display Antrian
                 </a>
-                <a href="#"
+                <a href="/cetakantrian"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -51,7 +59,7 @@
                     </svg>
                     Cetak Antrian
                 </a>
-                <a href="#"
+                <a href="/panggilantrian"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -95,7 +103,7 @@
         </div>
 
         <!-- Jenis Layanan -->
-        <div x-data="{ open: false }" class="pt-4">
+        <div x-data="{ open: true }" class="pt-4">
             <button @click="open = !open"
                 class="flex items-center justify-between w-full px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg">
                 <div class="flex items-center">
@@ -119,41 +127,42 @@
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
                     </svg>
+
                     Pengujian
                 </a>
-                <a href="#"
+                <a href="/listnumpang"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Numpang Masuk
-                </a>
-                <a href="#"
-                    class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
-                    <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
-                    </svg>
                     Numpang Keluar
                 </a>
-                <a href="#"
+                <a href="/listmutasi"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            d="M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z" />
                     </svg>
-                    Ubah Bentuk/Sifat
+                    Mutasi
                 </a>
-                <a href="#"
+                <a href="/listperubahan"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                     </svg>
-                    Hilang/Rusak
+                    Perubahan
+                </a>
+                <a href="/listcetakulang"
+                    class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
+                    <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+                    </svg>
+                    Cetak Ulang
                 </a>
             </div>
         </div>
@@ -171,7 +180,7 @@
                 </svg>
             </button>
             <div x-show="open" class="mt-2 space-y-1">
-                <a href="#"
+                <a href="/ikm"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -179,7 +188,7 @@
                     </svg>
                     Pengajuan IKM
                 </a>
-                <a href="#"
+                <a href="/pengaturanikm"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -205,7 +214,7 @@
                 </svg>
             </button>
             <div x-show="open" class="mt-2 space-y-1">
-                <a href="#"
+                <a href="/wa"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -213,7 +222,7 @@
                     </svg>
                     Daftar Notifikasi
                 </a>
-                <a href="#"
+                <a href="/pengaturanwa"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -237,15 +246,15 @@
                 </svg>
             </button>
             <div x-show="open" class="mt-2 space-y-1">
-                <a href="#"
+                <a href="/riwayat"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                     </svg>
-                    Riwayat Uji
+                    Riwayat Layanan
                 </a>
-                <a href="#"
+                 <a href="/laporanpelayanan"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -253,7 +262,7 @@
                     </svg>
                     Laporan Pelayanan
                 </a>
-                <a href="#"
+                <a href="/laporanikm"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -263,7 +272,7 @@
                     </svg>
                     Laporan IKM
                 </a>
-                <a href="#"
+                <a href="/logaktivitas"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -275,7 +284,7 @@
         </div>
 
         <!-- Settings -->
-        <div x-data="{ open: true }" class="pt-4">
+        <div x-data="{ open: false }" class="pt-4">
             <button @click="open = !open"
                 class="flex items-center justify-between w-full px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg">
                 <div class="flex items-center">

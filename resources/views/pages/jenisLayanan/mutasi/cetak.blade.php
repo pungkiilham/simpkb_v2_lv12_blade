@@ -13,8 +13,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h1 class="text-xl md:text-2xl font-bold text-gray-800">Pendaftaran Pengujian Kendaraan</h1>
-                        <p class="text-sm text-gray-600 mt-1">Form pendaftaran pengujian kendaraan bermotor</p>
+                        <h1 class="text-xl md:text-2xl font-bold text-gray-800">Perubahan Data Kendaraan</h1>
+                        <p class="text-sm text-gray-600 mt-1">Daftar kendaraan bermotor yang melakukan perubahan hari ini</p>
                     </div>
                 </div>
                 <a href="/listpendaftaran"

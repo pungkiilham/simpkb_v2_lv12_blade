@@ -17,7 +17,7 @@
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div class="grid grid-cols-2 gap-4 mt-4">
                 <!-- Foto Depan -->
                 <div class="space-y-2">
                     <label class="block text-sm font-medium text-gray-700">Foto Depan</label>

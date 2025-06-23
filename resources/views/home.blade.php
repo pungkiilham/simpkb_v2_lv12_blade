@@ -11,7 +11,7 @@
                     </div>
                     <span class="ml-3 text-white font-semibold text-lg">DISHUB KOTA BATU</span>
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center gap-2">
                     <a href="{{ route('login') }}"
                         class="inline-flex items-center px-4 py-2 border border-white text-sm font-medium rounded-md text-white hover:bg-white hover:text-[#1a237e] transition duration-150 ease-in-out">
                         Masuk
@@ -40,6 +40,20 @@
                             Mulai Sekarang
                         </a>
                     </div>
+                </div>
+                <div class="mt-8 flex justify-center items-center gap-2">
+                    <a href="{{ route('antrian') }}"
+                        class="inline-flex items-center px-4 py-2 border border-white text-sm font-medium rounded-md text-white hover:bg-white hover:text-[#1a237e] transition duration-150 ease-in-out">
+                        Display Antrian
+                    </a>
+                    <a href="{{ route('dashboardantrian') }}"
+                        class="inline-flex items-center px-4 py-2 border border-white text-sm font-medium rounded-md text-white hover:bg-white hover:text-[#1a237e] transition duration-150 ease-in-out">
+                        Dashboard Antrian
+                    </a>
+                    <a href="{{ route('ikm') }}"
+                        class="inline-flex items-center px-4 py-2 border border-white text-sm font-medium rounded-md text-white hover:bg-white hover:text-[#1a237e] transition duration-150 ease-in-out">
+                        Display IKM
+                    </a>
                 </div>
             </div>
         </div>
