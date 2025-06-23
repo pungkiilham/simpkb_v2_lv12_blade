@@ -25,7 +25,7 @@
             <!-- Tools Section -->
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-4">
                 <div class="flex justify-ends gap-6">
-                    <div class="flex items-center gap-2">
+                    {{-- <div class="flex items-center gap-2">
                         <label class="text-sm text-gray-600">Layanan:</label>
                         <select
                             class="text-sm border border-gray-200 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
@@ -37,7 +37,7 @@
                             <option value="perubahan">Perubahan</option>
                             <option value="cetak">Cetak Ulang</option>
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="flex items-center gap-2">
                         <label class="text-sm text-gray-600">Status:</label>
                         <select
@@ -157,102 +157,6 @@
                                                     d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
                                             </svg>
                                         </a>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">1</td>
-                                <td class="px-2 py-2 text-sm text-gray-900">
-                                    <div class="flex flex-col">
-                                        <span class="font-medium">John Doe</span>
-                                    </div>
-                                </td>
-                                <td class="px-2 py-2 text-sm text-gray-900">
-                                    <div class="flex flex-col space-y-1 text-center">
-                                        <span>N 1234 AB</span>
-                                        <span>UJIAB123456</span>
-                                    </div>
-                                </td>
-                                <td
-                                    class="hidden md:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
-                                    Mobil Bus</td>
-                                <td
-                                    class="hidden lg:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
-                                    Numpang Masuk</td>
-                                <td class="px-2 py-2 text-sm text-center whitespace-nowrap">
-                                    <span
-                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Tidak Lulus</span>
-                                </td>
-                                <td class="px-2 py-2 text-sm text-center whitespace-nowrap">
-                                    <div class="flex justify-center items-center space-x-2">
-                                        <a href="#" class="text-blue-600 hover:text-blue-800" title="Lihat">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
-                                        </a>
-                                        <a href="#" class="text-emerald-600 hover:text-emerald-800"
-                                        title="Cetak">
-                                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                            stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
-                                        </svg>
-                                    </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">1</td>
-                                <td class="px-2 py-2 text-sm text-gray-900">
-                                    <div class="flex flex-col">
-                                        <span class="font-medium">John Doe</span>
-                                    </div>
-                                </td>
-                                <td class="px-2 py-2 text-sm text-gray-900">
-                                    <div class="flex flex-col space-y-1 text-center">
-                                        <span>N 1234 AB</span>
-                                        <span>UJIAB123456</span>
-                                    </div>
-                                </td>
-                                <td
-                                    class="hidden md:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
-                                    Mobil Bus</td>
-                                <td
-                                    class="hidden lg:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
-                                    Numpang Masuk</td>
-                                <td class="px-2 py-2 text-sm text-center whitespace-nowrap">
-                                    <span
-                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">Lulus</span>
-                                </td>
-                                <td class="px-2 py-2 text-sm text-center whitespace-nowrap">
-                                    <div class="flex justify-center items-center space-x-2">
-                                        <a href="#" class="text-blue-600 hover:text-blue-800" title="Lihat">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
-                                        </a>
-                                        <a href="#" class="text-red-600 hover:text-red-800" title="Sinkron">
-                                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                                stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
-                                            </svg>
-                                        </a>
-                                        {{-- <a href="#" class="text-emerald-600 hover:text-emerald-800"
-                                            title="Cetak">
-                                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                                                stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
-                                            </svg>
-                                        </a> --}}
                                     </div>
                                 </td>
                             </tr>
