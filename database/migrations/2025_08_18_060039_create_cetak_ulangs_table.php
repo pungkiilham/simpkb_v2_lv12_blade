@@ -7,12 +7,14 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * JUST FOR MARKING
      * Run the migrations.
      */
     public function up(): void
     {
-        //
+        Schema::create('cetak_ulangs', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -20,7 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('cetak_ulangs');
     }
 };
-
