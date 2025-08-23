@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 200);
+            $table->string('role_id', 200);
             $table->tinyInteger('visible')->default(1);
             $table->tinyInteger('active')->default(1);
             $table->tinyInteger('view')->default(1);
             $table->tinyInteger('create/update/delete')->default(1);
-            $table->tinyInteger('export')->default(1);
+            $table->tinyInteger('export_csv')->default(1);
+            $table->tinyInteger('export_pdf')->default(1);
             $table->timestamps();
         });
     }
