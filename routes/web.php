@@ -34,9 +34,13 @@ Route::get('/panggilantrian', function () {
 //Master kendaraan route ai
 Route::get('/kendaraan', [KendaraanController::class, 'showCombinedKendaraanData'])->name('kendaraan.index');
 Route::get('/kendaraan/{kendaraanId}', [KendaraanController::class, 'showSpecificKendaraanData'])->name('kendaraan.show');
-Route::get('/kendaraan/{kendaraanId}/edit', function($kendaraanId) { /* Your edit form view logic */ })->name('kendaraan.edit'); // Placeholder for edit form
+// Route::get('/kendaraan/{kendaraanId}/edit', function($kendaraanId) { /* Your edit form view logic */ })->name('kendaraan.edit'); // Placeholder for edit form
 Route::post('/kendaraan', [KendaraanController::class, 'store'])->name('kendaraan.store');
+// Route::put('/kendaraan/{kendaraanId}', [KendaraanController::class, 'update'])->name('kendaraan.update');
+
+Route::get('/kendaraan/{kendaraanId}/edit', [KendaraanController::class, 'edit'])->name('kendaraan.edit');
 Route::put('/kendaraan/{kendaraanId}', [KendaraanController::class, 'update'])->name('kendaraan.update');
+
 Route::delete('/kendaraan/{kendaraanId}', [KendaraanController::class, 'destroy'])->name('kendaraan.destroy');
 Route::get('/kendaraan/export/all-csv', [KendaraanController::class, 'exportAllKendaraanData'])->name('kendaraan.exportAllCsv');
 Route::get('/kendaraan/{kendaraanId}/export-pdf', [KendaraanController::class, 'exportSpecificKendaraanToPdf'])->name('kendaraan.exportPdf');

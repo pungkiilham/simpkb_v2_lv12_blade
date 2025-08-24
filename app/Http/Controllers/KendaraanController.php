@@ -130,7 +130,8 @@ class KendaraanController extends Controller
 
         // Jika kendaraan tidak ditemukan
         if (!$kendaraan) {
-            return response()->json(['message' => 'Kendaraan tidak ditemukan'], 404);
+            return view('pages.masterKendaraan.semua')->with('error','Data kendaraan tidak ditemukan.');
+            // abort(404, 'Data kendaraan tidak ditemukan.');
         }
         // dd($kendaraan);
         // Mengembalikan data kendaraan spesifik ke view atau dalam format JSON
@@ -387,145 +388,82 @@ class KendaraanController extends Controller
      * @param  string  $kendaraanId ID dari kendaraan yang ingin diupdate.
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, string $kendaraanId)
+    public function edit(string $kendaraanId)
     {
-        // Validasi input dari request
-        $request->validate([
-            'nomor_uji' => 'sometimes|string|max:50',
-            'nomor_kendaraan' => 'sometimes|string|max:50',
-            'nama_pemilik' => 'sometimes|string|max:50',
-            // Tambahkan validasi untuk kolom lain sesuai kebutuhan, gunakan 'sometimes'
-            // jika kolom tidak harus selalu ada dalam request update
-        ]);
+        // Mirip dengan showSpecificKendaraanData, kita perlu mengambil semua data terkait
+        $kendaraan = DB::table('kendaraans')
+            ->leftJoin('sertifikasi_kendaraans', 'kendaraans.id', '=', 'sertifikasi_kendaraans.kendaraan_id')
+            ->leftJoin('spesifikasi_kendaraans', 'kendaraans.id', '=', 'spesifikasi_kendaraans.kendaraan_id')
+            ->leftJoin('uraian_sumbu_kendaraans', 'kendaraans.id', '=', 'uraian_sumbu_kendaraans.kendaraan_id')
+            ->select(
+                'kendaraans.*', // Mengambil semua kolom dari tabel 'kendaraans'
+                'kendaraans.id as kendaraan_id', // Alias ID kendaraan utama
+                // Sertifikasi Kendaraan
+                'sertifikasi_kendaraans.sertifikat_registrasi_nomor',
+                'sertifikasi_kendaraans.sertifikat_registrasi_penerbit',
+                'sertifikasi_kendaraans.sertifikat_registrasi_tanggal',
+                'sertifikasi_kendaraans.sertifikat_uji_nomor',
+                'sertifikasi_kendaraans.sertifikat_uji_penerbit',
+                'sertifikasi_kendaraans.sertifikat_uji_tanggal',
+                'sertifikasi_kendaraans.sertifikat_rancang_nomor',
+                'sertifikasi_kendaraans.sertifikat_rancang_penerbit',
+                'sertifikasi_kendaraans.sertifikat_rancang_tanggal',
+                // Spesifikasi Kendaraan
+                'spesifikasi_kendaraans.kubikasi_mesin',
+                'spesifikasi_kendaraans.daya_mesin',
+                'spesifikasi_kendaraans.jenis_bahan_bakar_id',
+                'spesifikasi_kendaraans.dimensi_panjang',
+                'spesifikasi_kendaraans.dimensi_lebar',
+                'spesifikasi_kendaraans.dimensi_tinggi',
+                'spesifikasi_kendaraans.bak_panjang',
+                'spesifikasi_kendaraans.bak_lebar',
+                'spesifikasi_kendaraans.bak_tinggi',
+                'spesifikasi_kendaraans.nama_karoseri',
+                'spesifikasi_kendaraans.warna_kabin',
+                'spesifikasi_kendaraans.warna_bak',
+                'spesifikasi_kendaraans.roh',
+                'spesifikasi_kendaraans.foh',
+                'spesifikasi_kendaraans.jarak_terendah',
+                'spesifikasi_kendaraans.jenis_karoseri',
+                'spesifikasi_kendaraans.bahan_utama',
+                'spesifikasi_kendaraans.tempat_duduk',
+                'spesifikasi_kendaraans.kapasitas_berdiri',
+                // Uraian Sumbu
+                'uraian_sumbu_kendaraans.konfigurasi_sumbu',
+                'uraian_sumbu_kendaraans.konfigurasi_sumbu_1',
+                'uraian_sumbu_kendaraans.konfigurasi_sumbu_2',
+                'uraian_sumbu_kendaraans.konfigurasi_sumbu_3',
+                'uraian_sumbu_kendaraans.konfigurasi_sumbu_4',
+                'uraian_sumbu_kendaraans.konfigurasi_sumbu_5',
+                'uraian_sumbu_kendaraans.berat_sumbu_1',
+                'uraian_sumbu_kendaraans.berat_sumbu_2',
+                'uraian_sumbu_kendaraans.berat_sumbu_3',
+                'uraian_sumbu_kendaraans.berat_sumbu_4',
+                'uraian_sumbu_kendaraans.berat_sumbu_5',
+                'uraian_sumbu_kendaraans.berat_sumbu_6',
+                'uraian_sumbu_kendaraans.pemakaian_sumbu_1',
+                'uraian_sumbu_kendaraans.pemakaian_sumbu_2',
+                'uraian_sumbu_kendaraans.pemakaian_sumbu_3',
+                'uraian_sumbu_kendaraans.pemakaian_sumbu_4',
+                'uraian_sumbu_kendaraans.pemakaian_sumbu_5',
+                'uraian_sumbu_kendaraans.pemakaian_sumbu_6',
+                'uraian_sumbu_kendaraans.daya_sumbu_1',
+                'uraian_sumbu_kendaraans.daya_sumbu_2',
+                'uraian_sumbu_kendaraans.daya_sumbu_3',
+                'uraian_sumbu_kendaraans.daya_sumbu_4',
+                'uraian_sumbu_kendaraans.daya_sumbu_5',
+                'uraian_sumbu_kendaraans.daya_sumbu_6'
+            )
+            ->where('kendaraans.id', $kendaraanId)
+            ->first();
 
-        try {
-            DB::beginTransaction(); // Memulai transaksi database
-
-            // Update data di tabel 'kendaraans'
-            $updatedKendaraan = DB::table('kendaraans')
-                ->where('id', $kendaraanId)
-                ->update([
-                    'nomor_uji' => $request->input('nomor_uji', DB::table('kendaraans')->where('id', $kendaraanId)->value('nomor_uji')), // Contoh: Ambil nilai lama jika tidak disediakan
-                    'nomor_kendaraan' => $request->input('nomor_kendaraan', DB::table('kendaraans')->where('id', $kendaraanId)->value('nomor_kendaraan')),
-                    'nama_pemilik' => $request->input('nama_pemilik', DB::table('kendaraans')->where('id', $kendaraanId)->value('nama_pemilik')),
-                    // Lanjutkan untuk semua kolom yang bisa diupdate di tabel kendaraans
-                    'jenis_pemilik_id' => $request->input('jenis_pemilik_id', DB::table('kendaraans')->where('id', $kendaraanId)->value('jenis_pemilik_id')),
-                    'jenis_identitas' => $request->input('jenis_identitas', DB::table('kendaraans')->where('id', $kendaraanId)->value('jenis_identitas')),
-                    'nomor_identitas' => $request->input('nomor_identitas', DB::table('kendaraans')->where('id', $kendaraanId)->value('nomor_identitas')),
-                    'tempat_lahir' => $request->input('tempat_lahir', DB::table('kendaraans')->where('id', $kendaraanId)->value('tempat_lahir')),
-                    'tanggal_lahir' => $request->input('tanggal_lahir', DB::table('kendaraans')->where('id', $kendaraanId)->value('tanggal_lahir')),
-                    'jenis_kelamin' => $request->input('jenis_kelamin', DB::table('kendaraans')->where('id', $kendaraanId)->value('jenis_kelamin')),
-                    'alamat_pemilik' => $request->input('alamat_pemilik', DB::table('kendaraans')->where('id', $kendaraanId)->value('alamat_pemilik')),
-                    'rt' => $request->input('rt', DB::table('kendaraans')->where('id', $kendaraanId)->value('rt')),
-                    'rw' => $request->input('rw', DB::table('kendaraans')->where('id', $kendaraanId)->value('rw')),
-                    'kelurahan' => $request->input('kelurahan', DB::table('kendaraans')->where('id', $kendaraanId)->value('kelurahan')),
-                    'kecamatan' => $request->input('kecamatan', DB::table('kendaraans')->where('id', $kendaraanId)->value('kecamatan')),
-                    'kabupaten' => $request->input('kabupaten', DB::table('kendaraans')->where('id', $kendaraanId)->value('kabupaten')),
-                    'provinsi' => $request->input('provinsi', DB::table('kendaraans')->where('id', $kendaraanId)->value('provinsi')),
-                    'awal_pakai' => $request->input('awal_pakai', DB::table('kendaraans')->where('id', $kendaraanId)->value('awal_pakai')),
-                    'tahun' => $request->input('tahun', DB::table('kendaraans')->where('id', $kendaraanId)->value('tahun')),
-                    'nomor_mesin' => $request->input('nomor_mesin', DB::table('kendaraans')->where('id', $kendaraanId)->value('nomor_mesin')),
-                    'nomor_rangka' => $request->input('nomor_rangka', DB::table('kendaraans')->where('id', $kendaraanId)->value('nomor_rangka')),
-                    'nomor_wa' => $request->input('nomor_wa', DB::table('kendaraans')->where('id', $kendaraanId)->value('nomor_wa')),
-                    'jenis_kendaraan_id' => $request->input('jenis_kendaraan_id', DB::table('kendaraans')->where('id', $kendaraanId)->value('jenis_kendaraan_id')),
-                    'keterangan_jenis_kendaraan' => $request->input('keterangan_jenis_kendaraan', DB::table('kendaraans')->where('id', $kendaraanId)->value('keterangan_jenis_kendaraan')),
-                    'status' => $request->input('status', DB::table('kendaraans')->where('id', $kendaraanId)->value('status')),
-                    'merk' => $request->input('merk', DB::table('kendaraans')->where('id', $kendaraanId)->value('merk')),
-                    'tipe' => $request->input('tipe', DB::table('kendaraans')->where('id', $kendaraanId)->value('tipe')),
-                    'nama_importir' => $request->input('nama_importir', DB::table('kendaraans')->where('id', $kendaraanId)->value('nama_importir')),
-                    'tanggal_uji' => $request->input('tanggal_uji', DB::table('kendaraans')->where('id', $kendaraanId)->value('tanggal_uji')),
-                    'tanggal_mati_uji' => $request->input('tanggal_mati_uji', DB::table('kendaraans')->where('id', $kendaraanId)->value('tanggal_mati_uji')),
-                    'active' => $request->input('active', DB::table('kendaraans')->where('id', $kendaraanId)->value('active')),
-                    'updated_at' => now(),
-                ]);
-
-            if ($updatedKendaraan === 0) {
-                DB::rollBack();
-                return response()->json(['message' => 'Kendaraan tidak ditemukan atau tidak ada perubahan'], 404);
-            }
-
-            // Update data di tabel 'sertifikasi_kendaraans'
-            DB::table('sertifikasi_kendaraans')
-                ->where('kendaraan_id', $kendaraanId)
-                ->update([
-                    'sertifikat_registrasi_nomor' => $request->input('sertifikat_registrasi_nomor', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_registrasi_nomor')),
-                    'sertifikat_registrasi_penerbit' => $request->input('sertifikat_registrasi_penerbit', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_registrasi_penerbit')),
-                    'sertifikat_registrasi_tanggal' => $request->input('sertifikat_registrasi_tanggal', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_registrasi_tanggal')),
-                    'sertifikat_uji_nomor' => $request->input('sertifikat_uji_nomor', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_uji_nomor')),
-                    'sertifikat_uji_penerbit' => $request->input('sertifikat_uji_penerbit', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_uji_penerbit')),
-                    'sertifikat_uji_tanggal' => $request->input('sertifikat_uji_tanggal', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_uji_tanggal')),
-                    'sertifikat_rancang_nomor' => $request->input('sertifikat_rancang_nomor', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_rancang_nomor')),
-                    'sertifikat_rancang_penerbit' => $request->input('sertifikat_rancang_penerbit', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_rancang_penerbit')),
-                    'sertifikat_rancang_tanggal' => $request->input('sertifikat_rancang_tanggal', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_rancang_tanggal')),
-                    'active' => $request->input('active', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('active')),
-                    'updated_at' => now(),
-                ]);
-
-            // Update data di tabel 'spesifikasi_kendaraans'
-            DB::table('spesifikasi_kendaraans')
-                ->where('kendaraan_id', $kendaraanId)
-                ->update([
-                    'kubikasi_mesin' => $request->input('kubikasi_mesin', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('kubikasi_mesin')),
-                    'daya_mesin' => $request->input('daya_mesin', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('daya_mesin')),
-                    'jenis_bahan_bakar_id' => $request->input('jenis_bahan_bakar_id', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('jenis_bahan_bakar_id')),
-                    'dimensi_panjang' => $request->input('dimensi_panjang', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('dimensi_panjang')),
-                    'dimensi_lebar' => $request->input('dimensi_lebar', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('dimensi_lebar')),
-                    'dimensi_tinggi' => $request->input('dimensi_tinggi', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('dimensi_tinggi')),
-                    'bak_panjang' => $request->input('bak_panjang', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('bak_panjang')),
-                    'bak_lebar' => $request->input('bak_lebar', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('bak_lebar')),
-                    'bak_tinggi' => $request->input('bak_tinggi', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('bak_tinggi')),
-                    'nama_karoseri' => $request->input('nama_karoseri', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('nama_karoseri')),
-                    'warna_kabin' => $request->input('warna_kabin', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('warna_kabin')),
-                    'warna_bak' => $request->input('warna_bak', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('warna_bak')),
-                    'roh' => $request->input('roh', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('roh')),
-                    'foh' => $request->input('foh', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('foh')),
-                    'jarak_terendah' => $request->input('jarak_terendah', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('jarak_terendah')),
-                    'jenis_karoseri' => $request->input('jenis_karoseri', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('jenis_karoseri')),
-                    'bahan_utama' => $request->input('bahan_utama', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('bahan_utama')),
-                    'tempat_duduk' => $request->input('tempat_duduk', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('tempat_duduk')),
-                    'kapasitas_berdiri' => $request->input('kapasitas_berdiri', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('kapasitas_berdiri')),
-                    'active' => $request->input('active', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('active')),
-                    'updated_at' => now(),
-                ]);
-
-            // Update data di tabel 'uraian_sumbu_kendaraans'
-            DB::table('uraian_sumbu_kendaraans')
-                ->where('kendaraan_id', $kendaraanId)
-                ->update([
-                    'konfigurasi_sumbu' => $request->input('konfigurasi_sumbu', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('konfigurasi_sumbu')),
-                    'konfigurasi_sumbu_1' => $request->input('konfigurasi_sumbu_1', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('konfigurasi_sumbu_1')),
-                    'konfigurasi_sumbu_2' => $request->input('konfigurasi_sumbu_2', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('konfigurasi_sumbu_2')),
-                    'konfigurasi_sumbu_3' => $request->input('konfigurasi_sumbu_3', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('konfigurasi_sumbu_3')),
-                    'konfigurasi_sumbu_4' => $request->input('konfigurasi_sumbu_4', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('konfigurasi_sumbu_4')),
-                    'konfigurasi_sumbu_5' => $request->input('konfigurasi_sumbu_5', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('konfigurasi_sumbu_5')),
-                    'berat_sumbu_1' => $request->input('berat_sumbu_1', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('berat_sumbu_1')),
-                    'berat_sumbu_2' => $request->input('berat_sumbu_2', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('berat_sumbu_2')),
-                    'berat_sumbu_3' => $request->input('berat_sumbu_3', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('berat_sumbu_3')),
-                    'berat_sumbu_4' => $request->input('berat_sumbu_4', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('berat_sumbu_4')),
-                    'berat_sumbu_5' => $request->input('berat_sumbu_5', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('berat_sumbu_5')),
-                    'berat_sumbu_6' => $request->input('berat_sumbu_6', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('berat_sumbu_6')),
-                    'pemakaian_sumbu_1' => $request->input('pemakaian_sumbu_1', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('pemakaian_sumbu_1')),
-                    'pemakaian_sumbu_2' => $request->input('pemakaian_sumbu_2', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('pemakaian_sumbu_2')),
-                    'pemakaian_sumbu_3' => $request->input('pemakaian_sumbu_3', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('pemakaian_sumbu_3')),
-                    'pemakaian_sumbu_4' => $request->input('pemakaian_sumbu_4', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('pemakaian_sumbu_4')),
-                    'pemakaian_sumbu_5' => $request->input('pemakaian_sumbu_5', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('pemakaian_sumbu_5')),
-                    'pemakaian_sumbu_6' => $request->input('pemakaian_sumbu_6', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('pemakaian_sumbu_6')),
-                    'daya_sumbu_1' => $request->input('daya_sumbu_1', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('daya_sumbu_1')),
-                    'daya_sumbu_2' => $request->input('daya_sumbu_2', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('daya_sumbu_2')),
-                    'daya_sumbu_3' => $request->input('daya_sumbu_3', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('daya_sumbu_3')),
-                    'daya_sumbu_4' => $request->input('daya_sumbu_4', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('daya_sumbu_4')),
-                    'daya_sumbu_5' => $request->input('daya_sumbu_5', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('daya_sumbu_5')),
-                    'daya_sumbu_6' => $request->input('daya_sumbu_6', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('daya_sumbu_6')),
-                    'active' => $request->input('active', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('active')),
-                    'updated_at' => now(),
-                ]);
-
-            DB::commit(); // Komit transaksi jika semua berhasil
-            return response()->json(['message' => 'Kendaraan dan detail terkait berhasil diupdate'], 200);
-        } catch (\Exception $e) {
-            DB::rollBack(); // Rollback transaksi jika terjadi error
-            return response()->json(['message' => 'Gagal mengupdate kendaraan', 'error' => $e->getMessage()], 500);
+        // Jika kendaraan tidak ditemukan, kembalikan respons 404
+        if (!$kendaraan) {
+            abort(404, 'Data kendaraan tidak ditemukan.');
         }
+
+        // Muat view 'pages.masterKendaraan.ubah' dan kirim data kendaraan
+        return view('pages.masterKendaraan.ubah', ['kendaraan' => $kendaraan]);
     }
 
     /**
@@ -625,6 +563,160 @@ class KendaraanController extends Controller
         };
 
         return new StreamedResponse($callback, 200, $headers); // Mengembalikan StreamedResponse.
+    }
+
+    /**
+     * Mengupdate data kendaraan dan detail terkaitnya di database.
+     * Melakukan validasi input dan menggunakan transaksi database.
+     *
+     * @param  \Illuminate\Http\Request  $request Data input dari form/API untuk update.
+     * @param  string  $kendaraanId ID dari kendaraan yang ingin diupdate.
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, string $kendaraanId)
+    {
+        // Validasi input dari request. 'sometimes' digunakan agar kolom tidak wajib
+        // ada dalam request, tetapi jika ada, validasi diterapkan.
+        $request->validate([
+            'nomor_uji' => 'sometimes|string|max:50',
+            'nomor_kendaraan' => 'sometimes|string|max:50',
+            'nama_pemilik' => 'sometimes|string|max:50',
+            'nomor_rangka' => 'sometimes|string|unique:kendaraans,nomor_rangka,' . $kendaraanId . ',id|max:50', // Unique, tapi abaikan ID ini
+            // Lanjutkan dengan validasi untuk semua kolom lain yang bisa diupdate
+        ]);
+
+        try {
+            DB::beginTransaction(); // Memulai transaksi database
+
+            // Update data di tabel 'kendaraans'
+            // Menggunakan input() dengan nilai default untuk menjaga nilai yang tidak dikirim di request.
+            $updatedKendaraan = DB::table('kendaraans')
+                ->where('id', $kendaraanId)
+                ->update([
+                    'nomor_uji' => $request->input('nomor_uji', DB::table('kendaraans')->where('id', $kendaraanId)->value('nomor_uji')),
+                    'nomor_kendaraan' => $request->input('nomor_kendaraan', DB::table('kendaraans')->where('id', $kendaraanId)->value('nomor_kendaraan')),
+                    'jenis_pemilik_id' => $request->input('jenis_pemilik_id', DB::table('kendaraans')->where('id', $kendaraanId)->value('jenis_pemilik_id')),
+                    'nama_pemilik' => $request->input('nama_pemilik', DB::table('kendaraans')->where('id', $kendaraanId)->value('nama_pemilik')),
+                    'jenis_identitas' => $request->input('jenis_identitas', DB::table('kendaraans')->where('id', $kendaraanId)->value('jenis_identitas')),
+                    'nomor_identitas' => $request->input('nomor_identitas', DB::table('kendaraans')->where('id', $kendaraanId)->value('nomor_identitas')),
+                    'tempat_lahir' => $request->input('tempat_lahir', DB::table('kendaraans')->where('id', $kendaraanId)->value('tempat_lahir')),
+                    'tanggal_lahir' => $request->input('tanggal_lahir', DB::table('kendaraans')->where('id', $kendaraanId)->value('tanggal_lahir')),
+                    'jenis_kelamin' => $request->input('jenis_kelamin', DB::table('kendaraans')->where('id', $kendaraanId)->value('jenis_kelamin')),
+                    'alamat_pemilik' => $request->input('alamat_pemilik', DB::table('kendaraans')->where('id', $kendaraanId)->value('alamat_pemilik')),
+                    'rt' => $request->input('rt', DB::table('kendaraans')->where('id', $kendaraanId)->value('rt')),
+                    'rw' => $request->input('rw', DB::table('kendaraans')->where('id', $kendaraanId)->value('rw')),
+                    'kelurahan' => $request->input('kelurahan', DB::table('kendaraans')->where('id', $kendaraanId)->value('kelurahan')),
+                    'kecamatan' => $request->input('kecamatan', DB::table('kendaraans')->where('id', $kendaraanId)->value('kecamatan')),
+                    'kabupaten' => $request->input('kabupaten', DB::table('kendaraans')->where('id', $kendaraanId)->value('kabupaten')),
+                    'provinsi' => $request->input('provinsi', DB::table('kendaraans')->where('id', $kendaraanId)->value('provinsi')),
+                    'awal_pakai' => $request->input('awal_pakai', DB::table('kendaraans')->where('id', $kendaraanId)->value('awal_pakai')),
+                    'tahun' => $request->input('tahun', DB::table('kendaraans')->where('id', $kendaraanId)->value('tahun')),
+                    'nomor_mesin' => $request->input('nomor_mesin', DB::table('kendaraans')->where('id', $kendaraanId)->value('nomor_mesin')),
+                    'nomor_rangka' => $request->input('nomor_rangka', DB::table('kendaraans')->where('id', $kendaraanId)->value('nomor_rangka')),
+                    'nomor_wa' => $request->input('nomor_wa', DB::table('kendaraans')->where('id', $kendaraanId)->value('nomor_wa')),
+                    'jenis_kendaraan_id' => $request->input('jenis_kendaraan_id', DB::table('kendaraans')->where('id', $kendaraanId)->value('jenis_kendaraan_id')),
+                    'keterangan_jenis_kendaraan' => $request->input('keterangan_jenis_kendaraan', DB::table('kendaraans')->where('id', $kendaraanId)->value('keterangan_jenis_kendaraan')),
+                    'status' => $request->input('status', DB::table('kendaraans')->where('id', $kendaraanId)->value('status')),
+                    'merk' => $request->input('merk', DB::table('kendaraans')->where('id', $kendaraanId)->value('merk')),
+                    'tipe' => $request->input('tipe', DB::table('kendaraans')->where('id', $kendaraanId)->value('tipe')),
+                    'nama_importir' => $request->input('nama_importir', DB::table('kendaraans')->where('id', $kendaraanId)->value('nama_importir')),
+                    'tanggal_uji' => $request->input('tanggal_uji', DB::table('kendaraans')->where('id', $kendaraanId)->value('tanggal_uji')),
+                    'tanggal_mati_uji' => $request->input('tanggal_mati_uji', DB::table('kendaraans')->where('id', $kendaraanId)->value('tanggal_mati_uji')),
+                    'active' => $request->input('active', DB::table('kendaraans')->where('id', $kendaraanId)->value('active')),
+                    'updated_at' => now(),
+                ]);
+
+            // Jika tidak ada baris yang terupdate di tabel 'kendaraans', berarti ID tidak ditemukan.
+            // Walaupun kolom lain bisa jadi diupdate, kita check yang paling utama.
+            // Anda bisa memperluas ini untuk memeriksa update di tabel terkait juga.
+            if ($updatedKendaraan === 0) {
+                DB::rollBack();
+                return response()->json(['message' => 'Kendaraan tidak ditemukan atau tidak ada perubahan pada data utama'], 404);
+            }
+
+            // Update data di tabel 'sertifikasi_kendaraans'
+            DB::table('sertifikasi_kendaraans')
+                ->where('kendaraan_id', $kendaraanId)
+                ->update([
+                    'sertifikat_registrasi_nomor' => $request->input('sertifikat_registrasi_nomor', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_registrasi_nomor')),
+                    'sertifikat_registrasi_penerbit' => $request->input('sertifikat_registrasi_penerbit', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_registrasi_penerbit')),
+                    'sertifikat_registrasi_tanggal' => $request->input('sertifikat_registrasi_tanggal', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_registrasi_tanggal')),
+                    'sertifikat_uji_nomor' => $request->input('sertifikat_uji_nomor', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_uji_nomor')),
+                    'sertifikat_uji_penerbit' => $request->input('sertifikat_uji_penerbit', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_uji_penerbit')),
+                    'sertifikat_uji_tanggal' => $request->input('sertifikat_uji_tanggal', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_uji_tanggal')),
+                    'sertifikat_rancang_nomor' => $request->input('sertifikat_rancang_nomor', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_rancang_nomor')),
+                    'sertifikat_rancang_penerbit' => $request->input('sertifikat_rancang_penerbit', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_rancang_penerbit')),
+                    'sertifikat_rancang_tanggal' => $request->input('sertifikat_rancang_tanggal', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('sertifikat_rancang_tanggal')),
+                    'active' => $request->input('active', DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('active')),
+                    'updated_at' => now(),
+                ]);
+
+            // Update data di tabel 'spesifikasi_kendaraans'
+            DB::table('spesifikasi_kendaraans')
+                ->where('kendaraan_id', $kendaraanId)
+                ->update([
+                    'kubikasi_mesin' => $request->input('kubikasi_mesin', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('kubikasi_mesin')),
+                    'daya_mesin' => $request->input('daya_mesin', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('daya_mesin')),
+                    'jenis_bahan_bakar_id' => $request->input('jenis_bahan_bakar_id', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('jenis_bahan_bakar_id')),
+                    'dimensi_panjang' => $request->input('dimensi_panjang', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('dimensi_panjang')),
+                    'dimensi_lebar' => $request->input('dimensi_lebar', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('dimensi_lebar')),
+                    'dimensi_tinggi' => $request->input('dimensi_tinggi', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('dimensi_tinggi')),
+                    'bak_panjang' => $request->input('bak_panjang', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('bak_panjang')),
+                    'bak_lebar' => $request->input('bak_lebar', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('bak_lebar')),
+                    'bak_tinggi' => $request->input('bak_tinggi', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('bak_tinggi')),
+                    'nama_karoseri' => $request->input('nama_karoseri', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('nama_karoseri')),
+                    'warna_kabin' => $request->input('warna_kabin', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('warna_kabin')),
+                    'warna_bak' => $request->input('warna_bak', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('warna_bak')),
+                    'roh' => $request->input('roh', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('roh')),
+                    'foh' => $request->input('foh', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('foh')),
+                    'jarak_terendah' => $request->input('jarak_terendah', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('jarak_terendah')),
+                    'jenis_karoseri' => $request->input('jenis_karoseri', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('jenis_karoseri')),
+                    'bahan_utama' => $request->input('bahan_utama', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('bahan_utama')),
+                    'tempat_duduk' => $request->input('tempat_duduk', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('tempat_duduk')),
+                    'kapasitas_berdiri' => $request->input('kapasitas_berdiri', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('kapasitas_berdiri')),
+                    'active' => $request->input('active', DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->value('active')),
+                    'updated_at' => now(),
+                ]);
+
+            // Update data di tabel 'uraian_sumbu_kendaraans'
+            DB::table('uraian_sumbu_kendaraans')
+                ->where('kendaraan_id', $kendaraanId)
+                ->update([
+                    'konfigurasi_sumbu' => $request->input('konfigurasi_sumbu', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('konfigurasi_sumbu')),
+                    'konfigurasi_sumbu_1' => $request->input('konfigurasi_sumbu_1', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('konfigurasi_sumbu_1')),
+                    'konfigurasi_sumbu_2' => $request->input('konfigurasi_sumbu_2', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('konfigurasi_sumbu_2')),
+                    'konfigurasi_sumbu_3' => $request->input('konfigurasi_sumbu_3', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('konfigurasi_sumbu_3')),
+                    'konfigurasi_sumbu_4' => $request->input('konfigurasi_sumbu_4', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('konfigurasi_sumbu_4')),
+                    'konfigurasi_sumbu_5' => $request->input('konfigurasi_sumbu_5', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('konfigurasi_sumbu_5')),
+                    'berat_sumbu_1' => $request->input('berat_sumbu_1', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('berat_sumbu_1')),
+                    'berat_sumbu_2' => $request->input('berat_sumbu_2', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('berat_sumbu_2')),
+                    'berat_sumbu_3' => $request->input('berat_sumbu_3', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('berat_sumbu_3')),
+                    'berat_sumbu_4' => $request->input('berat_sumbu_4', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('berat_sumbu_4')),
+                    'berat_sumbu_5' => $request->input('berat_sumbu_5', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('berat_sumbu_5')),
+                    'berat_sumbu_6' => $request->input('berat_sumbu_6', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('berat_sumbu_6')),
+                    'pemakaian_sumbu_1' => $request->input('pemakaian_sumbu_1', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('pemakaian_sumbu_1')),
+                    'pemakaian_sumbu_2' => $request->input('pemakaian_sumbu_2', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('pemakaian_sumbu_2')),
+                    'pemakaian_sumbu_3' => $request->input('pemakaian_sumbu_3', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('pemakaian_sumbu_3')),
+                    'pemakaian_sumbu_4' => $request->input('pemakaian_sumbu_4', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('pemakaian_sumbu_4')),
+                    'pemakaian_sumbu_5' => $request->input('pemakaian_sumbu_5', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('pemakaian_sumbu_5')),
+                    'pemakaian_sumbu_6' => $request->input('pemakaian_sumbu_6', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('pemakaian_sumbu_6')),
+                    'daya_sumbu_1' => $request->input('daya_sumbu_1', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('daya_sumbu_1')),
+                    'daya_sumbu_2' => $request->input('daya_sumbu_2', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('daya_sumbu_2')),
+                    'daya_sumbu_3' => $request->input('daya_sumbu_3', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('daya_sumbu_3')),
+                    'daya_sumbu_4' => $request->input('daya_sumbu_4', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('daya_sumbu_4')),
+                    'daya_sumbu_5' => $request->input('daya_sumbu_5', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('daya_sumbu_5')),
+                    'daya_sumbu_6' => $request->input('daya_sumbu_6', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('daya_sumbu_6')),
+                    'active' => $request->input('active', DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->value('active')),
+                    'updated_at' => now(),
+                ]);
+
+            DB::commit(); // Commit transaksi jika semua update berhasil.
+            return response()->json(['message' => 'Kendaraan dan detail terkait berhasil diupdate'], 200);
+
+        } catch (\Exception $e) {
+            DB::rollBack(); // Rollback transaksi jika terjadi error.
+            return response()->json(['message' => 'Gagal mengupdate kendaraan', 'error' => $e->getMessage()], 500);
+        }
     }
 
     /**
