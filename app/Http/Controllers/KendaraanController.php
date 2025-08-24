@@ -145,151 +145,238 @@ class KendaraanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
-        // Validasi input dari request
+        // Validasi input dari request. Tambahkan semua aturan validasi yang diperlukan.
         $request->validate([
             'nomor_uji' => 'required|string|max:50',
             'nomor_kendaraan' => 'required|string|max:50',
             'nama_pemilik' => 'required|string|max:50',
-            "nomor_identitas" => 'required',
-            'nomor_rangka' => 'required',
-            'jenis_kendaraan_id' => 'required',
-            'tanggal_mati_uji' => 'required'
-            // Tambahkan validasi untuk kolom lain sesuai kebutuhan
+            "nomor_identitas" => 'required|string|max:50',
+            'nomor_rangka' => 'required|string|unique:kendaraans,nomor_rangka|max:50',
+            'jenis_kendaraan_id' => 'required|integer',
+            'tanggal_mati_uji' => 'required|date',
+            // --- Aturan validasi tambahan untuk field nullable ---
+            'jenis_pemilik_id' => 'nullable|integer',
+            'jenis_identitas' => 'nullable|string|max:50', // Tetap nullable di validasi
+            'nomor_identitas' => 'nullable|string|max:50', // Diperbarui menjadi nullable
+            'tempat_lahir' => 'nullable|string|max:50',
+            'tanggal_lahir' => 'nullable|date',
+            'jenis_kelamin' => 'nullable|string|max:50',
+            'alamat_pemilik' => 'nullable|string|max:500',
+            'rt' => 'nullable|string|max:5',
+            'rw' => 'nullable|string|max:5',
+            'kelurahan' => 'nullable|string|max:50',
+            'kecamatan' => 'nullable|string|max:50',
+            'kabupaten' => 'nullable|string|max:50',
+            'provinsi' => 'nullable|string|max:50',
+            'awal_pakai' => 'nullable|string|max:50',
+            'tahun' => 'nullable|string|max:5',
+            'nomor_mesin' => 'nullable|string|max:50',
+            'nomor_wa' => 'nullable|string|max:50',
+            'keterangan_jenis_kendaraan' => 'nullable|string|max:50',
+            'status' => 'nullable|string|max:50',
+            'merk' => 'nullable|string|max:50',
+            'tipe' => 'nullable|string|max:50',
+            'nama_importir' => 'nullable|string|max:50',
+            'tanggal_uji' => 'nullable|date',
+
+            // Validasi untuk sertifikasi (dari tambah2)
+            'sertifikat_registrasi_nomor' => 'nullable|string|max:50',
+            'sertifikat_registrasi_penerbit' => 'nullable|string|max:50',
+            'sertifikat_registrasi_tanggal' => 'nullable|date',
+            'sertifikat_uji_nomor' => 'nullable|string|max:50',
+            'sertifikat_uji_penerbit' => 'nullable|string|max:50',
+            'sertifikat_uji_tanggal' => 'nullable|date',
+            'sertifikat_rancang_nomor' => 'nullable|string|max:50',
+            'sertifikat_rancang_penerbit' => 'nullable|string|max:50',
+            'sertifikat_rancang_tanggal' => 'nullable|date',
+            // Validasi untuk kemampuan kendaraan (dari tambah2) - asumsi nama kolom
+            'berat_kosong' => 'nullable|numeric',
+            'jumlah_berat_diizinkan' => 'nullable|numeric',
+            'muatan_sumbu_terberat' => 'nullable|numeric',
+            'jumlah_berat_kombinasi_diizinkan' => 'nullable|numeric',
+            // 'tempat_duduk' sudah ada di kendaraans, jadi ini untuk spesifikasi jika berbeda
+            'daya_angkut_orang_spesifikasi' => 'nullable|integer', // Kolom baru untuk membedakan
+            'daya_angkut_barang' => 'nullable|numeric',
+            'kelas_jalan' => 'nullable|string|max:50',
+            'mst' => 'nullable|string|max:50',
+            'ukuran_qr' => 'nullable|string|max:50',
+            'ukuran_p1' => 'nullable|string|max:50',
+            'ukuran_p2' => 'nullable|string|max:50',
+
+            // Validasi untuk spesifikasi (dari tambah3)
+            'kubikasi_mesin' => 'nullable|numeric',
+            'daya_mesin' => 'nullable|string|max:50',
+            'jenis_bahan_bakar_id' => 'nullable|integer',
+            'dimensi_panjang' => 'nullable|numeric',
+            'dimensi_lebar' => 'nullable|numeric',
+            'dimensi_tinggi' => 'nullable|numeric',
+            'bak_panjang' => 'nullable|numeric',
+            'bak_lebar' => 'nullable|numeric',
+            'bak_tinggi' => 'nullable|numeric',
+            'nama_karoseri' => 'nullable|string|max:50',
+            'warna_kabin' => 'nullable|string|max:50',
+            'warna_bak' => 'nullable|string|max:50',
+            'roh' => 'nullable|numeric',
+            'foh' => 'nullable|numeric',
+            'jarak_terendah' => 'nullable|numeric',
+            'jenis_karoseri' => 'nullable|string|max:50',
+            'bahan_utama' => 'nullable|string|max:50',
+            'kapasitas_berdiri' => 'nullable|integer',
+
+            // Validasi untuk uraian sumbu (dari tambah4)
+            'konfigurasi_sumbu' => 'nullable|string|max:50',
+            'konfigurasi_sumbu_1' => 'nullable|numeric', // Asumsi ini jarak sumbu 1-2
+            'konfigurasi_sumbu_2' => 'nullable|numeric', // Asumsi ini jarak sumbu 2-3
+            'konfigurasi_sumbu_3' => 'nullable|numeric', // Asumsi ini jarak sumbu 3-4
+            'konfigurasi_sumbu_4' => 'nullable|numeric', // Asumsi ini jarak sumbu 4-5
+            'konfigurasi_sumbu_5' => 'nullable|numeric', // Asumsi ini jarak sumbu 5-6
+            'berat_sumbu_1' => 'nullable|numeric',
+            'berat_sumbu_2' => 'nullable|numeric',
+            'berat_sumbu_3' => 'nullable|numeric',
+            'berat_sumbu_4' => 'nullable|numeric',
+            'berat_sumbu_5' => 'nullable|numeric',
+            'berat_sumbu_6' => 'nullable|numeric',
+            'pemakaian_sumbu_1' => 'nullable|string|max:50',
+            'pemakaian_sumbu_2' => 'nullable|string|max:50',
+            'pemakaian_sumbu_3' => 'nullable|string|max:50',
+            'pemakaian_sumbu_4' => 'nullable|string|max:50',
+            'pemakaian_sumbu_5' => 'nullable|string|max:50',
+            'pemakaian_sumbu_6' => 'nullable|string|max:50',
+            'daya_sumbu_1' => 'nullable|numeric',
+            'daya_sumbu_2' => 'nullable|numeric',
+            'daya_sumbu_3' => 'nullable|numeric',
+            'daya_sumbu_4' => 'nullable|numeric',
+            'daya_sumbu_5' => 'nullable|numeric',
+            'daya_sumbu_6' => 'nullable|numeric',
         ]);
 
-        // Generate UUID untuk kendaraan baru
         $kendaraanId = Str::uuid()->toString();
 
         try {
-            DB::beginTransaction(); // Memulai transaksi database
+            DB::beginTransaction();
 
-            // Masukkan data ke tabel 'kendaraans'
             DB::table('kendaraans')->insert([
                 'id' => $kendaraanId,
                 'nomor_uji' => $request->nomor_uji,
                 'nomor_kendaraan' => $request->nomor_kendaraan,
+                'jenis_pemilik_id' => $request->jenis_pemilik_id ?? null,
                 'nama_pemilik' => $request->nama_pemilik,
-                // Tambahkan semua kolom lain yang diperlukan dari tabel kendaraans
-                'jenis_pemilik_id' => $request->jenis_pemilik_id,
-                'jenis_identitas' => $request->jenis_identitas,
-                'nomor_identitas' => $request->nomor_identitas,
-                'tempat_lahir' => $request->tempat_lahir,
-                'tanggal_lahir' => $request->tanggal_lahir,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'alamat_pemilik' => $request->alamat_pemilik,
-                'rt' => $request->rt,
-                'rw' => $request->rw,
-                'kelurahan' => $request->kelurahan,
-                'kecamatan' => $request->kecamatan,
-                'kabupaten' => $request->kabupaten,
-                'provinsi' => $request->provinsi,
-                'awal_pakai' => $request->awal_pakai,
-                'tahun' => $request->tahun,
-                'nomor_mesin' => $request->nomor_mesin,
+                'jenis_identitas' => $request->jenis_identitas ?? '', // Now explicitly nullable in schema
+                'nomor_identitas' => $request->nomor_identitas ?? '', // Also nullable in schema
+                'tempat_lahir' => $request->tempat_lahir ?? '',
+                'tanggal_lahir' => $request->tanggal_lahir ?? null,
+                'jenis_kelamin' => $request->jenis_kelamin ?? '',
+                'alamat_pemilik' => $request->alamat_pemilik ?? '',
+                'rt' => $request->rt ?? '',
+                'rw' => $request->rw ?? '',
+                'kelurahan' => $request->kelurahan ?? '',
+                'kecamatan' => $request->kecamatan ?? '',
+                'kabupaten' => $request->kabupaten ?? '',
+                'provinsi' => $request->provinsi ?? '',
+                'awal_pakai' => $request->awal_pakai ?? '',
+                'tahun' => $request->tahun ?? '',
+                'nomor_mesin' => $request->nomor_mesin ?? '',
                 'nomor_rangka' => $request->nomor_rangka,
-                'nomor_wa' => $request->nomor_wa,
+                'nomor_wa' => $request->nomor_wa ?? '',
                 'jenis_kendaraan_id' => $request->jenis_kendaraan_id,
-                'keterangan_jenis_kendaraan' => $request->keterangan_jenis_kendaraan,
-                'status' => $request->status,
-                'merk' => $request->merk,
-                'tipe' => $request->tipe,
-                'nama_importir' => $request->nama_importir,
-                'tanggal_uji' => $request->tanggal_uji,
+                'keterangan_jenis_kendaraan' => $request->keterangan_jenis_kendaraan ?? '',
+                'status' => $request->status ?? '',
+                'merk' => $request->merk ?? '',
+                'tipe' => $request->tipe ?? '',
+                'nama_importir' => $request->nama_importir ?? '',
+                'tanggal_uji' => $request->tanggal_uji ?? null,
                 'tanggal_mati_uji' => $request->tanggal_mati_uji,
                 'active' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
 
-            // Masukkan data ke tabel 'sertifikasi_kendaraans'
             DB::table('sertifikasi_kendaraans')->insert([
-                'id' => Str::uuid()->toString(), // UUID baru untuk sertifikasi
+                'id' => Str::uuid()->toString(),
                 'kendaraan_id' => $kendaraanId,
-                'sertifikat_registrasi_nomor' => $request->sertifikat_registrasi_nomor,
-                // Tambahkan kolom sertifikasi lainnya
-                'sertifikat_registrasi_penerbit' => $request->sertifikat_registrasi_penerbit,
-                'sertifikat_registrasi_tanggal' => $request->sertifikat_registrasi_tanggal,
-                'sertifikat_uji_nomor' => $request->sertifikat_uji_nomor,
-                'sertifikat_uji_penerbit' => $request->sertifikat_uji_penerbit,
-                'sertifikat_uji_tanggal' => $request->sertifikat_uji_tanggal,
-                'sertifikat_rancang_nomor' => $request->sertifikat_rancang_nomor,
-                'sertifikat_rancang_penerbit' => $request->sertifikat_rancang_penerbit,
-                'sertifikat_rancang_tanggal' => $request->sertifikat_rancang_tanggal,
+                'sertifikat_registrasi_nomor' => $request->sertifikat_registrasi_nomor ?? '',
+                'sertifikat_registrasi_penerbit' => $request->sertifikat_registrasi_penerbit ?? '',
+                'sertifikat_registrasi_tanggal' => $request->sertifikat_registrasi_tanggal ?? null,
+                'sertifikat_uji_nomor' => $request->sertifikat_uji_nomor ?? '',
+                'sertifikat_uji_penerbit' => $request->sertifikat_uji_penerbit ?? '',
+                'sertifikat_uji_tanggal' => $request->sertifikat_uji_tanggal ?? null,
+                'sertifikat_rancang_nomor' => $request->sertifikat_rancang_nomor ?? '',
+                'sertifikat_rancang_penerbit' => $request->sertifikat_rancang_penerbit ?? '',
+                'sertifikat_rancang_tanggal' => $request->sertifikat_rancang_tanggal ?? null,
                 'active' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
 
-            // Masukkan data ke tabel 'spesifikasi_kendaraans'
             DB::table('spesifikasi_kendaraans')->insert([
-                'id' => Str::uuid()->toString(), // UUID baru untuk spesifikasi
+                'id' => Str::uuid()->toString(),
                 'kendaraan_id' => $kendaraanId,
-                'kubikasi_mesin' => $request->kubikasi_mesin,
-                // Tambahkan kolom spesifikasi lainnya
-                'daya_mesin' => $request->daya_mesin,
-                'jenis_bahan_bakar_id' => $request->jenis_bahan_bakar_id,
-                'dimensi_panjang' => $request->dimensi_panjang,
-                'dimensi_lebar' => $request->dimensi_lebar,
-                'dimensi_tinggi' => $request->dimensi_tinggi,
-                'bak_panjang' => $request->bak_panjang,
-                'bak_lebar' => $request->bak_lebar,
-                'bak_tinggi' => $request->bak_tinggi,
-                'nama_karoseri' => $request->nama_karoseri,
-                'warna_kabin' => $request->warna_kabin,
-                'warna_bak' => $request->warna_bak,
-                'roh' => $request->roh,
-                'foh' => $request->foh,
-                'jarak_terendah' => $request->jarak_terendah,
-                'jenis_karoseri' => $request->jenis_karoseri,
-                'bahan_utama' => $request->bahan_utama,
-                'tempat_duduk' => $request->tempat_duduk,
-                'kapasitas_berdiri' => $request->kapasitas_berdiri,
+                'kubikasi_mesin' => $request->kubikasi_mesin ?? null,
+                'daya_mesin' => $request->daya_mesin ?? '',
+                'jenis_bahan_bakar_id' => $request->jenis_bahan_bakar_id ?? null,
+                'dimensi_panjang' => $request->dimensi_panjang ?? null,
+                'dimensi_lebar' => $request->dimensi_lebar ?? null,
+                'dimensi_tinggi' => $request->dimensi_tinggi ?? null,
+                'bak_panjang' => $request->bak_panjang ?? null,
+                'bak_lebar' => $request->bak_lebar ?? null,
+                'bak_tinggi' => $request->bak_tinggi ?? null,
+                'nama_karoseri' => $request->nama_karoseri ?? '',
+                'warna_kabin' => $request->warna_kabin ?? '',
+                'warna_bak' => $request->warna_bak ?? '',
+                'roh' => $request->roh ?? null,
+                'foh' => $request->foh ?? null,
+                'jarak_terendah' => $request->jarak_terendah ?? null,
+                'jenis_karoseri' => $request->jenis_karoseri ?? '',
+                'bahan_utama' => $request->bahan_utama ?? '',
+                'tempat_duduk' => $request->tempat_duduk ?? null,
+                'kapasitas_berdiri' => $request->kapasitas_berdiri ?? null,
                 'active' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
 
-            // Masukkan data ke tabel 'uraian_sumbu_kendaraans'
             DB::table('uraian_sumbu_kendaraans')->insert([
-                'id' => Str::uuid()->toString(), // UUID baru untuk uraian sumbu
+                'id' => Str::uuid()->toString(),
                 'kendaraan_id' => $kendaraanId,
-                'konfigurasi_sumbu' => $request->konfigurasi_sumbu,
-                // Tambahkan kolom uraian sumbu lainnya
-                'konfigurasi_sumbu_1' => $request->konfigurasi_sumbu_1,
-                'konfigurasi_sumbu_2' => $request->konfigurasi_sumbu_2,
-                'konfigurasi_sumbu_3' => $request->konfigurasi_sumbu_3,
-                'konfigurasi_sumbu_4' => $request->konfigurasi_sumbu_4,
-                'konfigurasi_sumbu_5' => $request->konfigurasi_sumbu_5,
-                'berat_sumbu_1' => $request->berat_sumbu_1,
-                'berat_sumbu_2' => $request->berat_sumbu_2,
-                'berat_sumbu_3' => $request->berat_sumbu_3,
-                'berat_sumbu_4' => $request->berat_sumbu_4,
-                'berat_sumbu_5' => $request->berat_sumbu_5,
-                'berat_sumbu_6' => $request->berat_sumbu_6,
-                'pemakaian_sumbu_1' => $request->pemakaian_sumbu_1,
-                'pemakaian_sumbu_2' => $request->pemakaian_sumbu_2,
-                'pemakaian_sumbu_3' => $request->pemakaian_sumbu_3,
-                'pemakaian_sumbu_4' => $request->pemakaian_sumbu_4,
-                'pemakaian_sumbu_5' => $request->pemakaian_sumbu_5,
-                'pemakaian_sumbu_6' => $request->pemakaian_sumbu_6,
-                'daya_sumbu_1' => $request->daya_sumbu_1,
-                'daya_sumbu_2' => $request->daya_sumbu_2,
-                'daya_sumbu_3' => $request->daya_sumbu_3,
-                'daya_sumbu_4' => $request->daya_sumbu_4,
-                'daya_sumbu_5' => $request->daya_sumbu_5,
-                'daya_sumbu_6' => $request->daya_sumbu_6,
+                'konfigurasi_sumbu' => $request->konfigurasi_sumbu ?? '',
+                'konfigurasi_sumbu_1' => $request->konfigurasi_sumbu_1 ?? null,
+                'konfigurasi_sumbu_2' => $request->konfigurasi_sumbu_2 ?? null,
+                'konfigurasi_sumbu_3' => $request->konfigurasi_sumbu_3 ?? null,
+                'konfigurasi_sumbu_4' => $request->konfigurasi_sumbu_4 ?? null,
+                'konfigurasi_sumbu_5' => $request->konfigurasi_sumbu_5 ?? null,
+                'berat_sumbu_1' => $request->berat_sumbu_1 ?? null,
+                'berat_sumbu_2' => $request->berat_sumbu_2 ?? null,
+                'berat_sumbu_3' => $request->berat_sumbu_3 ?? null,
+                'berat_sumbu_4' => $request->berat_sumbu_4 ?? null,
+                'berat_sumbu_5' => $request->berat_sumbu_5 ?? null,
+                'berat_sumbu_6' => $request->berat_sumbu_6 ?? null,
+                'pemakaian_sumbu_1' => $request->pemakaian_sumbu_1 ?? '',
+                'pemakaian_sumbu_2' => $request->pemakaian_sumbu_2 ?? '',
+                'pemakaian_sumbu_3' => $request->pemakaian_sumbu_3 ?? '',
+                'pemakaian_sumbu_4' => $request->pemakaian_sumbu_4 ?? '',
+                'pemakaian_sumbu_5' => $request->pemakaian_sumbu_5 ?? '',
+                'pemakaian_sumbu_6' => $request->pemakaian_sumbu_6 ?? '',
+                'daya_sumbu_1' => $request->daya_sumbu_1 ?? null,
+                'daya_sumbu_2' => $request->daya_sumbu_2 ?? null,
+                'daya_sumbu_3' => $request->daya_sumbu_3 ?? null,
+                'daya_sumbu_4' => $request->daya_sumbu_4 ?? null,
+                'daya_sumbu_5' => $request->daya_sumbu_5 ?? null,
+                'daya_sumbu_6' => $request->daya_sumbu_6 ?? null,
                 'active' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
 
-            DB::commit(); // Komit transaksi jika semua berhasil
-            return response()->json(['message' => 'Kendaraan dan detail terkait berhasil ditambahkan', 'kendaraan_id' => $kendaraanId], 201);
+            DB::commit();
+            // Mengarahkan kembali ke halaman index kendaraan dengan pesan sukses
+            return redirect()->route('kendaraan.index')->with('success', 'Data kendaraan berhasil ditambahkan!');
         } catch (\Exception $e) {
-            DB::rollBack(); // Rollback transaksi jika terjadi error
-            return response()->json(['message' => 'Gagal menambahkan kendaraan', 'error' => $e->getMessage()], 500);
+            DB::rollBack();
+            // Mengarahkan kembali ke halaman sebelumnya dengan input dan pesan error
+            return redirect()->back()->withInput()->with('error', 'Gagal menambahkan kendaraan: ' . $e->getMessage());
         }
     }
 

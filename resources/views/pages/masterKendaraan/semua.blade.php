@@ -16,7 +16,8 @@
                     <div>
                         <h1 class="text-xl md:text-2xl font-bold text-gray-800">Master Data Kendaraan</h1>
                         <div class="flex items-center gap-2 mt-1">
-                            <p class="text-sm text-gray-600">Total: <span class="font-medium">{{ $kendaraanData->count() }} Kendaraan</span></p>
+                            <p class="text-sm text-gray-600">Total: <span class="font-medium">{{ $kendaraanData->count() }}
+                                    Kendaraan</span></p>
                         </div>
                     </div>
                 </div>
@@ -39,6 +40,20 @@
                 </div>
             </div>
         </div>
+
+        @if (session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                <strong class="font-bold">Sukses!</strong>
+                <span class="block sm:inline">{{ session('success') }}</span>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <strong class="font-bold">Error!</strong>
+                <span class="block sm:inline">{{ session('error') }}</span>
+            </div>
+        @endif
 
         <!-- Main Content -->
         <div class="bg-white rounded-xl shadow-lg p-3 md:p-4">
@@ -113,43 +128,67 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse ($kendaraanData as $kendaraan)
                                 <tr class="hover:bg-gray-50 transition-colors">
-                                    <td class="px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">{{ $loop->iteration }}</td>
+                                    <td class="px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
+                                        {{ $loop->iteration }}</td>
                                     <td class="px-2 py-2 text-sm text-gray-900">
                                         <div class="flex flex-col">
                                             <span class="font-medium">{{ $kendaraan->nama_pemilik ?? 'N/A' }}</span>
-                                            <span class="text-xs text-gray-500 sm:hidden">{{ $kendaraan->nomor_uji ?? 'N/A' }}</span>
-                                            <span class="text-xs text-gray-500 md:hidden">{{ $kendaraan->keterangan_jenis_kendaraan ?? 'N/A' }}</span>
-                                            <span class="text-xs text-gray-500 md:hidden">{{ $kendaraan->kabupaten ?? 'N/A' }}</span>
+                                            <span
+                                                class="text-xs text-gray-500 sm:hidden">{{ $kendaraan->nomor_uji ?? 'N/A' }}</span>
+                                            <span
+                                                class="text-xs text-gray-500 md:hidden">{{ $kendaraan->keterangan_jenis_kendaraan ?? 'N/A' }}</span>
+                                            <span
+                                                class="text-xs text-gray-500 md:hidden">{{ $kendaraan->kabupaten ?? 'N/A' }}</span>
                                             {{-- <span class="text-xs text-gray-500 lg:hidden">{{ $kendaraan->tanggal_mati_uji ? \Carbon\Carbon::parse($kendaraan->tanggal_mati_uji)->format('Y-m-d') : 'N/A' }}</span> --}}
                                         </div>
                                     </td>
-                                    <td class="hidden sm:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">{{ $kendaraan->nomor_uji ?? 'N/A' }}</td>
-                                    <td class="px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">{{ $kendaraan->nomor_kendaraan ?? 'N/A' }}</td>
-                                    <td class="hidden md:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">{{ $kendaraan->keterangan_jenis_kendaraan ?? 'N/A' }}</td>
-                                    <td class="hidden md:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">{{ $kendaraan->kabupaten ?? 'N/A' }}</td>
+                                    <td
+                                        class="hidden sm:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
+                                        {{ $kendaraan->nomor_uji ?? 'N/A' }}</td>
+                                    <td class="px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
+                                        {{ $kendaraan->nomor_kendaraan ?? 'N/A' }}</td>
+                                    <td
+                                        class="hidden md:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
+                                        {{ $kendaraan->keterangan_jenis_kendaraan ?? 'N/A' }}</td>
+                                    <td
+                                        class="hidden md:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
+                                        {{ $kendaraan->kabupaten ?? 'N/A' }}</td>
                                     {{-- <td class="hidden lg:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">{{ $kendaraan->tanggal_mati_uji ? \Carbon\Carbon::parse($kendaraan->tanggal_mati_uji)->format('Y-m-d') : 'N/A' }}</td> --}}
                                     <td class="px-2 py-2 text-sm text-center whitespace-nowrap">
                                         <div class="flex justify-center items-center space-x-2">
-                                            <a href="{{ route('kendaraan.show', $kendaraan->kendaraan_id) }}" class="text-blue-600 hover:text-blue-800" title="Lihat Detail">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            <a href="{{ route('kendaraan.show', $kendaraan->kendaraan_id) }}"
+                                                class="text-blue-600 hover:text-blue-800" title="Lihat Detail">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                                 </svg>
                                             </a>
-                                            <a href="{{ route('kendaraan.edit', $kendaraan->kendaraan_id) }}" class="text-emerald-600 hover:text-emerald-800" title="Ubah Data">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            <a href="{{ route('kendaraan.edit', $kendaraan->kendaraan_id) }}"
+                                                class="text-emerald-600 hover:text-emerald-800" title="Ubah Data">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                 </svg>
                                             </a>
-                                            <a href="{{ route('kendaraan.exportPdf', $kendaraan->kendaraan_id) }}" class="text-purple-600 hover:text-purple-800" title="Export PDF">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                            <a href="{{ route('kendaraan.exportPdf', $kendaraan->kendaraan_id) }}"
+                                                class="text-purple-600 hover:text-purple-800" title="Export PDF">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                                                 </svg>
                                             </a>
-                                            <button type="button" class="text-red-600 hover:text-red-800" title="Hapus Data"
+                                            <button type="button" class="text-red-600 hover:text-red-800"
+                                                title="Hapus Data"
                                                 onclick="confirmDelete('{{ route('kendaraan.destroy', $kendaraan->kendaraan_id) }}')">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                 </svg>
                                             </button>
                                         </div>
@@ -157,7 +196,8 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="px-2 py-4 text-sm text-gray-500 text-center">Tidak ada data kendaraan ditemukan.</td>
+                                    <td colspan="8" class="px-2 py-4 text-sm text-gray-500 text-center">Tidak ada data
+                                        kendaraan ditemukan.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -197,16 +237,20 @@
     </div>
 
     <!-- Modal Konfirmasi Hapus -->
-    <div id="deleteConfirmationModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+    <div id="deleteConfirmationModal"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
         <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div class="mt-3 text-center">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">Konfirmasi Hapus</h3>
                 <div class="mt-2 px-7 py-3">
-                    <p class="text-sm text-gray-500">Apakah Anda yakin ingin menghapus data kendaraan ini? Tindakan ini tidak dapat dibatalkan.</p>
+                    <p class="text-sm text-gray-500">Apakah Anda yakin ingin menghapus data kendaraan ini? Tindakan ini
+                        tidak dapat dibatalkan.</p>
                 </div>
                 <div class="items-center px-4 py-3">
-                    <button id="cancelDeleteButton" class="px-4 py-2 bg-gray-200 text-gray-800 text-base font-medium rounded-md w-full sm:w-auto hover:bg-gray-300 mr-2">Batal</button>
-                    <button id="confirmDeleteButton" class="px-4 py-2 bg-red-600 text-white text-base font-medium rounded-md w-full sm:w-auto hover:bg-red-700">Hapus</button>
+                    <button id="cancelDeleteButton"
+                        class="px-4 py-2 bg-gray-200 text-gray-800 text-base font-medium rounded-md w-full sm:w-auto hover:bg-gray-300 mr-2">Batal</button>
+                    <button id="confirmDeleteButton"
+                        class="px-4 py-2 bg-red-600 text-white text-base font-medium rounded-md w-full sm:w-auto hover:bg-red-700">Hapus</button>
                 </div>
             </div>
         </div>
@@ -214,52 +258,52 @@
 @endsection
 
 @push('scripts')
-<script>
-    // Fungsi untuk menampilkan modal konfirmasi hapus
-    function confirmDelete(deleteUrl) {
-        const modal = document.getElementById('deleteConfirmationModal');
-        const confirmBtn = document.getElementById('confirmDeleteButton');
-        const cancelBtn = document.getElementById('cancelDeleteButton');
+    <script>
+        // Fungsi untuk menampilkan modal konfirmasi hapus
+        function confirmDelete(deleteUrl) {
+            const modal = document.getElementById('deleteConfirmationModal');
+            const confirmBtn = document.getElementById('confirmDeleteButton');
+            const cancelBtn = document.getElementById('cancelDeleteButton');
 
-        // Tampilkan modal
-        modal.classList.remove('hidden');
+            // Tampilkan modal
+            modal.classList.remove('hidden');
 
-        // Atur event listener untuk tombol konfirmasi
-        confirmBtn.onclick = function() {
-            modal.classList.add('hidden');
-            // Buat form dinamis untuk mengirim request DELETE
-            const form = document.createElement('form');
-            form.action = deleteUrl;
-            form.method = 'POST';
-            form.style.display = 'none';
-
-            const methodField = document.createElement('input');
-            methodField.setAttribute('type', 'hidden');
-            methodField.setAttribute('name', '_method');
-            methodField.setAttribute('value', 'DELETE');
-            form.appendChild(methodField);
-
-            const csrfField = document.createElement('input');
-            csrfField.setAttribute('type', 'hidden');
-            csrfField.setAttribute('name', '_token');
-            csrfField.setAttribute('value', '{{ csrf_token() }}');
-            form.appendChild(csrfField);
-
-            document.body.appendChild(form);
-            form.submit();
-        };
-
-        // Atur event listener untuk tombol batal
-        cancelBtn.onclick = function() {
-            modal.classList.add('hidden');
-        };
-
-        // Tutup modal jika mengklik di luar modal
-        window.onclick = function(event) {
-            if (event.target == modal) {
+            // Atur event listener untuk tombol konfirmasi
+            confirmBtn.onclick = function() {
                 modal.classList.add('hidden');
-            }
-        };
-    }
-</script>
+                // Buat form dinamis untuk mengirim request DELETE
+                const form = document.createElement('form');
+                form.action = deleteUrl;
+                form.method = 'POST';
+                form.style.display = 'none';
+
+                const methodField = document.createElement('input');
+                methodField.setAttribute('type', 'hidden');
+                methodField.setAttribute('name', '_method');
+                methodField.setAttribute('value', 'DELETE');
+                form.appendChild(methodField);
+
+                const csrfField = document.createElement('input');
+                csrfField.setAttribute('type', 'hidden');
+                csrfField.setAttribute('name', '_token');
+                csrfField.setAttribute('value', '{{ csrf_token() }}');
+                form.appendChild(csrfField);
+
+                document.body.appendChild(form);
+                form.submit();
+            };
+
+            // Atur event listener untuk tombol batal
+            cancelBtn.onclick = function() {
+                modal.classList.add('hidden');
+            };
+
+            // Tutup modal jika mengklik di luar modal
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.classList.add('hidden');
+                }
+            };
+        }
+    </script>
 @endpush

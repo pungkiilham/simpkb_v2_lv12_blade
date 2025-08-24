@@ -18,7 +18,8 @@
                         <p class="text-sm text-gray-600 mt-1">Menambahkan data kendaraan baru</p>
                     </div>
                 </div>
-                <a href="/semuakendaraan"
+                {{-- Menggunakan route() helper untuk link kembali ke daftar semua kendaraan --}}
+                <a href="{{ route('kendaraan.index') }}"
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -31,18 +32,20 @@
 
         <!-- Form Section -->
         <div class="bg-white rounded-xl shadow-lg p-3 md:p-6">
-            <form action="#" method="POST">
+            {{-- Menggunakan route() helper untuk action form yang mengarah ke metode store di controller --}}
+            <form action="{{ route('kendaraan.store') }}" method="POST">
                 @csrf
                 <!-- Data Kendaraan -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
                     <!-- Left Column -->
                     <div class="space-y-6">
-                        {{-- Data kendaraan --}}
+                        {{-- Data kendaraan, pastikan ini adalah komponen tambah1.blade.php --}}
                         @include('pages.masterKendaraan.components.tambah1')
                     </div>
 
                     <!-- Right Column -->
                     <div class="space-y-6">
+                        {{-- Pastikan ini adalah komponen tambah2.blade.php --}}
                         @include('pages.masterKendaraan.components.tambah2')
                     </div>
                 </div>
@@ -50,12 +53,13 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
                     <!-- Left Column -->
                     <div class="space-y-6">
-                        {{-- Data kendaraan --}}
+                        {{-- Pastikan ini adalah komponen tambah3.blade.php --}}
                         @include('pages.masterKendaraan.components.tambah3')
                     </div>
 
                     <!-- Right Column -->
                     <div class="space-y-6">
+                        {{-- Pastikan ini adalah komponen tambah4.blade.php --}}
                         @include('pages.masterKendaraan.components.tambah4')
                     </div>
                 </div>

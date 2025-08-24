@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('nomor_kendaraan', 50);
             $table->integer('jenis_pemilik_id', false, true)->length(11)->nullable();
             $table->string('nama_pemilik', 50);
-            $table->string('jenis_identitas', 50);
-            $table->string('nomor_identitas', 50);
+            $table->string('jenis_identitas', 50)->nullable();
+            $table->string('nomor_identitas', 50)->nullable();
             $table->string('tempat_lahir', 50)->nullable();
             $table->date('tanggal_lahir')->nullable();
             $table->string('jenis_kelamin', 50)->nullable();
