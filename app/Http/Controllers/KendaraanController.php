@@ -390,17 +390,15 @@ class KendaraanController extends Controller
      */
     public function edit(string $kendaraanId)
     {
-        // Mengambil data kendaraan spesifik berdasarkan kendaraanId
-        // dan menggabungkannya dengan tabel terkait.
+        // Mirip dengan showSpecificKendaraanData, kita perlu mengambil semua data terkait
         $kendaraan = DB::table('kendaraans')
-            ->join('sertifikasi_kendaraans', 'kendaraans.id', '=', 'sertifikasi_kendaraans.kendaraan_id')
-            ->join('spesifikasi_kendaraans', 'kendaraans.id', '=', 'spesifikasi_kendaraans.kendaraan_id')
-            ->join('uraian_sumbu_kendaraans', 'kendaraans.id', '=', 'uraian_sumbu_kendaraans.kendaraan_id')
+            ->leftJoin('sertifikasi_kendaraans', 'kendaraans.id', '=', 'sertifikasi_kendaraans.kendaraan_id')
+            ->leftJoin('spesifikasi_kendaraans', 'kendaraans.id', '=', 'spesifikasi_kendaraans.kendaraan_id')
+            ->leftJoin('uraian_sumbu_kendaraans', 'kendaraans.id', '=', 'uraian_sumbu_kendaraans.kendaraan_id')
             ->select(
                 'kendaraans.*', // Mengambil semua kolom dari tabel 'kendaraans'
-                // Aliaskan 'id' dari kendaraans sebagai 'kendaraan_id' untuk konsistensi dengan rute
-                'kendaraans.id as kendaraan_id',
-                // Ambil semua kolom yang diperlukan dari tabel sertifikasi_kendaraans
+                'kendaraans.id as kendaraan_id', // Alias ID kendaraan utama
+                // Sertifikasi Kendaraan
                 'sertifikasi_kendaraans.sertifikat_registrasi_nomor',
                 'sertifikasi_kendaraans.sertifikat_registrasi_penerbit',
                 'sertifikasi_kendaraans.sertifikat_registrasi_tanggal',
@@ -410,7 +408,7 @@ class KendaraanController extends Controller
                 'sertifikasi_kendaraans.sertifikat_rancang_nomor',
                 'sertifikasi_kendaraans.sertifikat_rancang_penerbit',
                 'sertifikasi_kendaraans.sertifikat_rancang_tanggal',
-                // Ambil semua kolom yang diperlukan dari tabel spesifikasi_kendaraans
+                // Spesifikasi Kendaraan - KOLOM YANG DIBUTUHKAN UNTUK UBAH2
                 'spesifikasi_kendaraans.kubikasi_mesin',
                 'spesifikasi_kendaraans.daya_mesin',
                 'spesifikasi_kendaraans.jenis_bahan_bakar_id',
@@ -430,7 +428,17 @@ class KendaraanController extends Controller
                 'spesifikasi_kendaraans.bahan_utama',
                 'spesifikasi_kendaraans.tempat_duduk',
                 'spesifikasi_kendaraans.kapasitas_berdiri',
-                // Ambil semua kolom yang diperlukan dari tabel uraian_sumbu_kendaraans
+                'spesifikasi_kendaraans.berat_kosong',
+                'spesifikasi_kendaraans.jumlah_berat_diizinkan',
+                'spesifikasi_kendaraans.muatan_sumbu_terberat',
+                'spesifikasi_kendaraans.jumlah_berat_kombinasi_diizinkan',
+                'spesifikasi_kendaraans.daya_angkut_barang',
+                'spesifikasi_kendaraans.kelas_jalan',
+                'spesifikasi_kendaraans.mst',
+                'spesifikasi_kendaraans.ukuran_qr',
+                'spesifikasi_kendaraans.ukuran_p1',
+                'spesifikasi_kendaraans.ukuran_p2',
+                // Uraian Sumbu
                 'uraian_sumbu_kendaraans.konfigurasi_sumbu',
                 'uraian_sumbu_kendaraans.konfigurasi_sumbu_1',
                 'uraian_sumbu_kendaraans.konfigurasi_sumbu_2',
@@ -456,19 +464,17 @@ class KendaraanController extends Controller
                 'uraian_sumbu_kendaraans.daya_sumbu_5',
                 'uraian_sumbu_kendaraans.daya_sumbu_6'
             )
-            ->where('kendaraans.id', $kendaraanId) // Menambahkan kondisi WHERE
-            ->first(); // Mengambil hanya satu baris hasil
+            ->where('kendaraans.id', $kendaraanId)
+            ->first();
 
-        // Jika kendaraan tidak ditemukan
+        // Jika kendaraan tidak ditemukan, kembalikan respons 404
         if (!$kendaraan) {
-            return view('pages.masterKendaraan.semua')->with('error', 'Data kendaraan tidak ditemukan.');
-            // abort(404, 'Data kendaraan tidak ditemukan.');
+            abort(404, 'Data kendaraan tidak ditemukan.');
         }
 
         // Muat view 'pages.masterKendaraan.ubah' dan kirim data kendaraan
         return view('pages.masterKendaraan.ubah', ['kendaraan' => $kendaraan]);
     }
-
 
     /**
      * Mengupdate data kendaraan dan detail terkaitnya di database.
