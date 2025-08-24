@@ -52,23 +52,24 @@ class KendaraanController extends Controller
     }
 
     /**
-     * Menampilkan data kendaraan spesifik dengan detail dari tabel terkait.
+     * Menampilkan data kendaraan spesifik beserta detail dari tabel terkait.
+     * Data diambil berdasarkan 'kendaraanId' yang diberikan.
      *
      * @param  string  $kendaraanId ID dari kendaraan yang ingin dicari.
      * @return \Illuminate\Http\Response
      */
     public function showSpecificKendaraanData(string $kendaraanId)
     {
-        // Mengambil data kendaraan spesifik berdasarkan kendaraanId
-        // dan menggabungkannya dengan tabel terkait.
+        // Query untuk mencari kendaraan spesifik dan menggabungkannya
+        // dengan tabel terkait. Menggunakan kendaraans.* untuk memastikan semua kolom dari
+        // tabel kendaraans diambil.
         $kendaraan = DB::table('kendaraans')
-            ->join('sertifikasi_kendaraans', 'kendaraans.id', '=', 'sertifikasi_kendaraans.kendaraan_id')
-            ->join('spesifikasi_kendaraans', 'kendaraans.id', '=', 'spesifikasi_kendaraans.kendaraan_id')
-            ->join('uraian_sumbu_kendaraans', 'kendaraans.id', '=', 'uraian_sumbu_kendaraans.kendaraan_id')
+            ->leftJoin('sertifikasi_kendaraans', 'kendaraans.id', '=', 'sertifikasi_kendaraans.kendaraan_id')
+            ->leftJoin('spesifikasi_kendaraans', 'kendaraans.id', '=', 'spesifikasi_kendaraans.kendaraan_id')
+            ->leftJoin('uraian_sumbu_kendaraans', 'kendaraans.id', '=', 'uraian_sumbu_kendaraans.kendaraan_id')
             ->select(
                 'kendaraans.*', // Mengambil semua kolom dari tabel 'kendaraans'
-                // Aliaskan 'id' dari kendaraans sebagai 'kendaraan_id' untuk konsistensi dengan rute
-                'kendaraans.id as kendaraan_id',
+                'kendaraans.id as kendaraan_id', // Alias ID kendaraan utama
                 // Ambil semua kolom yang diperlukan dari tabel sertifikasi_kendaraans
                 'sertifikasi_kendaraans.sertifikat_registrasi_nomor',
                 'sertifikasi_kendaraans.sertifikat_registrasi_penerbit',
@@ -99,6 +100,16 @@ class KendaraanController extends Controller
                 'spesifikasi_kendaraans.bahan_utama',
                 'spesifikasi_kendaraans.tempat_duduk',
                 'spesifikasi_kendaraans.kapasitas_berdiri',
+                'spesifikasi_kendaraans.berat_kosong', // DITAMBAHKAN
+                'spesifikasi_kendaraans.jumlah_berat_diizinkan', // DITAMBAHKAN
+                'spesifikasi_kendaraans.muatan_sumbu_terberat', // DITAMBAHKAN
+                'spesifikasi_kendaraans.jumlah_berat_kombinasi_diizinkan', // DITAMBAHKAN
+                'spesifikasi_kendaraans.daya_angkut_barang', // DITAMBAHKAN
+                'spesifikasi_kendaraans.kelas_jalan', // DITAMBAHKAN
+                'spesifikasi_kendaraans.mst', // DITAMBAHKAN
+                'spesifikasi_kendaraans.ukuran_qr', // DITAMBAHKAN
+                'spesifikasi_kendaraans.ukuran_p1', // DITAMBAHKAN
+                'spesifikasi_kendaraans.ukuran_p2', // DITAMBAHKAN
                 // Ambil semua kolom yang diperlukan dari tabel uraian_sumbu_kendaraans
                 'uraian_sumbu_kendaraans.konfigurasi_sumbu',
                 'uraian_sumbu_kendaraans.konfigurasi_sumbu_1',
@@ -118,35 +129,32 @@ class KendaraanController extends Controller
                 'uraian_sumbu_kendaraans.pemakaian_sumbu_4',
                 'uraian_sumbu_kendaraans.pemakaian_sumbu_5',
                 'uraian_sumbu_kendaraans.pemakaian_sumbu_6',
-                'uraian_sumbu_kendaraans.daya_sumbu_1',
-                'uraian_sumbu_kendaraans.daya_sumbu_2',
-                'uraian_sumbu_kendaraans.daya_sumbu_3',
-                'uraian_sumbu_kendaraans.daya_sumbu_4',
-                'uraian_sumbu_kendaraans.daya_sumbu_5',
-                'uraian_sumbu_kendaraans.daya_sumbu_6'
+                'daya_sumbu_1',
+                'daya_sumbu_2',
+                'daya_sumbu_3',
+                'daya_sumbu_4',
+                'daya_sumbu_5',
+                'daya_sumbu_6'
             )
-            ->where('kendaraans.id', $kendaraanId) // Menambahkan kondisi WHERE
-            ->first(); // Mengambil hanya satu baris hasil
+            ->where('kendaraans.id', $kendaraanId)
+            ->first();
 
-        // Jika kendaraan tidak ditemukan
+        // Jika kendaraan tidak ditemukan, kembalikan respons 404
         if (!$kendaraan) {
-            return view('pages.masterKendaraan.semua')->with('error', 'Data kendaraan tidak ditemukan.');
-            // abort(404, 'Data kendaraan tidak ditemukan.');
+            abort(404, 'Data kendaraan tidak ditemukan.');
         }
-        // dd($kendaraan);
-        // Mengembalikan data kendaraan spesifik ke view atau dalam format JSON
+
+        // Mengembalikan data kendaraan spesifik ke view 'pages.masterKendaraan.lihat'
         return view('pages.masterKendaraan.lihat', ['kendaraan' => $kendaraan]);
-        // Atau untuk API:
-        // return response()->json($kendaraan);
     }
 
     /**
-     * Menambahkan data kendaraan baru beserta detail terkaitnya.
+     * Menambahkan data kendaraan baru beserta detail terkaitnya ke database.
+     * Melakukan validasi input dan menggunakan transaksi database.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request Data input dari form/API.
      * @return \Illuminate\Http\Response
      */
-
     public function store(Request $request)
     {
         // Validasi input dari request. Tambahkan semua aturan validasi yang diperlukan.
@@ -160,8 +168,8 @@ class KendaraanController extends Controller
             'tanggal_mati_uji' => 'required|date',
             // --- Aturan validasi tambahan untuk field nullable ---
             'jenis_pemilik_id' => 'nullable|integer',
-            'jenis_identitas' => 'nullable|string|max:50', // Tetap nullable di validasi
-            'nomor_identitas' => 'nullable|string|max:50', // Diperbarui menjadi nullable
+            'jenis_identitas' => 'nullable|string|max:50',
+            'nomor_identitas' => 'nullable|string|max:50',
             'tempat_lahir' => 'nullable|string|max:50',
             'tanggal_lahir' => 'nullable|date',
             'jenis_kelamin' => 'nullable|string|max:50',
@@ -198,8 +206,7 @@ class KendaraanController extends Controller
             'jumlah_berat_diizinkan' => 'nullable|numeric',
             'muatan_sumbu_terberat' => 'nullable|numeric',
             'jumlah_berat_kombinasi_diizinkan' => 'nullable|numeric',
-            // 'tempat_duduk' sudah ada di kendaraans, jadi ini untuk spesifikasi jika berbeda
-            'daya_angkut_orang_spesifikasi' => 'nullable|integer', // Kolom baru untuk membedakan
+            'daya_angkut_orang_spesifikasi' => 'nullable|integer',
             'daya_angkut_barang' => 'nullable|numeric',
             'kelas_jalan' => 'nullable|string|max:50',
             'mst' => 'nullable|string|max:50',
@@ -208,24 +215,25 @@ class KendaraanController extends Controller
             'ukuran_p2' => 'nullable|string|max:50',
 
             // Validasi untuk spesifikasi (dari tambah3)
-            'kubikasi_mesin' => 'nullable|numeric',
+            'kubikasi_mesin' => 'nullable|string|max:50', // Mengubah ke string sesuai skema baru
             'daya_mesin' => 'nullable|string|max:50',
             'jenis_bahan_bakar_id' => 'nullable|integer',
-            'dimensi_panjang' => 'nullable|numeric',
-            'dimensi_lebar' => 'nullable|numeric',
-            'dimensi_tinggi' => 'nullable|numeric',
-            'bak_panjang' => 'nullable|numeric',
-            'bak_lebar' => 'nullable|numeric',
-            'bak_tinggi' => 'nullable|numeric',
+            'dimensi_panjang' => 'nullable|string|max:50', // Mengubah ke string sesuai skema baru
+            'dimensi_lebar' => 'nullable|string|max:50', // Mengubah ke string sesuai skema baru
+            'dimensi_tinggi' => 'nullable|string|max:50', // Mengubah ke string sesuai skema baru
+            'bak_panjang' => 'nullable|string|max:50', // Mengubah ke string sesuai skema baru
+            'bak_lebar' => 'nullable|string|max:50', // Mengubah ke string sesuai skema baru
+            'bak_tinggi' => 'nullable|string|max:50', // Mengubah ke string sesuai skema baru
             'nama_karoseri' => 'nullable|string|max:50',
             'warna_kabin' => 'nullable|string|max:50',
             'warna_bak' => 'nullable|string|max:50',
-            'roh' => 'nullable|numeric',
-            'foh' => 'nullable|numeric',
-            'jarak_terendah' => 'nullable|numeric',
+            'roh' => 'nullable|string|max:50', // Mengubah ke string sesuai skema baru
+            'foh' => 'nullable|string|max:50', // Mengubah ke string sesuai skema baru
+            'jarak_terendah' => 'nullable|string|max:50', // Mengubah ke string sesuai skema baru
             'jenis_karoseri' => 'nullable|string|max:50',
             'bahan_utama' => 'nullable|string|max:50',
-            'kapasitas_berdiri' => 'nullable|integer',
+            'tempat_duduk' => 'nullable|string|max:50', // Mengubah ke string sesuai skema baru
+            'kapasitas_berdiri' => 'nullable|string|max:50', // Mengubah ke string sesuai skema baru
 
             // Validasi untuk uraian sumbu (dari tambah4)
             'konfigurasi_sumbu' => 'nullable|string|max:50',
@@ -265,8 +273,8 @@ class KendaraanController extends Controller
                 'nomor_kendaraan' => $request->nomor_kendaraan,
                 'jenis_pemilik_id' => $request->jenis_pemilik_id ?? null,
                 'nama_pemilik' => $request->nama_pemilik,
-                'jenis_identitas' => $request->jenis_identitas ?? '', // Now explicitly nullable in schema
-                'nomor_identitas' => $request->nomor_identitas ?? '', // Also nullable in schema
+                'jenis_identitas' => $request->jenis_identitas ?? '',
+                'nomor_identitas' => $request->nomor_identitas ?? '',
                 'tempat_lahir' => $request->tempat_lahir ?? '',
                 'tanggal_lahir' => $request->tanggal_lahir ?? null,
                 'jenis_kelamin' => $request->jenis_kelamin ?? '',
@@ -334,6 +342,16 @@ class KendaraanController extends Controller
                 'bahan_utama' => $request->bahan_utama ?? '',
                 'tempat_duduk' => $request->tempat_duduk ?? null,
                 'kapasitas_berdiri' => $request->kapasitas_berdiri ?? null,
+                'berat_kosong' => $request->berat_kosong ?? null,
+                'jumlah_berat_diizinkan' => $request->jumlah_berat_diizinkan ?? null,
+                'muatan_sumbu_terberat' => $request->muatan_sumbu_terberat ?? null,
+                'jumlah_berat_kombinasi_diizinkan' => $request->jumlah_berat_kombinasi_diizinkan ?? null,
+                'daya_angkut_barang' => $request->daya_angkut_barang ?? null,
+                'kelas_jalan' => $request->kelas_jalan ?? '',
+                'mst' => $request->mst ?? '',
+                'ukuran_qr' => $request->ukuran_qr ?? '',
+                'ukuran_p1' => $request->ukuran_p1 ?? '',
+                'ukuran_p2' => $request->ukuran_p2 ?? '',
                 'active' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -372,11 +390,9 @@ class KendaraanController extends Controller
             ]);
 
             DB::commit();
-            // Mengarahkan kembali ke halaman index kendaraan dengan pesan sukses
             return redirect()->route('kendaraan.index')->with('success', 'Data kendaraan berhasil ditambahkan!');
         } catch (\Exception $e) {
             DB::rollBack();
-            // Mengarahkan kembali ke halaman sebelumnya dengan input dan pesan error
             return redirect()->back()->withInput()->with('error', 'Gagal menambahkan kendaraan: ' . $e->getMessage());
         }
     }
@@ -726,7 +742,6 @@ class KendaraanController extends Controller
 
             DB::commit(); // Commit transaksi jika semua update berhasil.
             return redirect()->route('kendaraan.index')->with('success', 'Data kendaraan berhasil diupdate!');
-
         } catch (\Exception $e) {
             DB::rollBack(); // Rollback transaksi jika terjadi error.
             return redirect()->back()->withInput()->with('error', 'Gagal mengupdate kendaraan: ' . $e->getMessage());
