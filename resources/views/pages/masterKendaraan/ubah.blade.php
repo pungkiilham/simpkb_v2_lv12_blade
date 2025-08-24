@@ -18,7 +18,7 @@
                         <p class="text-sm text-gray-600 mt-1">Mengubah data kendaraan yang sudah tersimpan</p>
                     </div>
                 </div>
-                <a href="/semuakendaraan"
+                <a href="{{ route('kendaraan.index') }}"
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -31,8 +31,10 @@
 
         <!-- Form Section -->
         <div class="bg-white rounded-xl shadow-lg p-3 md:p-6">
-            <form action="#" method="POST">
+            <form action="{{ route('kendaraan.update', $kendaraan->kendaraan_id) }}" method="POST">
                 @csrf
+                @method('PUT') {{-- Menunjukkan ini adalah permintaan UPDATE --}}
+
                 <!-- Data Kendaraan -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
                     <!-- Left Column -->

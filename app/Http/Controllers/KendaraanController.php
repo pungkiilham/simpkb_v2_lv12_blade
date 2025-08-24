@@ -32,6 +32,7 @@ class KendaraanController extends Controller
                 'kendaraans.tipe',
                 'kendaraans.tipe',
                 'kendaraans.keterangan_jenis_kendaraan',
+                'kendaraans.tanggal_mati_uji',
                 // 'sertifikasi_kendaraans.sertifikat_registrasi_nomor',
                 // 'sertifikasi_kendaraans.sertifikat_uji_nomor',
                 // 'sertifikasi_kendaraans.sertifikat_rancang_nomor',
@@ -758,26 +759,27 @@ class KendaraanController extends Controller
     public function destroy(string $kendaraanId)
     {
         try {
-            DB::beginTransaction(); // Memulai transaksi database
+            DB::beginTransaction();
 
-            // Hapus data dari tabel terkait terlebih dahulu untuk menghindari constraint foreign key
+            // Hapus data terkait terlebih dahulu dari tabel anak
             DB::table('sertifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->delete();
             DB::table('spesifikasi_kendaraans')->where('kendaraan_id', $kendaraanId)->delete();
             DB::table('uraian_sumbu_kendaraans')->where('kendaraan_id', $kendaraanId)->delete();
 
-            // Kemudian, hapus data dari tabel 'kendaraans'
+            // Kemudian hapus data kendaraan utama
             $deleted = DB::table('kendaraans')->where('id', $kendaraanId)->delete();
 
             if ($deleted === 0) {
                 DB::rollBack();
-                return response()->json(['message' => 'Kendaraan tidak ditemukan'], 404);
+                return redirect()->back()->with('error', 'Kendaraan tidak ditemukan atau gagal dihapus.');
             }
 
-            DB::commit(); // Komit transaksi jika semua berhasil
-            return response()->json(['message' => 'Kendaraan dan detail terkait berhasil dihapus'], 200);
+            DB::commit();
+            return redirect()->route('kendaraan.index')->with('success', 'Data kendaraan berhasil dihapus!');
+
         } catch (\Exception $e) {
-            DB::rollBack(); // Rollback transaksi jika terjadi error
-            return response()->json(['message' => 'Gagal menghapus kendaraan', 'error' => $e->getMessage()], 500);
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Gagal menghapus kendaraan: ' . $e->getMessage());
         }
     }
 

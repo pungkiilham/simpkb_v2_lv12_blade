@@ -45,20 +45,6 @@ Route::delete('/kendaraan/{kendaraanId}', [KendaraanController::class, 'destroy'
 Route::get('/kendaraan/export/all-csv', [KendaraanController::class, 'exportAllKendaraanData'])->name('kendaraan.exportAllCsv');
 Route::get('/kendaraan/{kendaraanId}/export-pdf', [KendaraanController::class, 'exportSpecificKendaraanToPdf'])->name('kendaraan.exportPdf');
 
-// Master Kendaraan routes
-// Route::get('/semuakendaraan', function () {
-//     return view('pages.masterKendaraan.semua');
-// })->name('semuaKendaraan');
-
-Route::get('/tambahkendaraan', function () {
-    return view('pages.masterKendaraan.tambah');
-})->name('tambahkendaraan');
-Route::get('/ubahkendaraan', function () {
-    return view('pages.masterKendaraan.ubah');
-})->name('ubahkendaraan');
-// Route::get('/lihatkendaraan', function () {
-//     return view('pages.masterKendaraan.lihat');
-// })->name('lihatkendaraan');
 
 // Jenis layanan routes
 // pendaftaran

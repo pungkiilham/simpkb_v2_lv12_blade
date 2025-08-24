@@ -1,6 +1,8 @@
 @include('layouts.head')
 
 <body class="bg-[#FAFAFA]">
+    @stack('scripts')
+
     <div class="min-h-screen flex">
         <!-- Sidebar -->
         <aside id="sidebar"
