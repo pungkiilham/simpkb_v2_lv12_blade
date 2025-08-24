@@ -14,7 +14,7 @@ use Barryvdh\DomPDF\Facade\Pdf; // Tambahkan ini untuk Dompdf
 
 class KendaraanController extends Controller
 {
-    public function index(Request $request)
+    public function showCombinedKendaraanData(Request $request)
     {
         // Mengambil data dari tabel 'kendaraans' dan menggabungkannya
         // dengan 'sertifikasi_kendaraans', 'spesifikasi_kendaraans', dan 'uraian_sumbu_kendaraans'
@@ -30,18 +30,20 @@ class KendaraanController extends Controller
                 'kendaraans.nama_pemilik',
                 'kendaraans.merk',
                 'kendaraans.tipe',
-                'sertifikasi_kendaraans.sertifikat_registrasi_nomor',
-                'sertifikasi_kendaraans.sertifikat_uji_nomor',
-                'sertifikasi_kendaraans.sertifikat_rancang_nomor',
-                'spesifikasi_kendaraans.kubikasi_mesin',
-                'spesifikasi_kendaraans.daya_mesin',
-                'spesifikasi_kendaraans.dimensi_panjang',
-                'spesifikasi_kendaraans.dimensi_lebar',
-                'spesifikasi_kendaraans.dimensi_tinggi',
-                'spesifikasi_kendaraans.nama_karoseri',
-                'uraian_sumbu_kendaraans.konfigurasi_sumbu',
-                'uraian_sumbu_kendaraans.berat_sumbu_1',
-                'uraian_sumbu_kendaraans.daya_sumbu_1'
+                'kendaraans.tipe',
+                'kendaraans.keterangan_jenis_kendaraan',
+                // 'sertifikasi_kendaraans.sertifikat_registrasi_nomor',
+                // 'sertifikasi_kendaraans.sertifikat_uji_nomor',
+                // 'sertifikasi_kendaraans.sertifikat_rancang_nomor',
+                // 'spesifikasi_kendaraans.kubikasi_mesin',
+                // 'spesifikasi_kendaraans.daya_mesin',
+                // 'spesifikasi_kendaraans.dimensi_panjang',
+                // 'spesifikasi_kendaraans.dimensi_lebar',
+                // 'spesifikasi_kendaraans.dimensi_tinggi',
+                // 'spesifikasi_kendaraans.nama_karoseri',
+                // 'uraian_sumbu_kendaraans.konfigurasi_sumbu',
+                // 'uraian_sumbu_kendaraans.berat_sumbu_1',
+                // 'uraian_sumbu_kendaraans.daya_sumbu_1'
             )
             ->get(); // Mengambil semua hasil
 
@@ -64,24 +66,64 @@ class KendaraanController extends Controller
             ->join('spesifikasi_kendaraans', 'kendaraans.id', '=', 'spesifikasi_kendaraans.kendaraan_id')
             ->join('uraian_sumbu_kendaraans', 'kendaraans.id', '=', 'uraian_sumbu_kendaraans.kendaraan_id')
             ->select(
+                'kendaraans.*', // Mengambil semua kolom dari tabel 'kendaraans'
+                // Aliaskan 'id' dari kendaraans sebagai 'kendaraan_id' untuk konsistensi dengan rute
                 'kendaraans.id as kendaraan_id',
-                'kendaraans.nomor_uji',
-                'kendaraans.nomor_kendaraan',
-                'kendaraans.nama_pemilik',
-                'kendaraans.merk',
-                'kendaraans.tipe',
+                // Ambil semua kolom yang diperlukan dari tabel sertifikasi_kendaraans
                 'sertifikasi_kendaraans.sertifikat_registrasi_nomor',
+                'sertifikasi_kendaraans.sertifikat_registrasi_penerbit',
+                'sertifikasi_kendaraans.sertifikat_registrasi_tanggal',
                 'sertifikasi_kendaraans.sertifikat_uji_nomor',
+                'sertifikasi_kendaraans.sertifikat_uji_penerbit',
+                'sertifikasi_kendaraans.sertifikat_uji_tanggal',
                 'sertifikasi_kendaraans.sertifikat_rancang_nomor',
+                'sertifikasi_kendaraans.sertifikat_rancang_penerbit',
+                'sertifikasi_kendaraans.sertifikat_rancang_tanggal',
+                // Ambil semua kolom yang diperlukan dari tabel spesifikasi_kendaraans
                 'spesifikasi_kendaraans.kubikasi_mesin',
                 'spesifikasi_kendaraans.daya_mesin',
+                'spesifikasi_kendaraans.jenis_bahan_bakar_id',
                 'spesifikasi_kendaraans.dimensi_panjang',
                 'spesifikasi_kendaraans.dimensi_lebar',
                 'spesifikasi_kendaraans.dimensi_tinggi',
+                'spesifikasi_kendaraans.bak_panjang',
+                'spesifikasi_kendaraans.bak_lebar',
+                'spesifikasi_kendaraans.bak_tinggi',
                 'spesifikasi_kendaraans.nama_karoseri',
+                'spesifikasi_kendaraans.warna_kabin',
+                'spesifikasi_kendaraans.warna_bak',
+                'spesifikasi_kendaraans.roh',
+                'spesifikasi_kendaraans.foh',
+                'spesifikasi_kendaraans.jarak_terendah',
+                'spesifikasi_kendaraans.jenis_karoseri',
+                'spesifikasi_kendaraans.bahan_utama',
+                'spesifikasi_kendaraans.tempat_duduk',
+                'spesifikasi_kendaraans.kapasitas_berdiri',
+                // Ambil semua kolom yang diperlukan dari tabel uraian_sumbu_kendaraans
                 'uraian_sumbu_kendaraans.konfigurasi_sumbu',
+                'uraian_sumbu_kendaraans.konfigurasi_sumbu_1',
+                'uraian_sumbu_kendaraans.konfigurasi_sumbu_2',
+                'uraian_sumbu_kendaraans.konfigurasi_sumbu_3',
+                'uraian_sumbu_kendaraans.konfigurasi_sumbu_4',
+                'uraian_sumbu_kendaraans.konfigurasi_sumbu_5',
                 'uraian_sumbu_kendaraans.berat_sumbu_1',
-                'uraian_sumbu_kendaraans.daya_sumbu_1'
+                'uraian_sumbu_kendaraans.berat_sumbu_2',
+                'uraian_sumbu_kendaraans.berat_sumbu_3',
+                'uraian_sumbu_kendaraans.berat_sumbu_4',
+                'uraian_sumbu_kendaraans.berat_sumbu_5',
+                'uraian_sumbu_kendaraans.berat_sumbu_6',
+                'uraian_sumbu_kendaraans.pemakaian_sumbu_1',
+                'uraian_sumbu_kendaraans.pemakaian_sumbu_2',
+                'uraian_sumbu_kendaraans.pemakaian_sumbu_3',
+                'uraian_sumbu_kendaraans.pemakaian_sumbu_4',
+                'uraian_sumbu_kendaraans.pemakaian_sumbu_5',
+                'uraian_sumbu_kendaraans.pemakaian_sumbu_6',
+                'uraian_sumbu_kendaraans.daya_sumbu_1',
+                'uraian_sumbu_kendaraans.daya_sumbu_2',
+                'uraian_sumbu_kendaraans.daya_sumbu_3',
+                'uraian_sumbu_kendaraans.daya_sumbu_4',
+                'uraian_sumbu_kendaraans.daya_sumbu_5',
+                'uraian_sumbu_kendaraans.daya_sumbu_6'
             )
             ->where('kendaraans.id', $kendaraanId) // Menambahkan kondisi WHERE
             ->first(); // Mengambil hanya satu baris hasil
@@ -90,9 +132,9 @@ class KendaraanController extends Controller
         if (!$kendaraan) {
             return response()->json(['message' => 'Kendaraan tidak ditemukan'], 404);
         }
-
+        // dd($kendaraan);
         // Mengembalikan data kendaraan spesifik ke view atau dalam format JSON
-        return view('nama_view_detail_kamu', ['kendaraan' => $kendaraan]);
+        return view('pages.masterKendaraan.lihat', ['kendaraan' => $kendaraan]);
         // Atau untuk API:
         // return response()->json($kendaraan);
     }
@@ -110,6 +152,10 @@ class KendaraanController extends Controller
             'nomor_uji' => 'required|string|max:50',
             'nomor_kendaraan' => 'required|string|max:50',
             'nama_pemilik' => 'required|string|max:50',
+            "nomor_identitas" => 'required',
+            'nomor_rangka' => 'required',
+            'jenis_kendaraan_id' => 'required',
+            'tanggal_mati_uji' => 'required'
             // Tambahkan validasi untuk kolom lain sesuai kebutuhan
         ]);
 

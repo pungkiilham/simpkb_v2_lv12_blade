@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KendaraanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,10 +31,20 @@ Route::get('/panggilantrian', function () {
     return view('pages.antrian.panggil');
 })->name('panggildantrian');
 
+//Master kendaraan route ai
+Route::get('/kendaraan', [KendaraanController::class, 'showCombinedKendaraanData'])->name('kendaraan.index');
+Route::get('/kendaraan/{kendaraanId}', [KendaraanController::class, 'showSpecificKendaraanData'])->name('kendaraan.show');
+Route::get('/kendaraan/{kendaraanId}/edit', function($kendaraanId) { /* Your edit form view logic */ })->name('kendaraan.edit'); // Placeholder for edit form
+Route::post('/kendaraan', [KendaraanController::class, 'store'])->name('kendaraan.store');
+Route::put('/kendaraan/{kendaraanId}', [KendaraanController::class, 'update'])->name('kendaraan.update');
+Route::delete('/kendaraan/{kendaraanId}', [KendaraanController::class, 'destroy'])->name('kendaraan.destroy');
+Route::get('/kendaraan/export/all-csv', [KendaraanController::class, 'exportAllKendaraanData'])->name('kendaraan.exportAllCsv');
+Route::get('/kendaraan/{kendaraanId}/export-pdf', [KendaraanController::class, 'exportSpecificKendaraanToPdf'])->name('kendaraan.exportPdf');
+
 // Master Kendaraan routes
-Route::get('/semuakendaraan', function () {
-    return view('pages.masterKendaraan.semua');
-})->name('semuaKendaraan');
+// Route::get('/semuakendaraan', function () {
+//     return view('pages.masterKendaraan.semua');
+// })->name('semuaKendaraan');
 
 Route::get('/tambahkendaraan', function () {
     return view('pages.masterKendaraan.tambah');
@@ -41,9 +52,9 @@ Route::get('/tambahkendaraan', function () {
 Route::get('/ubahkendaraan', function () {
     return view('pages.masterKendaraan.ubah');
 })->name('ubahkendaraan');
-Route::get('/lihatkendaraan', function () {
-    return view('pages.masterKendaraan.lihat');
-})->name('lihatkendaraan');
+// Route::get('/lihatkendaraan', function () {
+//     return view('pages.masterKendaraan.lihat');
+// })->name('lihatkendaraan');
 
 // Jenis layanan routes
 // pendaftaran
