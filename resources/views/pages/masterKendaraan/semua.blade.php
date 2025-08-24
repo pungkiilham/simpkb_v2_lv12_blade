@@ -240,9 +240,10 @@
     </div>
 
     <!-- Modal Konfirmasi Hapus (dengan Alpine.js) -->
-    <div x-show="showDeleteModal" x-cloak
+    <div x-show="showDeleteModal"
         @keydown.escape.window="showDeleteModal = false"
-        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center"
+        style="display: none;"> {{-- Menambahkan style="display: none;" secara inline --}}
         <div x-show="showDeleteModal" x-transition.opacity
             @click.away="showDeleteModal = false"
             class="relative top-0 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">

@@ -791,63 +791,266 @@ class KendaraanController extends Controller
      */
     public function exportAllKendaraanData()
     {
-        // Headers HTTP untuk mengunduh file CSV.
+        $fileName = 'data_kendaraan_' . now()->format('Ymd_His') . '.csv';
+
         $headers = [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="data_kendaraan_' . date('Ymd_His') . '.csv"',
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
         ];
 
-        // Lakukan query join yang sama seperti showCombinedKendaraanData untuk mendapatkan semua data.
-        $dataKendaraan = DB::table('kendaraans')
-            ->join('sertifikasi_kendaraans', 'kendaraans.id', '=', 'sertifikasi_kendaraans.kendaraan_id')
-            ->join('spesifikasi_kendaraans', 'kendaraans.id', '=', 'spesifikasi_kendaraans.kendaraan_id')
-            ->join('uraian_sumbu_kendaraans', 'kendaraans.id', '=', 'uraian_sumbu_kendaraans.kendaraan_id')
-            ->select(
-                'kendaraans.id as kendaraan_id',
-                'kendaraans.nomor_uji',
-                'kendaraans.nomor_kendaraan',
-                'kendaraans.nama_pemilik',
-                'kendaraans.merk',
-                'kendaraans.tipe',
-                'sertifikasi_kendaraans.sertifikat_registrasi_nomor',
-                'sertifikasi_kendaraans.sertifikat_uji_nomor',
-                'sertifikasi_kendaraans.sertifikat_rancang_nomor',
-                'spesifikasi_kendaraans.kubikasi_mesin',
-                'spesifikasi_kendaraans.daya_mesin',
-                'spesifikasi_kendaraans.dimensi_panjang',
-                'spesifikasi_kendaraans.dimensi_lebar',
-                'spesifikasi_kendaraans.dimensi_tinggi',
-                'spesifikasi_kendaraans.bak_panjang',
-                'spesifikasi_kendaraans.bak_lebar',
-                'spesifikasi_kendaraans.bak_tinggi',
-                'spesifikasi_kendaraans.nama_karoseri',
-                'uraian_sumbu_kendaraans.konfigurasi_sumbu',
-                'uraian_sumbu_kendaraans.berat_sumbu_1',
-                'uraian_sumbu_kendaraans.daya_sumbu_1'
-                // Tambahkan semua kolom lain yang ingin Anda sertakan dalam CSV
-                // Misalnya: 'kendaraans.nomor_mesin', 'sertifikasi_kendaraans.sertifikat_registrasi_penerbit', dll.
-            )
-            ->get();
+        // Definisikan heading untuk CSV. Ini adalah nama kolom yang akan ditampilkan di file CSV.
+        // Urutan ini SANGAT penting dan harus sesuai dengan urutan kolom di array $selectColumns.
+        $csvHeaders = [
+            // Kolom dari tabel 'kendaraans' (berdasarkan seeder)
+            'No. Uji',
+            'No. Kendaraan (Plat Nomor)',
+            'Jenis Pemilik ID', // ID, jika ingin nama perlu join ke tabel 'jenis_pemilik'
+            'Nama Pemilik',
+            'Jenis Identitas',
+            'Nomor Identitas (KTP/NPWP)',
+            'Tempat Lahir',
+            'Tanggal Lahir',
+            'Jenis Kelamin',
+            'Alamat Pemilik',
+            'RT',
+            'RW',
+            'Kelurahan',
+            'Kecamatan',
+            'Kabupaten',
+            'Provinsi',
+            'Awal Pakai',
+            'Tahun Pembuatan', // Menggunakan 'tahun' dari DB, display 'Tahun Pembuatan'
+            'Nomor Mesin',
+            'Nomor Rangka',
+            'Nomor WhatsApp', // Menggunakan 'nomor_wa' dari DB
+            'Jenis Kendaraan ID', // ID, jika ingin nama perlu join ke tabel 'jenis_kendaraan'
+            'Keterangan Jenis Kendaraan',
+            'Status', // Status kendaraan (Umum/Tidak Umum)
+            'Merk',
+            'Tipe',
+            'Nama Importir',
+            'Tanggal Uji',
+            'Tanggal Mati Uji',
+            'Aktif', // Status aktif kendaraan (0/1)
 
-        // Callback function untuk menulis data CSV secara stream.
-        $callback = function () use ($dataKendaraan) {
-            $file = fopen('php://output', 'w'); // Membuka aliran output ke browser.
+            // Kolom dari 'sertifikasi_kendaraans'
+            'Sertifikat Registrasi Nomor',
+            'Sertifikat Registrasi Penerbit',
+            'Sertifikat Registrasi Tanggal',
+            'Sertifikat Uji Nomor',
+            'Sertifikat Uji Penerbit',
+            'Sertifikat Uji Tanggal',
+            'Sertifikat Rancang Nomor',
+            'Sertifikat Rancang Penerbit',
+            'Sertifikat Rancang Tanggal',
 
-            // Tulis baris header CSV. Diambil dari kunci objek pertama.
-            if ($dataKendaraan->isNotEmpty()) {
-                $columns = array_keys((array) $dataKendaraan->first());
-                fputcsv($file, $columns);
+            // Kolom dari 'spesifikasi_kendaraans'
+            'Kubikasi Mesin',
+            'Daya Mesin',
+            'Jenis Bahan Bakar ID', // ID, jika ingin nama perlu join ke tabel 'jenis_bahan_bakar'
+            'Dimensi Panjang',
+            'Dimensi Lebar',
+            'Dimensi Tinggi',
+            'Bak Panjang',
+            'Bak Lebar',
+            'Bak Tinggi',
+            'Nama Karoseri',
+            'Warna Kabin',
+            'Warna Bak',
+            'ROH (Spesifikasi)',
+            'FOH (Spesifikasi)',
+            'Jarak Terendah',
+            'Jenis Karoseri',
+            'Bahan Utama',
+            'Tempat Duduk',
+            'Kapasitas Berdiri',
+            'Berat Kosong',
+            'Jumlah Berat Diizinkan',
+            'Muatan Sumbu Terberat',
+            'Jumlah Berat Kombinasi Diizinkan',
+            'Daya Angkut Barang',
+            'Kelas Jalan',
+            'MST',
+            'Ukuran QR',
+            'Ukuran P1',
+            'Ukuran P2',
+
+            // Kolom dari 'uraian_sumbu_kendaraans'
+            'Konfigurasi Sumbu',
+            'Konfigurasi Sumbu 1',
+            'Konfigurasi Sumbu 2',
+            'Konfigurasi Sumbu 3',
+            'Konfigurasi Sumbu 4',
+            'Konfigurasi Sumbu 5',
+            'Berat Sumbu 1',
+            'Berat Sumbu 2',
+            'Berat Sumbu 3',
+            'Berat Sumbu 4',
+            'Berat Sumbu 5',
+            'Berat Sumbu 6',
+            'Pemakaian Sumbu 1',
+            'Pemakaian Sumbu 2',
+            'Pemakaian Sumbu 3',
+            'Pemakaian Sumbu 4',
+            'Pemakaian Sumbu 5',
+            'Pemakaian Sumbu 6',
+            'Daya Sumbu 1',
+            'Daya Sumbu 2',
+            'Daya Sumbu 3',
+            'Daya Sumbu 4',
+            'Daya Sumbu 5',
+            'Daya Sumbu 6',
+        ];
+
+        // Definisikan daftar kolom yang akan di-SELECT dari database.
+        // Ini harus sesuai persis dengan nama kolom di database Anda (termasuk prefix tabel).
+        // Urutan ini harus sama dengan $csvHeaders.
+        $selectColumns = [
+            // Kolom dari 'kendaraans' (berdasarkan seeder dan permintaan eksklusi ID)
+            'kendaraans.nomor_uji',
+            'kendaraans.nomor_kendaraan',
+            'kendaraans.jenis_pemilik_id',
+            'kendaraans.nama_pemilik',
+            'kendaraans.jenis_identitas',
+            'kendaraans.nomor_identitas', // Ini adalah 'No. KTP Pemilik'
+            'kendaraans.tempat_lahir',
+            'kendaraans.tanggal_lahir',
+            'kendaraans.jenis_kelamin',
+            'kendaraans.alamat_pemilik',
+            'kendaraans.rt',
+            'kendaraans.rw',
+            'kendaraans.kelurahan',
+            'kendaraans.kecamatan',
+            'kendaraans.kabupaten',
+            'kendaraans.provinsi',
+            'kendaraans.awal_pakai',
+            'kendaraans.tahun', // Ini adalah 'Tahun Pembuatan'
+            'kendaraans.nomor_mesin',
+            'kendaraans.nomor_rangka',
+            'kendaraans.nomor_wa', // Ini adalah 'No. Telp. Pemilik'
+            'kendaraans.jenis_kendaraan_id',
+            'kendaraans.keterangan_jenis_kendaraan',
+            'kendaraans.status',
+            'kendaraans.merk', // Ini adalah 'Merek Pabrik'
+            'kendaraans.tipe', // Ini adalah 'Tipe Kendaraan'
+            'kendaraans.nama_importir',
+            'kendaraans.tanggal_uji',
+            'kendaraans.tanggal_mati_uji',
+            'kendaraans.active',
+
+            // Sertifikasi Kendaraan (sesuai dari metode edit Anda)
+            'sertifikasi_kendaraans.sertifikat_registrasi_nomor',
+            'sertifikasi_kendaraans.sertifikat_registrasi_penerbit',
+            'sertifikasi_kendaraans.sertifikat_registrasi_tanggal',
+            'sertifikasi_kendaraans.sertifikat_uji_nomor',
+            'sertifikasi_kendaraans.sertifikat_uji_penerbit',
+            'sertifikasi_kendaraans.sertifikat_uji_tanggal',
+            'sertifikasi_kendaraans.sertifikat_rancang_nomor',
+            'sertifikasi_kendaraans.sertifikat_rancang_penerbit',
+            'sertifikasi_kendaraans.sertifikat_rancang_tanggal',
+
+            // Spesifikasi Kendaraan (sesuai dari metode edit Anda)
+            'spesifikasi_kendaraans.kubikasi_mesin',
+            'spesifikasi_kendaraans.daya_mesin',
+            'spesifikasi_kendaraans.jenis_bahan_bakar_id',
+            'spesifikasi_kendaraans.dimensi_panjang',
+            'spesifikasi_kendaraans.dimensi_lebar',
+            'spesifikasi_kendaraans.dimensi_tinggi',
+            'spesifikasi_kendaraans.bak_panjang',
+            'spesifikasi_kendaraans.bak_lebar',
+            'spesifikasi_kendaraans.bak_tinggi',
+            'spesifikasi_kendaraans.nama_karoseri',
+            'spesifikasi_kendaraans.warna_kabin',
+            'spesifikasi_kendaraans.warna_bak',
+            'spesifikasi_kendaraans.roh',
+            'spesifikasi_kendaraans.foh',
+            'spesifikasi_kendaraans.jarak_terendah',
+            'spesifikasi_kendaraans.jenis_karoseri',
+            'spesifikasi_kendaraans.bahan_utama',
+            'spesifikasi_kendaraans.tempat_duduk',
+            'spesifikasi_kendaraans.kapasitas_berdiri',
+            'spesifikasi_kendaraans.berat_kosong',
+            'spesifikasi_kendaraans.jumlah_berat_diizinkan',
+            'spesifikasi_kendaraans.muatan_sumbu_terberat',
+            'spesifikasi_kendaraans.jumlah_berat_kombinasi_diizinkan',
+            'spesifikasi_kendaraans.daya_angkut_barang',
+            'spesifikasi_kendaraans.kelas_jalan',
+            'spesifikasi_kendaraans.mst',
+            'spesifikasi_kendaraans.ukuran_qr',
+            'spesifikasi_kendaraans.ukuran_p1',
+            'spesifikasi_kendaraans.ukuran_p2',
+
+            // Uraian Sumbu (sesuai dari metode edit Anda)
+            'uraian_sumbu_kendaraans.konfigurasi_sumbu',
+            'uraian_sumbu_kendaraans.konfigurasi_sumbu_1',
+            'uraian_sumbu_kendaraans.konfigurasi_sumbu_2',
+            'uraian_sumbu_kendaraans.konfigurasi_sumbu_3',
+            'uraian_sumbu_kendaraans.konfigurasi_sumbu_4',
+            'uraian_sumbu_kendaraans.konfigurasi_sumbu_5',
+            'uraian_sumbu_kendaraans.berat_sumbu_1',
+            'uraian_sumbu_kendaraans.berat_sumbu_2',
+            'uraian_sumbu_kendaraans.berat_sumbu_3',
+            'uraian_sumbu_kendaraans.berat_sumbu_4',
+            'uraian_sumbu_kendaraans.berat_sumbu_5',
+            'uraian_sumbu_kendaraans.berat_sumbu_6',
+            'uraian_sumbu_kendaraans.pemakaian_sumbu_1',
+            'uraian_sumbu_kendaraans.pemakaian_sumbu_2',
+            'uraian_sumbu_kendaraans.pemakaian_sumbu_3',
+            'uraian_sumbu_kendaraans.pemakaian_sumbu_4',
+            'uraian_sumbu_kendaraans.pemakaian_sumbu_5',
+            'uraian_sumbu_kendaraans.pemakaian_sumbu_6',
+            'uraian_sumbu_kendaraans.daya_sumbu_1',
+            'uraian_sumbu_kendaraans.daya_sumbu_2',
+            'uraian_sumbu_kendaraans.daya_sumbu_3',
+            'uraian_sumbu_kendaraans.daya_sumbu_4',
+            'uraian_sumbu_kendaraans.daya_sumbu_5',
+            'uraian_sumbu_kendaraans.daya_sumbu_6'
+        ];
+
+
+        $callback = function() use ($csvHeaders, $selectColumns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $csvHeaders); // Tulis header kolom
+
+            try {
+                // Replikasi query join dari metode showSpecificKendaraanData/edit Anda
+                $kendaraanData = DB::table('kendaraans')
+                    ->leftJoin('sertifikasi_kendaraans', 'kendaraans.id', '=', 'sertifikasi_kendaraans.kendaraan_id')
+                    ->leftJoin('spesifikasi_kendaraans', 'kendaraans.id', '=', 'spesifikasi_kendaraans.kendaraan_id')
+                    ->leftJoin('uraian_sumbu_kendaraans', 'kendaraans.id', '=', 'uraian_sumbu_kendaraans.kendaraan_id')
+                    ->select($selectColumns) // Gunakan daftar kolom yang sudah didefinisikan
+                    ->get();
+
+                foreach ($kendaraanData as $data) {
+                    $row = [];
+                    foreach ($selectColumns as $column) {
+                        // Ambil nama kolom setelah titik (misalnya, 'nama_pemilik' dari 'kendaraans.nama_pemilik')
+                        $columnName = last(explode('.', $column));
+
+                        // Cek apakah ada kolom yang perlu diformat (khususnya tanggal)
+                        if (str_contains($columnName, 'tanggal') || str_contains($columnName, 'created_at') || str_contains($columnName, 'updated_at')) {
+                            $row[] = $data->$columnName ? Carbon::parse($data->$columnName)->format('Y-m-d') : '';
+                        } elseif ($columnName === 'active') {
+                            $row[] = $data->$columnName == 1 ? 'Aktif' : 'Tidak Aktif';
+                        } else {
+                            $row[] = $data->$columnName;
+                        }
+                    }
+                    fputcsv($file, $row); // Tulis baris data
+                }
+            } catch (\Exception $e) {
+                // Baris ini dihapus seperti yang diminta:
+                // Log::error("CSV Export Error: " . $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine());
+                fputcsv($file, ['Error generating CSV: ' . $e->getMessage()]);
+            } finally {
+                fclose($file);
             }
-
-            // Tulis data baris demi baris ke file CSV.
-            foreach ($dataKendaraan as $row) {
-                fputcsv($file, (array) $row); // Mengonversi objek ke array.
-            }
-
-            fclose($file); // Menutup aliran file.
         };
 
-        return new StreamedResponse($callback, 200, $headers); // Mengembalikan StreamedResponse.
+        return response()->stream($callback, 200, $headers);
     }
 
 
