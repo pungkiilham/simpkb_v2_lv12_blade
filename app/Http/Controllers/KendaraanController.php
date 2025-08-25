@@ -16,40 +16,49 @@ class KendaraanController extends Controller
 {
     public function showCombinedKendaraanData(Request $request)
     {
-        // Mengambil data dari tabel 'kendaraans' dan menggabungkannya
-        // dengan 'sertifikasi_kendaraans', 'spesifikasi_kendaraans', dan 'uraian_sumbu_kendaraans'
-        // menggunakan 'kendaraan_id' sebagai kunci join.
-        $dataKendaraan = DB::table('kendaraans')
-            ->join('sertifikasi_kendaraans', 'kendaraans.id', '=', 'sertifikasi_kendaraans.kendaraan_id')
-            ->join('spesifikasi_kendaraans', 'kendaraans.id', '=', 'spesifikasi_kendaraans.kendaraan_id')
-            ->join('uraian_sumbu_kendaraans', 'kendaraans.id', '=', 'uraian_sumbu_kendaraans.kendaraan_id')
-            ->select(
-                'kendaraans.id as kendaraan_id', // Alias untuk ID kendaraan utama
-                'kendaraans.nomor_uji',
-                'kendaraans.nomor_kendaraan',
-                'kendaraans.nama_pemilik',
-                'kendaraans.merk',
-                'kendaraans.tipe',
-                'kendaraans.tipe',
-                'kendaraans.keterangan_jenis_kendaraan',
-                'kendaraans.tanggal_mati_uji',
-                // 'sertifikasi_kendaraans.sertifikat_registrasi_nomor',
-                // 'sertifikasi_kendaraans.sertifikat_uji_nomor',
-                // 'sertifikasi_kendaraans.sertifikat_rancang_nomor',
-                // 'spesifikasi_kendaraans.kubikasi_mesin',
-                // 'spesifikasi_kendaraans.daya_mesin',
-                // 'spesifikasi_kendaraans.dimensi_panjang',
-                // 'spesifikasi_kendaraans.dimensi_lebar',
-                // 'spesifikasi_kendaraans.dimensi_tinggi',
-                // 'spesifikasi_kendaraans.nama_karoseri',
-                // 'uraian_sumbu_kendaraans.konfigurasi_sumbu',
-                // 'uraian_sumbu_kendaraans.berat_sumbu_1',
-                // 'uraian_sumbu_kendaraans.daya_sumbu_1'
-            )
-            ->get(); // Mengambil semua hasil
+        $perPage = $request->input('per_page', 25);
+        $asalFilter = $request->input('asal_filter');
+        $statusFilter = $request->input('status_filter');
 
-        // Kamu bisa mengembalikan data ini ke view atau dalam format JSON
-        return view('pages.masterKendaraan.semua', ['kendaraanData' => $dataKendaraan]);
+        $query = DB::table('kendaraans')
+            ->leftJoin('sertifikasi_kendaraans', 'kendaraans.id', '=', 'sertifikasi_kendaraans.kendaraan_id')
+            ->leftJoin('spesifikasi_kendaraans', 'kendaraans.id', '=', 'spesifikasi_kendaraans.kendaraan_id')
+            ->leftJoin('uraian_sumbu_kendaraans', 'kendaraans.id', '=', 'uraian_sumbu_kendaraans.kendaraan_id')
+            ->select(
+                'kendaraans.id as kendaraan_id', 'kendaraans.nomor_uji', 'kendaraans.nomor_kendaraan',
+                'kendaraans.nama_pemilik', 'kendaraans.merk', 'kendaraans.tipe',
+                'kendaraans.keterangan_jenis_kendaraan', 'kendaraans.tanggal_mati_uji',
+                'kendaraans.kabupaten', 'kendaraans.status' // Pastikan kolom kabupaten dan status ada di sini
+            );
+
+        // Terapkan filter 'Asal' (kabupaten)
+        if ($asalFilter && $asalFilter !== 'all') {
+            $query->where('kendaraans.kabupaten', $asalFilter);
+        }
+
+        // Terapkan filter 'Status'
+        if ($statusFilter && $statusFilter !== 'all') {
+            if ($statusFilter === 'Habis Uji') {
+                // Asumsi 'Habis Uji' berarti tanggal_mati_uji sudah lewat
+                $query->where('kendaraans.tanggal_mati_uji', '<', Carbon::now());
+            } else if ($statusFilter === 'Aktif') {
+                // Asumsi 'Aktif' berarti tanggal_mati_uji belum lewat
+                $query->where('kendaraans.tanggal_mati_uji', '>=', Carbon::now());
+            } else if ($statusFilter === 'Non-aktif') {
+                // Asumsi 'Non-aktif' berarti status memang 'Non-aktif' di kolom status
+                $query->where('kendaraans.status', 'Non-aktif');
+            }
+            // Jika ada nilai status lain di database, Anda bisa menambahkannya di sini
+        }
+
+
+        $dataKendaraan = $query->paginate($perPage);
+
+        return view('pages.masterKendaraan.semua', [
+            'kendaraanData' => $dataKendaraan,
+            'asalFilter' => $asalFilter, // Kirim kembali nilai filter ke view
+            'statusFilter' => $statusFilter, // Kirim kembali nilai filter ke view
+        ]);
     }
 
     /**
@@ -147,6 +156,15 @@ class KendaraanController extends Controller
 
         // Mengembalikan data kendaraan spesifik ke view 'pages.masterKendaraan.lihat'
         return view('pages.masterKendaraan.lihat', ['kendaraan' => $kendaraan]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        // Logika untuk menampilkan formulir pembuatan kendaraan baru
+        return view('pages.masterKendaraan.tambah'); // Contoh view
     }
 
     /**
@@ -394,7 +412,7 @@ class KendaraanController extends Controller
             return redirect()->route('kendaraan.index')->with('success', 'Data kendaraan berhasil ditambahkan!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->withInput()->with('error', 'Gagal menambahkan kendaraan: ' . $e->getMessage());
+            return redirect()->route('kendaraan.index')->withInput()->with('error', 'Gagal menambahkan kendaraan: ' . $e->getMessage());
         }
     }
 
@@ -776,7 +794,6 @@ class KendaraanController extends Controller
 
             DB::commit();
             return redirect()->route('kendaraan.index')->with('success', 'Data kendaraan berhasil dihapus!');
-
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Gagal menghapus kendaraan: ' . $e->getMessage());
@@ -1011,7 +1028,7 @@ class KendaraanController extends Controller
         ];
 
 
-        $callback = function() use ($csvHeaders, $selectColumns) {
+        $callback = function () use ($csvHeaders, $selectColumns) {
             $file = fopen('php://output', 'w');
             fputcsv($file, $csvHeaders); // Tulis header kolom
 

@@ -66,6 +66,7 @@
                                     d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
                         </button>
+                        <!-- Search filter -->
                         <div class="relative w-48 md:w-64">
                             <input type="text" placeholder="Search..."
                                 class="w-full pl-10 pr-4 py-1.5 md:py-2 text-sm rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20">

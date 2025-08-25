@@ -17,13 +17,15 @@
                     <div>
                         <h1 class="text-xl md:text-2xl font-bold text-gray-800">Master Data Kendaraan</h1>
                         <div class="flex items-center gap-2 mt-1">
-                            <p class="text-sm text-gray-600">Total: <span class="font-medium">{{ $kendaraanData->count() }}
+                            {{-- <p class="text-sm text-gray-600">Total: <span class="font-medium">{{ $kendaraanData->count() }}
+                                    Kendaraan</span></p> --}}
+                            <p class="text-sm text-gray-600">Total: <span class="font-medium">{{ $kendaraanData->total() }}
                                     Kendaraan</span></p>
                         </div>
                     </div>
                 </div>
                 <div class="flex flex-wrap items-center gap-2">
-                    <a href="{{ route('kendaraan.store') }}"
+                    <a href="{{ route('kendaraan.create') }}"
                         class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gradient-to-r from-amber-500 to-amber-600 rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all shadow-sm">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -72,7 +74,36 @@
                 </div> --}}
 
                 <div class="flex justify-ends gap-6">
-                    <div class="flex items-center gap-2">
+                    <form method="GET" action="{{ route('kendaraan.index') }}"
+                        class="flex flex-col md:flex-row items-center space-y-3 md:space-y-0 md:space-x-4 w-full md:w-auto">
+                        {{-- Filter Asal --}}
+                        <div class="flex items-center gap-2">
+                            <label for="asal_filter" class="text-sm text-gray-600">Asal:</label>
+                            <select name="asal_filter" id="asal_filter" onchange="this.form.submit()"
+                                class="text-sm border border-gray-200 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
+                                <option value="all" {{ $asalFilter == 'all' ? 'selected' : '' }}>Semua</option>
+                                <option value="Batu" {{ $asalFilter == 'Batu' ? 'selected' : '' }}>Batu</option>
+                                <option value="Numpang" {{ $asalFilter == 'Numpang' ? 'selected' : '' }}>Numpang</option>
+                                <option value="Mutasi" {{ $asalFilter == 'Mutasi' ? 'selected' : '' }}>Mutasi</option>
+                            </select>
+                        </div>
+
+                        {{-- Filter Status --}}
+                        <div class="flex items-center gap-2">
+                            <label for="status_filter" class="text-sm text-gray-600">Status:</label>
+                            <select name="status_filter" id="status_filter" onchange="this.form.submit()"
+                                class="text-sm border border-gray-200 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
+                                <option value="all" {{ $statusFilter == 'all' ? 'selected' : '' }}>Semua</option>
+                                <option value="Habis Uji" {{ $statusFilter == 'Habis Uji' ? 'selected' : '' }}>Habis Uji
+                                </option>
+                                <option value="Aktif" {{ $statusFilter == 'Aktif' ? 'selected' : '' }}>Aktif (Hidup)
+                                </option>
+                                <option value="Non-aktif" {{ $statusFilter == 'Non-aktif' ? 'selected' : '' }}>Non-aktif
+                                    (Mati)</option>
+                            </select>
+                        </div>
+                    </form>
+                    {{-- <div class="flex items-center gap-2">
                         <label class="text-sm text-gray-600">Asal:</label>
                         <select
                             class="text-sm border border-gray-200 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
@@ -86,11 +117,11 @@
                         <label class="text-sm text-gray-600">Status:</label>
                         <select
                             class="text-sm border border-gray-200 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
-                            <option value="all">Semua</option>
-                            <option value="Aktif">Aktif</option>
-                            <option value="Non-aktif">Non-aktif</option>
+                            <option value="all">Habis Uji</option>
+                            <option value="Aktif">Hidup</option>
+                            <option value="Non-aktif">Mati</option>
                         </select>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -129,8 +160,11 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse ($kendaraanData as $kendaraan)
                                 <tr class="hover:bg-gray-50 transition-colors">
-                                    <td class="px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
-                                        {{ $loop->iteration }}</td>
+                                    {{-- <td class="px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
+                                        {{ $loop->iteration }}</td> --}}
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        {{ ($kendaraanData->currentPage() - 1) * $kendaraanData->perPage() + $loop->iteration }}
+                                    </td>
                                     <td class="px-2 py-2 text-sm text-gray-900">
                                         <div class="flex flex-col">
                                             <span class="font-medium">{{ $kendaraan->nama_pemilik ?? 'N/A' }}</span>
@@ -155,7 +189,10 @@
                                     <td
                                         class="hidden md:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
                                         {{ $kendaraan->kabupaten ?? 'N/A' }}</td>
-                                    <td class="hidden lg:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">{{ $kendaraan->tanggal_mati_uji ? \Carbon\Carbon::parse($kendaraan->tanggal_mati_uji)->format('Y-m-d') : 'N/A' }}</td>
+                                    <td
+                                        class="hidden lg:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
+                                        {{ $kendaraan->tanggal_mati_uji ? \Carbon\Carbon::parse($kendaraan->tanggal_mati_uji)->format('Y-m-d') : 'N/A' }}
+                                    </td>
                                     <td class="px-2 py-2 text-sm text-center whitespace-nowrap">
                                         <div class="flex justify-center items-center space-x-2">
                                             <a href="{{ route('kendaraan.show', $kendaraan->kendaraan_id) }}"
@@ -174,14 +211,6 @@
                                                     viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                </svg>
-                                            </a>
-                                            <a href="{{ route('kendaraan.exportPdf', $kendaraan->kendaraan_id) }}"
-                                                class="text-purple-600 hover:text-purple-800" title="Export PDF">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                                                 </svg>
                                             </a>
                                             {{-- Tombol Hapus dengan Alpine.js --}}
@@ -210,42 +239,51 @@
         </div>
 
         <!-- Pagination -->
-        <div class="flex items-center justify-between mt-4">
-            {{-- Karena controller saat ini mengambil semua data, pagination ini statis.
-                 Jika Anda mengimplementasikan pagination di controller (misal: ->paginate(10)),
-                 Anda bisa mengganti ini dengan Laravel Blade Paginator: {{ $kendaraanData->links() }} --}}
+        {{-- <div class="flex items-center justify-between mt-4">
             <div class="flex items-center">
-                <label class="text-sm text-gray-600 mr-2">Baris per halaman:</label>
-                <select
-                    class="text-sm border border-gray-200 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
-                    <option>25</option>
-                    <option>50</option>
-                    <option>100</option>
-                </select>
+                <form method="GET" action="{{ route('kendaraan.combined') }}">
+                    <label for="per_page" class="text-sm text-gray-600 mr-2">Baris per halaman:</label>
+                    <select name="per_page" id="per_page" onchange="this.form.submit()"
+                        class="text-sm border border-gray-200 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
+                        <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                        <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                    </select>
+                </form>
             </div>
-            <div class="flex items-center space-x-2">
-                <button
-                    class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50"
-                    disabled>
-                    Previous
-                </button>
-                <div class="text-sm text-gray-500">Page 1 of 1</div>
-                <button
-                    class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50"
-                    disabled>
-                    Next
-                </button>
+            <!-- Tombol navigasi Previous/Next & Default Pagination Links -->
+            <div class="flex items-center justify-between mt-4 p-3 bg-white rounded-xl shadow-lg">
+                <div class="flex items-center space-x-2">
+                    <a href="{{ $kendaraanData->previousPageUrl() }}"
+                        class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 {{ $kendaraanData->hasPreviousPage() ? '' : 'opacity-50 cursor-not-allowed' }}"
+                        {{ $kendaraanData->hasPreviousPage() ? '' : 'aria-disabled="true"' }}>
+                        Previous
+                    </a>
+                    <div class="text-sm text-gray-500">
+                        Page {{ $kendaraanData->currentPage() }} of {{ $kendaraanData->lastPage() }}
+                    </div>
+                    <a href="{{ $kendaraanData->nextPageUrl() }}"
+                        class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 {{ $kendaraanData->hasNextPage() ? '' : 'opacity-50 cursor-not-allowed' }}"
+                        {{ $kendaraanData->hasNextPage() ? '' : 'aria-disabled="true"' }}>
+                        Next
+                    </a>
+                </div>
             </div>
+        </div> --}}
+        <div class=" mt-4">
+            {{-- Laravel's default pagination links (menampilkan nomor halaman 1, 2, 3...) --}}
+            {{-- Anda bisa memilih untuk menampilkan ini atau tidak --}}
+            {{-- {{ $kendaraanData->links() }} --}}
+            {{ $kendaraanData->links() }}
         </div>
-    </div>
 
+    </div>
+    {{-- <p>Type of $kendaraanData: {{ dd($kendaraanData) }}</p> --}}
     <!-- Modal Konfirmasi Hapus (dengan Alpine.js) -->
-    <div x-show="showDeleteModal"
-        @keydown.escape.window="showDeleteModal = false"
+    <div x-show="showDeleteModal" @keydown.escape.window="showDeleteModal = false"
         class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center"
         style="display: none;"> {{-- Menambahkan style="display: none;" secara inline --}}
-        <div x-show="showDeleteModal" x-transition.opacity
-            @click.away="showDeleteModal = false"
+        <div x-show="showDeleteModal" x-transition.opacity @click.away="showDeleteModal = false"
             class="relative top-0 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
             <div class="mt-3 text-center">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">Konfirmasi Hapus</h3>

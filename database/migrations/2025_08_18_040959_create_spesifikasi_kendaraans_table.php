@@ -38,7 +38,7 @@ return new class extends Migration
             $table->decimal('berat_kosong', 10, 2)->nullable(); // Misalnya, decimal untuk berat
             $table->decimal('jumlah_berat_diizinkan', 10, 2)->nullable();
             $table->decimal('muatan_sumbu_terberat', 10, 2)->nullable();
-            $table->decimal('jumlah_berat_kombinasi_diizinkan', 10, 2);
+            $table->decimal('jumlah_berat_kombinasi_diizinkan', 10, 2)->nullable();
             $table->decimal('daya_angkut_barang', 10, 2)->nullable();
             $table->string('kelas_jalan', 50)->nullable();
             $table->string('mst', 50)->nullable();
