@@ -149,7 +149,7 @@
             <h3 class="text-sm font-medium text-gray-700 mb-3">Bagian Menjulur</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Ke Belakang/ROH (mm)</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">ROH / Belakang (mm)</label>
                     <input type="number" name="roh"
                         value="{{ old('roh') }}"
                         class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2">
@@ -158,7 +158,7 @@
                     @enderror
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Ke Depan/FOH (mm)</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">FOH / Depan (mm)</label>
                     <input type="number" name="foh"
                         value="{{ old('foh') }}"
                         class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2">

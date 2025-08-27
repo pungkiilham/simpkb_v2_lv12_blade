@@ -30,7 +30,7 @@
                         class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
                         disabled>
                 </div>
-                <div>
+                {{-- <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Jarak Sumbu IV-V (mm)</label>
                     <input type="number" name="jarak_sumbu_4_5"
                         value="{{ $kendaraan->jarak_sumbu_4_5 ?? '-' }}"
@@ -43,6 +43,16 @@
                         value="{{ $kendaraan->jarak_sumbu_5_6 ?? '-' }}"
                         class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
                         disabled>
+                </div> --}}
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Konfigurasi Sumbu</label>
+                    <input type="text" name="konfigurasi_sumbu"
+                           value="{{ old('konfigurasi_sumbu', $kendaraan->konfigurasi_sumbu) }}"
+                           class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
+                           disabled>
+                    @error('konfigurasi_sumbu')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
         </div>
@@ -80,6 +90,13 @@
                         disabled>
                 </div>
                 <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Total Berat Sumbu</label>
+                    <input type="number" name="berat_sumbu_4"
+                        value="{{ $kendaraan->berat_sumbu_4 + $kendaraan->berat_sumbu_3 + $kendaraan->berat_sumbu_2 + $kendaraan->berat_sumbu_1 ?? '-' }}"
+                        class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
+                        disabled>
+                </div>
+                {{-- <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Sumbu V</label>
                     <input type="number" name="berat_sumbu_5"
                         value="{{ $kendaraan->berat_sumbu_5 ?? '-' }}"
@@ -92,7 +109,7 @@
                         value="{{ $kendaraan->berat_sumbu_6 ?? '-' }}"
                         class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
                         disabled>
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -128,7 +145,7 @@
                         class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
                         disabled>
                 </div>
-                <div>
+                {{-- <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Sumbu V</label>
                     <input type="text" name="pemakaian_sumbu_5"
                         value="{{ $kendaraan->pemakaian_sumbu_5 ?? '-' }}"
@@ -141,7 +158,7 @@
                         value="{{ $kendaraan->pemakaian_sumbu_6 ?? '-' }}"
                         class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
                         disabled>
-                </div>
+                </div> --}}
             </div>
         </div>
 
@@ -177,7 +194,7 @@
                         class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
                         disabled>
                 </div>
-                <div>
+                {{-- <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Sumbu V</label>
                     <input type="number" name="daya_sumbu_5"
                         value="{{ $kendaraan->daya_sumbu_5 ?? '-' }}"
@@ -190,7 +207,7 @@
                         value="{{ $kendaraan->daya_sumbu_6 ?? '-' }}"
                         class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
                         disabled>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

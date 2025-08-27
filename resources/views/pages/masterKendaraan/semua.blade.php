@@ -103,31 +103,21 @@
                             </select>
                         </div>
                     </form>
-                    {{-- <div class="flex items-center gap-2">
-                        <label class="text-sm text-gray-600">Asal:</label>
-                        <select
-                            class="text-sm border border-gray-200 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
-                            <option value="all">Semua</option>
-                            <option value="Batu">Batu</option>
-                            <option value="Numpang">Numpang</option>
-                            <option value="Mutasi">Mutasi</option>
-                        </select>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <label class="text-sm text-gray-600">Status:</label>
-                        <select
-                            class="text-sm border border-gray-200 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
-                            <option value="all">Habis Uji</option>
-                            <option value="Aktif">Hidup</option>
-                            <option value="Non-aktif">Mati</option>
-                        </select>
-                    </div> --}}
                 </div>
             </div>
 
             <!-- Table -->
             <div class="overflow-x-auto -mx-3 md:-mx-4">
-                <div class="inline-block min-w-full align-middle">
+                {{-- <div class="inline-block min-w-full align-middle"> --}}
+                <div class="inline-block min-w-full align-middle" x-data="{
+                    showDeleteModal: false,
+                    deleteUrl: '',
+                    openModal(url) {
+                        this.deleteUrl = url;
+                        this.showDeleteModal = true;
+                    }
+                }" x-cloak>
+
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead>
                             <tr class="bg-gray-50">
@@ -214,9 +204,73 @@
                                                 </svg>
                                             </a>
                                             {{-- Tombol Hapus dengan Alpine.js --}}
-                                            <button type="button" class="text-red-600 hover:text-red-800"
+                                            {{-- <button type="button" class="text-red-600 hover:text-red-800"
                                                 title="Hapus Data"
                                                 @click="showDeleteModal = true; deleteTargetUrl = '{{ route('kendaraan.destroy', $kendaraan->kendaraan_id) }}'">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button> --}}
+                                            <!-- hapus modal -->
+                                            {{-- <div class="relative" x-data="{ open: false }">
+                                                <div class="flex items-center">
+                                                    <button @click="open = !open"
+                                                        class="flex items-center text-red-600 hover:text-red-800"
+                                                        title="Hapus Data">
+                                                        <div class="flex-shrink-0">
+                                                            <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                                viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                            </svg>
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                                <!-- Dropdown Hapus -->
+                                                <div x-show="open" @click.away="open = false"
+                                                    class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5 z-50">
+                                                    <div class="px-4 py-2">
+                                                        <p class="text-md font-medium border-b-2">Anda yakin ingin
+                                                            <br>menghapus data
+                                                            ini?
+                                                        </p>
+                                                        <p class="text-sm opacity-70 mt-2 font-medium">
+                                                            {{ $kendaraan->nama_pemilik ?? 'N/A' }}</p>
+                                                        <p class="text-sm opacity-70">{{ $kendaraan->nomor_uji ?? 'N/A' }}
+                                                        </p>
+                                                        <p class="text-sm opacity-70">
+                                                            {{ $kendaraan->nomor_kendaraan ?? 'N/A' }}</p>
+                                                    </div>
+                                                    <form
+                                                        :action="{{ route('kendaraan.destroy', $kendaraan->kendaraan_id) }}"
+                                                        method="POST" class="flex items-center justify-center">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="block w-full text-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                                            <div
+                                                                class="flex items-center justify-center font-medium text-red-600 gap-2">
+                                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                                    viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                        stroke-width="2"
+                                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                                </svg>
+                                                                Hapus
+                                                            </div>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div> --}}
+
+                                            <!-- Tombol Hapus: Membuka modal dan mengatur URL -->
+                                            <button type="button"
+                                                @click="openModal('{{ route('kendaraan.destroy', $kendaraan->kendaraan_id) }}')"
+                                                class="text-red-600 hover:text-red-900 transition-colors"
+                                                title="Hapus Data">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -234,75 +288,59 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div x-show="showDeleteModal" class="fixed inset-0 z-50 overflow-y-auto"
+                        style="background-color: rgba(0,0,0,0.5);" x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                        x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0" x-on:click.away="showDeleteModal = false">
+                        <div class="flex items-center justify-center min-h-screen p-4">
+                            <div class="bg-white rounded-lg shadow-xl p-6 max-w-sm w-full"
+                                x-transition:enter="ease-out duration-300"
+                                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                                x-transition:leave="ease-in duration-200"
+                                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                                <h3 class="text-lg font-bold text-gray-900 mb-2">Konfirmasi Hapus</h3>
+                                <p class="text-sm text-gray-500 mb-2">
+                                    Anda yakin ingin menghapus data kendaraan ini?
+                                </p>
+                                <p class="text-sm opacity-70 mt-2 font-medium">
+                                    {{ $kendaraan->nama_pemilik ?? 'N/A' }}</p>
+                                <p class="text-sm opacity-70">{{ $kendaraan->nomor_uji ?? 'N/A' }}
+                                </p>
+                                <p class="text-sm opacity-70">
+                                    {{ $kendaraan->nomor_kendaraan ?? 'N/A' }}</p>
+                                <p class="text-sm text-gray-500 mb-4 mt-2">
+                                    *Tindakan ini tidak dapat dibatalkan.
+                                </p>
+                                <form :action="deleteUrl" method="POST" class="flex flex-col gap-4">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <div class="flex justify-end space-x-3">
+                                        <button type="button" @click="showDeleteModal = false"
+                                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors">
+                                            Batal
+                                        </button>
+                                        <button type="submit"
+                                            class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors">
+                                            Hapus
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Pagination -->
-        {{-- <div class="flex items-center justify-between mt-4">
-            <div class="flex items-center">
-                <form method="GET" action="{{ route('kendaraan.combined') }}">
-                    <label for="per_page" class="text-sm text-gray-600 mr-2">Baris per halaman:</label>
-                    <select name="per_page" id="per_page" onchange="this.form.submit()"
-                        class="text-sm border border-gray-200 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500/20">
-                        <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
-                        <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
-                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
-                    </select>
-                </form>
-            </div>
-            <!-- Tombol navigasi Previous/Next & Default Pagination Links -->
-            <div class="flex items-center justify-between mt-4 p-3 bg-white rounded-xl shadow-lg">
-                <div class="flex items-center space-x-2">
-                    <a href="{{ $kendaraanData->previousPageUrl() }}"
-                        class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 {{ $kendaraanData->hasPreviousPage() ? '' : 'opacity-50 cursor-not-allowed' }}"
-                        {{ $kendaraanData->hasPreviousPage() ? '' : 'aria-disabled="true"' }}>
-                        Previous
-                    </a>
-                    <div class="text-sm text-gray-500">
-                        Page {{ $kendaraanData->currentPage() }} of {{ $kendaraanData->lastPage() }}
-                    </div>
-                    <a href="{{ $kendaraanData->nextPageUrl() }}"
-                        class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 {{ $kendaraanData->hasNextPage() ? '' : 'opacity-50 cursor-not-allowed' }}"
-                        {{ $kendaraanData->hasNextPage() ? '' : 'aria-disabled="true"' }}>
-                        Next
-                    </a>
-                </div>
-            </div>
-        </div> --}}
         <div class=" mt-4">
             {{-- Laravel's default pagination links (menampilkan nomor halaman 1, 2, 3...) --}}
             {{-- Anda bisa memilih untuk menampilkan ini atau tidak --}}
-            {{-- {{ $kendaraanData->links() }} --}}
             {{ $kendaraanData->links() }}
         </div>
-
     </div>
     {{-- <p>Type of $kendaraanData: {{ dd($kendaraanData) }}</p> --}}
-    <!-- Modal Konfirmasi Hapus (dengan Alpine.js) -->
-    <div x-show="showDeleteModal" @keydown.escape.window="showDeleteModal = false"
-        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center"
-        style="display: none;"> {{-- Menambahkan style="display: none;" secara inline --}}
-        <div x-show="showDeleteModal" x-transition.opacity @click.away="showDeleteModal = false"
-            class="relative top-0 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-            <div class="mt-3 text-center">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Konfirmasi Hapus</h3>
-                <div class="mt-2 px-7 py-3">
-                    <p class="text-sm text-gray-500">Apakah Anda yakin ingin menghapus data kendaraan ini? Tindakan ini
-                        tidak dapat dibatalkan.</p>
-                </div>
-                <div class="items-center px-4 py-3">
-                    <button type="button" @click="showDeleteModal = false"
-                        class="px-4 py-2 bg-gray-200 text-gray-800 text-base font-medium rounded-md w-full sm:w-auto hover:bg-gray-300 mr-2">Batal</button>
-
-                    <form x-bind:action="deleteTargetUrl" method="POST" class="inline-block">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit"
-                            class="px-4 py-2 bg-red-600 text-white text-base font-medium rounded-md w-full sm:w-auto hover:bg-red-700">Hapus</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection

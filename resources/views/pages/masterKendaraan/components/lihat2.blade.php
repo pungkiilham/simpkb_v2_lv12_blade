@@ -96,28 +96,28 @@
                 <h3 class="text-sm font-medium text-gray-700 mb-3">Jumlah Berat Yang Diperbolehkan</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Berat Kosong (Kg)</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">JBB (Kg)</label>
                         <input type="number" name="berat_kosong"
                             value="{{ $kendaraan->berat_kosong ?? '-' }}" {{-- Anda perlu memastikan kolom ini ada di query Anda --}}
                             class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
                             disabled>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Berat Yang Diizinkan (Kg)</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">JBKB (Kg)</label>
                         <input type="number" name="jumlah_berat_diizinkan"
                             value="{{ $kendaraan->jumlah_berat_diizinkan ?? '-' }}" {{-- Anda perlu memastikan kolom ini ada di query Anda --}}
                             class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
                             disabled>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Muatan Sumbu Paling Berat (Kg)</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">JBI (Kg)</label>
                         <input type="number" name="muatan_sumbu_terberat"
                             value="{{ $kendaraan->berat_sumbu_1 ?? '-' }}" {{-- Menggunakan berat_sumbu_1 sebagai contoh --}}
                             class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
                             disabled>
                     </div>
                      <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Berat Kombinasi yang Diizinkan (Kg)</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">JBKI (Kg)</label>
                         <input type="number" name="jumlah_berat_kombinasi_diizinkan"
                             value="{{ $kendaraan->jumlah_berat_kombinasi_diizinkan ?? '-' }}" {{-- Anda perlu memastikan kolom ini ada di query Anda --}}
                             class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"

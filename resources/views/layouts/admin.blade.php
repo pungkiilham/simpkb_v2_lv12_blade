@@ -67,7 +67,7 @@
                             </svg>
                         </button>
                         <!-- Search filter -->
-                        <div class="relative w-48 md:w-64">
+                        {{-- <div class="relative w-48 md:w-64">
                             <input type="text" placeholder="Search..."
                                 class="w-full pl-10 pr-4 py-1.5 md:py-2 text-sm rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
                             <svg class="absolute left-3 top-2 h-4 w-4 md:h-5 md:w-5 text-gray-400" fill="none"
@@ -75,7 +75,24 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
-                        </div>
+                        </div> --}}
+
+                        <!-- Search filter for global use -->
+                        <form method="GET" action="{{ url()->current() }}" class="relative w-48 md:w-64">
+                            {{-- Input tersembunyi untuk mempertahankan semua query parameter yang sudah ada --}}
+                            @foreach (request()->except('search', 'page') as $key => $value)
+                                <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                            @endforeach
+
+                            <input type="text" name="search" placeholder="Cari Nama, Nopol, Nouji" value="{{ request('search') }}"
+                                {{-- Menampilkan kembali nilai pencarian yang aktif --}} onchange="this.form.submit()" {{-- Otomatis submit saat nilai berubah --}}
+                                class="w-full pl-10 pr-4 py-1.5 md:py-2 text-sm rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
+                            <svg class="absolute left-3 top-2 h-4 w-4 md:h-5 md:w-5 text-gray-400" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </form>
                     </div>
                     <div class="flex items-center">
                         <!-- Profile Dropdown -->
@@ -86,8 +103,10 @@
                                     <div class="flex-shrink-0">
                                         <svg class="h-6 w-auto md:h-8 text-gray-600" fill="currentColor"
                                             stroke="currentColor" viewBox="0 0 24 24">
-                                            <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" />
-                                          </svg>
+                                            <path fill-rule="evenodd"
+                                                d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                                                clip-rule="evenodd" />
+                                        </svg>
                                     </div>
                                 </button>
 
