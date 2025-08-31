@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pendaftaran; // Assuming you have a Pendaftaran model
+use App\Models\Kendaraan; // Assuming you have a Kendaraan model
+use App\Models\Pemilik;   // Assuming you have a Pemilik model
 use Illuminate\Http\Request;
+use Exception;
 
 class PendaftaranController extends Controller
 {
@@ -58,29 +61,42 @@ class PendaftaranController extends Controller
     public function create()
     {
         // This method should return the view for adding a new registration form.
-        return view('pendaftaran.create');
+        return view('pages.jenisLayanan.pendaftaran.pendaftaran');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        // Validate the incoming request data
-        $request->validate([
+        // 1. Validate the incoming request data
+        $validatedData = $request->validate([
             'nama_pemilik' => 'required|string|max:255',
-            'no_polisi' => 'required|string|max:20',
-            // Add other validation rules here
+            'nomor_ktp' => 'required|string|max:255',
+            'alamat_pemilik' => 'required|string',
+            'nomor_whatsapp' => 'nullable|string|max:255',
+            'nomor_polisi' => 'required|string|max:255',
+            'nomor_mesin' => 'required|string|max:255',
+            'jenis_kendaraan' => 'required|string|in:mobil_penumpang,mobil_bus,mobil_barang,kendaraan_khusus',
+            'tanggal_mati_uji' => 'required|date',
+            'jenis_layanan' => 'required|string|in:baru,berkala,mutasi_keluar,mutasi_masuk,numpang_keluar,numpang_masuk,hilang,rusak,ubah_bentuk,ubah_sifat',
+            'tanggal_pengujian' => 'required|date',
+            'ganti_kartu' => 'required|string|in:ya,tidak',
+            'dikuasakan' => 'required|string|in:ya,tidak',
+            'status_pendaftaran' => 'required|string|in:diterima,ditolak',
+            'keterangan_ditolak' => 'nullable|string',
         ]);
 
-        // Create a new Pendaftaran record in the database
-        Pendaftaran::create($request->all());
+        try {
+            // 2. Create the new Pendaftaran record
+            Pendaftaran::create($validatedData);
 
-        // Redirect back to the index page with a success message
-        return redirect()->route('pendaftaran.index')->with('success', 'Pendaftaran berhasil ditambahkan!');
+            // 3. Redirect back with a success message
+            return redirect('/listpendaftaran')->with('success', 'Pendaftaran berhasil disimpan.');
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            // \Log::error('Failed to create pendaftaran: ' . $e->getMessage());
+
+            // Redirect back with an error message
+            return back()->with('error', 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
+        }
     }
 
     /**
@@ -96,6 +112,71 @@ class PendaftaranController extends Controller
         return view('pendaftaran.show', compact('pendaftaran'));
     }
 
+    public function searchKendaraan(Request $request)
+    {
+        // Set ke TRUE untuk melihat pesan error spesifik, lalu kembalikan ke FALSE setelah selesai.
+        $debugMode = true;
+
+        try {
+            $searchValue = $request->query('search_value');
+
+            // Cek jika input pencarian kosong
+            if (empty($searchValue)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Nilai pencarian tidak boleh kosong.'
+                ], 400); // 400 Bad Request
+            }
+
+            // Cari data kendaraan berdasarkan nomor_uji atau nomor_rangka
+            $kendaraan = Kendaraan::where('nomor_uji', 'like', "%{$searchValue}%")
+                ->orWhere('nomor_rangka', 'like', "%{$searchValue}%")
+                ->first();
+
+            if ($kendaraan) {
+                // Buat objek data yang sesuai dengan permintaan, langsung dari objek kendaraan
+                $responseData = [
+                    'nama_pemilik' => $kendaraan->nama_pemilik,
+                    'no_ktp' => $kendaraan->nomor_identitas,
+                    'alamat' => $kendaraan->alamat_pemilik,
+                    'no_telpon' => $kendaraan->nomor_wa,
+                    'no_polisi' => $kendaraan->nomor_kendaraan,
+                    'no_mesin' => $kendaraan->nomor_mesin,
+                    'jenis_kendaraan' => $kendaraan->keterangan_jenis_kendaraan,
+                    'tanggal_mati_uji' => $kendaraan->tanggal_mati_uji,
+                ];
+
+                // Kembalikan data dalam format JSON
+                return response()->json([
+                    'success' => true,
+                    'data' => $responseData
+                ]);
+            } else {
+                // Jika kendaraan tidak ditemukan
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data kendaraan tidak ditemukan.'
+                ], 404); // 404 Not Found
+            }
+
+        } catch (Exception $e) {
+            // Tangani semua kesalahan dan kembalikan respons JSON
+            if ($debugMode) {
+                // Saat mode debug aktif, kembalikan pesan error detail
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Terjadi kesalahan server: ' . $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ], 500);
+            } else {
+                // Saat mode debug non-aktif, kembalikan pesan error umum
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Terjadi kesalahan pada server saat mencari data.'
+                ], 500); // 500 Internal Server Error
+            }
+        }
+    }
     /**
      * Show the form for editing the specified resource.
      *

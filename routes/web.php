@@ -57,6 +57,19 @@ Route::get('/kendaraan/{kendaraanId}/export-pdf', [KendaraanController::class, '
 // pendaftaran ai
 // Route::resource('pendaftaran', PendaftaranController::class);
 Route::get('/pendaftaran',[PendaftaranController::class,'index'])->name('pendaftaran.index');
+Route::get('/newpendaftaran', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
+
+// Route for submitting the registration form
+Route::post('/newpendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
+
+// Route for the AJAX search functionality
+Route::get('/api/search-kendaraan', [PendaftaranController::class, 'searchKendaraan'])->name('api.search.kendaraan');
+
+// Example route to a list of pendaftaran data
+// Route::get('/listpendaftaran', function () {
+//     return view('listpendaftaran'); // Assuming you have this view
+// });
+
 
 // pendaftaran
 Route::get('/pendaftaranbaru', function () {
