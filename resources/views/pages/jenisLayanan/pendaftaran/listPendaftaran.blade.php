@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="flex flex-wrap items-center gap-2">
-                    <a href="{{ URL::to('/') }}/pendaftaran"
+                    <a href="{{ URL::to('/') }}/pendaftaranbaru"
                         class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all shadow-sm">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -33,16 +33,6 @@
         <div class="bg-white rounded-xl shadow-lg p-3 md:p-4">
             <!-- Tools Section -->
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-4">
-                {{-- <div class="relative w-full md:w-64">
-                    <input type="text" placeholder="Cari..."
-                        class="w-full pl-10 pr-4 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20">
-                    <svg class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </div> --}}
-
                 <div class="flex justify-ends gap-6">
                     <div class="flex items-center gap-2">
                         <label class="text-sm text-gray-600">Layanan:</label>
@@ -99,113 +89,118 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">1</td>
-                                <td class="px-2 py-2 text-sm text-gray-900">
-                                    <div class="flex flex-col">
-                                        <span class="font-medium">John Doe</span>
-                                    </div>
-                                </td>
-                                <td class="px-2 py-2 text-sm text-gray-900">
-                                    <div class="flex flex-col space-y-1 text-center">
-                                        <span>N 1234 AB</span>
-                                        <span>UJIAB123456</span>
-                                    </div>
-                                </td>
-                                <td
-                                    class="hidden md:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
-                                    Mobil Bus</td>
-                                <td
-                                    class="hidden lg:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
-                                    Numpang Masuk</td>
-                                <td class="px-2 py-2 text-sm text-center whitespace-nowrap">
-                                    <span
-                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Ditolak</span>
-                                </td>
-                                <td class="px-2 py-2 text-sm text-center whitespace-nowrap">
-                                    <div class="flex justify-center items-center space-x-2">
-                                        <a href="#" class="text-blue-600 hover:text-blue-800" title="Lihat">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
-                                        </a>
-                                        <a href="#" class="text-emerald-600 hover:text-emerald-800" title="Ubah">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                            </svg>
-                                        </a>
-                                        <button class="text-red-600 hover:text-red-800" title="Hapus"
-                                            onclick="confirmDelete">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">1</td>
-                                <td class="px-2 py-2 text-sm text-gray-900">
-                                    <div class="flex flex-col">
-                                        <span class="font-medium">John Doe</span>
-                                    </div>
-                                </td>
-                                <td class="px-2 py-2 text-sm text-gray-900">
-                                    <div class="flex flex-col space-y-1 text-center">
-                                        <span>N 1234 AB</span>
-                                        <span>UJIAB123456</span>
-                                    </div>
-                                </td>
-                                <td
-                                    class="hidden md:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
-                                    Mobil Bus</td>
-                                <td
-                                    class="hidden lg:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
-                                    Numpang Masuk</td>
-                                <td class="px-2 py-2 text-sm text-center whitespace-nowrap">
-                                    <span
-                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">Diterima</span>
-                                </td>
-                                <td class="px-2 py-2 text-sm text-center whitespace-nowrap">
-                                    <div class="flex justify-center items-center space-x-2">
-                                        <a href="#" class="text-blue-600 hover:text-blue-800" title="Lihat">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
-                                        </a>
-                                        <a href="#" class="text-emerald-600 hover:text-emerald-800" title="Ubah">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                            </svg>
-                                        </a>
-                                        <button class="text-red-600 hover:text-red-800" title="Hapus"
-                                            onclick="confirmDelete">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                            @forelse ($pendaftarans as $pendaftaran)
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <!-- Kolom No. -->
+                                    <td class="px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
+                                        {{ $loop->iteration }}</td>
+
+                                    <!-- Kolom Nama Pemilik -->
+                                    <td class="px-2 py-2 text-sm text-gray-900">
+                                        <div class="flex flex-col">
+                                            <span
+                                                class="font-medium">{{ $pendaftaran->kendaraan->pemilik->nama_pemilik ?? 'N/A' }}</span>
+                                        </div>
+                                    </td>
+
+                                    <!-- Kolom No. Pol / Uji -->
+                                    <td class="px-2 py-2 text-sm text-gray-900">
+                                        <div class="flex flex-col space-y-1 text-center">
+                                            <span>{{ $pendaftaran->kendaraan->nomor_kendaraan ?? 'N/A' }}</span>
+                                            <span>{{ $pendaftaran->kendaraan->nomor_uji ?? 'N/A' }}</span>
+                                        </div>
+                                    </td>
+
+                                    <!-- Kolom Jenis Kendaraan -->
+                                    <td
+                                        class="hidden md:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
+                                        {{ $pendaftaran->jenisKendaraan->nama_jenis_kendaraan ?? 'N/A' }}</td>
+
+                                    <!-- Kolom Jenis Layanan -->
+                                    <td
+                                        class="hidden lg:table-cell px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">
+                                        {{ $pendaftaran->jenisPengujian->nama_layanan ?? 'N/A' }}</td>
+
+                                    <!-- Kolom Status -->
+                                    <td class="px-2 py-2 text-sm text-center whitespace-nowrap">
+                                        @php
+                                            $statusMap = [
+                                                0 => [
+                                                    'label' => 'Menunggu',
+                                                    'color' => 'bg-yellow-100 text-yellow-800',
+                                                ],
+                                                1 => [
+                                                    'label' => 'Diterima',
+                                                    'color' => 'bg-emerald-100 text-emerald-800',
+                                                ],
+                                                2 => ['label' => 'Ditolak', 'color' => 'bg-red-100 text-red-800'],
+                                            ];
+                                            $statusInfo = $statusMap[$pendaftaran->status_pendaftaran] ?? [
+                                                'label' => 'Tidak Diketahui',
+                                                'color' => 'bg-gray-100 text-gray-800',
+                                            ];
+                                        @endphp
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $statusInfo['color'] }}">
+                                            {{ $statusInfo['label'] }}
+                                        </span>
+                                    </td>
+
+                                    <!-- Kolom Aksi -->
+                                    <td class="px-2 py-2 text-sm text-center whitespace-nowrap">
+                                        <div class="flex justify-center items-center space-x-2">
+                                            <a href="#" class="text-blue-600 hover:text-blue-800" title="Lihat">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                </svg>
+                                            </a>
+                                            <a href="#" class="text-emerald-600 hover:text-emerald-800"
+                                                title="Ubah">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                </svg>
+                                            </a>
+                                            <button class="text-red-600 hover:text-red-800" title="Hapus"
+                                                onclick="confirmDelete">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="py-4 text-center text-gray-500">
+                                        Tidak ada data pendaftaran yang tersedia.
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <!-- Pagination -->
-            <div class="flex items-center justify-between mt-4">
+            <div class=" mt-4">
+                {{-- Laravel's default pagination links (menampilkan nomor halaman 1, 2, 3...) --}}
+                {{-- Anda bisa memilih untuk menampilkan ini atau tidak --}}
+                {{-- {{ $kendaraanData->links() }} --}}
+            </div>
+        </div>
+    </div>
+@endsection
+
+
+{{-- <div class="flex items-center justify-between mt-4">
                 <div class="flex items-center">
                     <label class="text-sm text-gray-600 mr-2">Baris per halaman:</label>
                     <select
@@ -228,7 +223,4 @@
                         Next
                     </button>
                 </div>
-            </div>
-        </div>
-    </div>
-@endsection
+            </div> --}}

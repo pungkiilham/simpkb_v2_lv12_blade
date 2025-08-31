@@ -203,69 +203,6 @@
                                                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                 </svg>
                                             </a>
-                                            {{-- Tombol Hapus dengan Alpine.js --}}
-                                            {{-- <button type="button" class="text-red-600 hover:text-red-800"
-                                                title="Hapus Data"
-                                                @click="showDeleteModal = true; deleteTargetUrl = '{{ route('kendaraan.destroy', $kendaraan->kendaraan_id) }}'">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                </svg>
-                                            </button> --}}
-                                            <!-- hapus modal -->
-                                            {{-- <div class="relative" x-data="{ open: false }">
-                                                <div class="flex items-center">
-                                                    <button @click="open = !open"
-                                                        class="flex items-center text-red-600 hover:text-red-800"
-                                                        title="Hapus Data">
-                                                        <div class="flex-shrink-0">
-                                                            <svg class="w-5 h-5" fill="none" stroke="currentColor"
-                                                                viewBox="0 0 24 24">
-                                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                                    stroke-width="2"
-                                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                            </svg>
-                                                        </div>
-                                                    </button>
-                                                </div>
-                                                <!-- Dropdown Hapus -->
-                                                <div x-show="open" @click.away="open = false"
-                                                    class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5 z-50">
-                                                    <div class="px-4 py-2">
-                                                        <p class="text-md font-medium border-b-2">Anda yakin ingin
-                                                            <br>menghapus data
-                                                            ini?
-                                                        </p>
-                                                        <p class="text-sm opacity-70 mt-2 font-medium">
-                                                            {{ $kendaraan->nama_pemilik ?? 'N/A' }}</p>
-                                                        <p class="text-sm opacity-70">{{ $kendaraan->nomor_uji ?? 'N/A' }}
-                                                        </p>
-                                                        <p class="text-sm opacity-70">
-                                                            {{ $kendaraan->nomor_kendaraan ?? 'N/A' }}</p>
-                                                    </div>
-                                                    <form
-                                                        :action="{{ route('kendaraan.destroy', $kendaraan->kendaraan_id) }}"
-                                                        method="POST" class="flex items-center justify-center">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            class="block w-full text-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                                            <div
-                                                                class="flex items-center justify-center font-medium text-red-600 gap-2">
-                                                                <svg class="w-5 h-5" fill="none" stroke="currentColor"
-                                                                    viewBox="0 0 24 24">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                                        stroke-width="2"
-                                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                                </svg>
-                                                                Hapus
-                                                            </div>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div> --}}
-
                                             <!-- Tombol Hapus: Membuka modal dan mengatur URL -->
                                             <button type="button"
                                                 @click="openModal('{{ route('kendaraan.destroy', $kendaraan->kendaraan_id) }}')"

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\KendaraanController;
+use App\Http\Controllers\PendaftaranController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -53,13 +54,17 @@ Route::get('/kendaraan/{kendaraanId}/export-pdf', [KendaraanController::class, '
 
 
 // Jenis layanan routes
+// pendaftaran ai
+// Route::resource('pendaftaran', PendaftaranController::class);
+Route::get('/pendaftaran',[PendaftaranController::class,'index'])->name('pendaftaran.index');
+
 // pendaftaran
-Route::get('/pendaftaran', function () {
+Route::get('/pendaftaranbaru', function () {
     return view('pages.jenisLayanan.pendaftaran.pendaftaran');
 })->name('pendaftaran');
-Route::get('/listpendaftaran', function () {
-    return view('pages.jenisLayanan.pendaftaran.listPendaftaran');
-})->name('listpendaftaran');
+// Route::get('/listpendaftaran', function () {
+//     return view('pages.jenisLayanan.pendaftaran.listPendaftaran');
+// })->name('listpendaftaran');
 
 // pengujian
 Route::get('/listpengujian', function () {

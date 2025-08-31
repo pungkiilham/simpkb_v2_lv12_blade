@@ -103,7 +103,7 @@
         </div>
 
         <!-- Jenis Layanan -->
-        <div x-data="{ open: false }" class="pt-4">
+        <div x-data="{ open: true }" class="pt-4">
             <button @click="open = !open"
                 class="flex items-center justify-between w-full px-3 py-2 text-sm font-medium text-white hover:bg-white/10 rounded-lg">
                 <div class="flex items-center">
@@ -115,7 +115,7 @@
                 </svg>
             </button>
             <div x-show="open" class="mt-2 space-y-1">
-                <a href="/listpendaftaran"
+                <a href="{{ route('pendaftaran.index') }}"
                     class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-white hover:bg-white/10">
                     <svg class="mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
