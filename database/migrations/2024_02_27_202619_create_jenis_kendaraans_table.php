@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('jenis_kendaraans', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 200);
-            $table->tinyInteger('active')->default(1);
+            $table->tinyInteger('loket_id');
+            // $table->tinyInteger('active')->default(1);
             $table->timestamps();
         });
     }
