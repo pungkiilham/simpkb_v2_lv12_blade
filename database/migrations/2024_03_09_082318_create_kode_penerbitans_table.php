@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('kodepenerbitan', function (Blueprint $table) {
             $table->string('kodepenerbitan', 1)->primary();
             $table->string('keterangan', 20);
-            //$table->timestamps();
+            $table->timestamps();
         });
     }
 

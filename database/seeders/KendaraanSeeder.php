@@ -18,7 +18,7 @@ class KendaraanSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create('id_ID'); // Menggunakan lokal Indonesia untuk data yang lebih relevan
-        $numberOfVehicles = 500; // Jumlah data kendaraan yang ingin Anda buat
+        $numberOfVehicles = 100; // Jumlah data kendaraan yang ingin Anda buat
 
         // Mapping sederhana untuk ID ke nama (jika Anda punya tabel master, ini bisa di-query)
         // $jenisPemilik = ['Perorangan', 'Badan Usaha', 'Pemerintah'];

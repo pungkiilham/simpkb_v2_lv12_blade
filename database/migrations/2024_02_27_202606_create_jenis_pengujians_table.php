@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('jenis_pengujians', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 200);
-            $table->integer('loket_id', false, true)->length(11)->nullable();
-            $table->tinyInteger('active')->default(1);
+            $table->tinyInteger('loket_id');
             $table->timestamps();
         });
     }
