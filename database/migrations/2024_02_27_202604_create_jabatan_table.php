@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jenis_kendaraans', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name', 200);
-            // $table->tinyInteger('loket_id');
-            // $table->tinyInteger('active')->default(1);
+        Schema::create('jabatan', function (Blueprint $table) {
+            $table->id();
+            $table->string('name', 30);
+            $table->tinyInteger('active')->default(1);
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jenis_kendaraans');
+        Schema::dropIfExists('jabatan');
     }
 };
