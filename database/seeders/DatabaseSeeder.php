@@ -19,13 +19,12 @@ class DatabaseSeeder extends Seeder
             KodePenerbitanSeeder::class,
             JenisPengujianSeeder::class,
             JenisKendaraanSeeder::class,
+            JabatanSeeder::class,
+            JenisPemilikSeeder::class,
+            JabatanSeeder::class,
+            AsalKendaraanSeeder::class,
             UserSeeder::class,
             RoleSeeder::class
         ]);
-
-        // $this->call(JenisPengujian::class);
-        // $this->call(JenisKendaraan::class);
-        // $this->call(UserSeeder::class);
-        // $this->call(RoleSeeder::class);
     }
 }
