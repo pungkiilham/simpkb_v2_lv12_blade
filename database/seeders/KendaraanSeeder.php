@@ -44,6 +44,7 @@ class KendaraanSeeder extends Seeder
                 'id' => $kendaraanId,
                 'nomor_uji' => $faker->unique()->randomNumber(5, true) . Str::upper(Str::random(2)),
                 'nomor_kendaraan' => $faker->regexify('[A-Z]{1,2} [0-9]{1,4} [A-Z]{1,3}'),
+                'jenis_pemilik_id' => $faker->randomNumber(1,3),
                 // 'jenis_pemilik_id' => $faker->randomElement([Str::uuid(), Str::uuid(), Str::uuid()]), // Dummy UUID
                 'nama_pemilik' => $faker->name,
                 'jenis_identitas' => $faker->randomElement($jenisIdentitas),
@@ -63,6 +64,7 @@ class KendaraanSeeder extends Seeder
                 'nomor_mesin' => $faker->unique()->regexify('[A-Z0-9]{10}'),
                 'nomor_rangka' => $faker->unique()->regexify('[A-Z0-9]{17}'),
                 'nomor_wa' => $faker->phoneNumber,
+                'jenis_kendaraan_id' => $faker->randomNumber(1,24),
                 // 'jenis_kendaraan_id' => $faker->randomElement([Str::uuid(), Str::uuid(), Str::uuid()]), // Dummy UUID
                 'keterangan_jenis_kendaraan' => $faker->randomElement($jenisKendaraan),
                 'status' => $faker->randomElement($statusKendaraan),
