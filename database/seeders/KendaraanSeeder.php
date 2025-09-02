@@ -73,6 +73,7 @@ class KendaraanSeeder extends Seeder
                 'nama_importir' => $faker->company,
                 'tanggal_uji' => $faker->date('Y-m-d', 'now'),
                 'tanggal_mati_uji' => $faker->date('Y-m-d', '+1 year'),
+                'asal_kendaraan_id' => $faker->randomNumber(1,3),
                 'active' => $faker->boolean(90), // 90% aktif
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

@@ -43,6 +43,7 @@ return new class extends Migration
             $table->string('nama_importir', 50)->nullable();
             $table->date('tanggal_uji')->nullable();
             $table->date('tanggal_mati_uji')->nullable();
+            $table->integer('asal_kendaraan_id', false, true)->length(11)->nullable();
 
             $table->tinyInteger('active')->default(1);
             $table->timestamps();
