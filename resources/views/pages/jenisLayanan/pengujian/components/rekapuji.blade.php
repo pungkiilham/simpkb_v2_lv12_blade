@@ -22,73 +22,6 @@
                 </div>
             </div>
 
-            <!-- Penguji Approval Section -->
-            <div class="md:col-span-2 space-y-4 p-4 border-2 border-dashed border-gray-300 rounded-lg">
-                <h3 class="text-base font-semibold text-gray-800">Persetujuan Penguji</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- Penguji 1: Needs approval -->
-                    <div class="flex flex-col items-center p-3 border border-gray-200 rounded-lg shadow-sm">
-                        <span class="font-medium text-sm text-gray-700">Penguji 1</span>
-                        <span class="text-xs text-gray-500 my-1">Hamida</span>
-                        <div class="flex gap-2 mt-2 w-full">
-                            <button type="button"
-                                class="flex-1 inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-white rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm transition-transform transform hover:scale-105">
-                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                Setujui
-                            </button>
-                            <button type="button" disabled
-                                class="flex-1 inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-white rounded-lg bg-gray-400 cursor-not-allowed opacity-50">
-                                Batalkan
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Penguji 2: Approved -->
-                    <div class="flex flex-col items-center p-3 border border-gray-200 rounded-lg shadow-sm bg-green-50">
-                        <span class="font-medium text-sm text-gray-700">Penguji 2</span>
-                        <span class="text-xs text-gray-500 my-1">Siti Rahayu</span>
-                        <div class="flex gap-2 mt-2 w-full">
-                            <div
-                                class="flex-1 inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-green-700 bg-green-200 rounded-lg">
-                                <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                                Disetujui
-                            </div>
-                            <button type="button"
-                                class="flex-1 inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-white rounded-lg bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 shadow-sm transition-transform transform hover:scale-105">
-                                Batalkan
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Penguji 3: Needs approval -->
-                    <div class="flex flex-col items-center p-3 border border-gray-200 rounded-lg shadow-sm">
-                        <span class="font-medium text-sm text-gray-700">Penguji 3</span>
-                        <span class="text-xs text-gray-500 my-1">Andi Wijaya</span>
-                        <div class="flex gap-2 mt-2 w-full">
-                            <button type="button"
-                                class="flex-1 inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-white rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm transition-transform transform hover:scale-105">
-                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                Setujui
-                            </button>
-                            <button type="button" disabled
-                                class="flex-1 inline-flex items-center justify-center px-2 py-1 text-xs font-medium text-white rounded-lg bg-gray-400 cursor-not-allowed opacity-50">
-                                Batalkan
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Action Buttons for Verifikator -->
             <div class="md:col-span-2 space-y-4">
                 <div class="flex flex-col sm:flex-row gap-4">
@@ -111,6 +44,74 @@
                     </button>
                 </div>
             </div>
+
+            <!-- Penguji Approval Section -->
+            <div class="md:col-span-2 space-y-4 p-4 mt-4 border-2 border-dashed border-gray-300 rounded-lg">
+                <h3 class="text-base font-semibold text-gray-800">Persetujuan Penguji</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                    <!-- Penguji 1: Needs approval -->
+                    <div class="flex flex-col items-center p-3 border border-gray-200 rounded-lg shadow-sm">
+                        <span class="font-medium text-sm text-gray-700">Penguji 1</span>
+                        <span class="text-sm text-gray-500 my-1">Hamida</span>
+                        <div class="flex gap-2 mt-2 w-full">
+                            <button type="button"
+                                class="flex-1 inline-flex items-center justify-center px-2 py-2 text-xs font-medium text-white rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm transition-transform transform hover:scale-105">
+                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Setujui
+                            </button>
+                            <button type="button" disabled
+                                class="flex-1 inline-flex items-center justify-center px-2 py-2 text-xs font-medium text-white rounded-lg bg-gray-400 cursor-not-allowed opacity-50">
+                                Batalkan
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Penguji 2: Approved -->
+                    <div class="flex flex-col items-center p-3 border border-gray-200 rounded-lg shadow-sm bg-green-50">
+                        <span class="font-medium text-sm text-gray-700">Penguji 2</span>
+                        <span class="text-sm text-gray-500 my-1">Siti Rahayu</span>
+                        <div class="flex gap-2 mt-2 w-full">
+                            <div
+                                class="flex-1 inline-flex items-center justify-center px-2 py-2 text-xs font-medium text-green-700 bg-green-200 rounded-lg">
+                                <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                Disetujui
+                            </div>
+                            <button type="button"
+                                class="flex-1 inline-flex items-center justify-center px-2 py-2 text-xs font-medium text-white rounded-lg bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 shadow-sm transition-transform transform hover:scale-105">
+                                Batalkan
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Penguji 3: Needs approval -->
+                    <div class="flex flex-col items-center p-3 border border-gray-200 rounded-lg shadow-sm">
+                        <span class="font-medium text-sm text-gray-700">Penguji 3</span>
+                        <span class="text-sm text-gray-500 my-1">Andi Wijaya</span>
+                        <div class="flex gap-2 mt-2 w-full">
+                            <button type="button"
+                                class="flex-1 inline-flex items-center justify-center px-2 py-2 text-xs font-medium text-white rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm transition-transform transform hover:scale-105">
+                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Setujui
+                            </button>
+                            <button type="button" disabled
+                                class="flex-1 inline-flex items-center justify-center px-2 py-2 text-xs font-medium text-white rounded-lg bg-gray-400 cursor-not-allowed opacity-50">
+                                Batalkan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
