@@ -72,18 +72,13 @@
             </div>
 
             <!-- Modal -->
-            <div x-show="isOpen" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
-                x-transition:enter-end="opacity-100 scale-100" x-transition:leave="ease-in duration-200"
-                x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-                class="fixed inset-0 z-50 overflow-y-auto" style="display: none;">
+            <div x-show="isOpen" class="fixed inset-0 z-50 overflow-y-auto" style="background-color: rgba(0,0,0,0.5);"
+                x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                x-on:click.away="showDeleteModal = false">
+
                 <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
-                    <!-- Backdrop -->
-                    <div class="fixed inset-0 transition-opacity" aria-hidden="true"
-                        x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0"
-                        x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
-                        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-                        <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"></div>
-                    </div>
 
                     <!-- Modal Panel -->
                     <div class="relative inline-block w-full max-w-4xl p-8 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl"
@@ -93,6 +88,7 @@
                         x-transition:leave="ease-in duration-200"
                         x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
                         x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+
                         <!-- Modal Header -->
                         <div class="flex justify-between items-center mb-8">
                             <h3 class="text-xl font-bold text-gray-900">Filter Laporan Pelayanan</h3>
@@ -435,124 +431,3 @@
         </div>
     </div>
 @endsection
-
-{{-- <!-- Status Uji Card -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
-            <h4 class="font-semibold text-gray-900 flex items-center">
-                <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                Status Uji
-            </h4>
-        </div>
-        <div class="p-6 space-y-2">
-            <label class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-all duration-150 cursor-pointer">
-                <input type="checkbox" x-model="filters.statusUji" value="hidup" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                <span class="ml-3 text-gray-700">Hidup</span>
-            </label>
-            <label class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-all duration-150 cursor-pointer">
-                <input type="checkbox" x-model="filters.statusUji" value="mati" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                <span class="ml-3 text-gray-700">Mati Uji</span>
-            </label>
-        </div>
-    </div>
-
-    <!-- Asal Kendaraan Card -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
-            <h4 class="font-semibold text-gray-900 flex items-center">
-                <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                Asal Kendaraan
-            </h4>
-        </div>
-        <div class="p-6 space-y-2">
-            <label class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-all duration-150 cursor-pointer">
-                <input type="checkbox" x-model="filters.asalKendaraan" value="dalam_daerah" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                <span class="ml-3 text-gray-700">Dalam Daerah</span>
-            </label>
-            <label class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-all duration-150 cursor-pointer">
-                <input type="checkbox" x-model="filters.asalKendaraan" value="luar_daerah" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                <span class="ml-3 text-gray-700">Luar Daerah</span>
-            </label>
-        </div>
-    </div>
-
-    <!-- Jenis Layanan Card -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
-            <h4 class="font-semibold text-gray-900 flex items-center">
-                <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                Jenis Layanan
-            </h4>
-        </div>
-        <div class="p-6 space-y-2">
-            <label class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-all duration-150 cursor-pointer">
-                <input type="checkbox" x-model="filters.jenisLayanan" value="uji_berkala" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                <span class="ml-3 text-gray-700">Uji Berkala</span>
-            </label>
-            <label class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-all duration-150 cursor-pointer">
-                <input type="checkbox" x-model="filters.jenisLayanan" value="numpang_uji" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                <span class="ml-3 text-gray-700">Numpang Uji</span>
-            </label>
-            <label class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-all duration-150 cursor-pointer">
-                <input type="checkbox" x-model="filters.jenisLayanan" value="mutasi_masuk" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                <span class="ml-3 text-gray-700">Mutasi Masuk</span>
-            </label>
-            <label class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-all duration-150 cursor-pointer">
-                <input type="checkbox" x-model="filters.jenisLayanan" value="mutasi_keluar" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                <span class="ml-3 text-gray-700">Mutasi Keluar</span>
-            </label>
-        </div>
-    </div>
-
-    <!-- Jenis Pemilik Card -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
-            <h4 class="font-semibold text-gray-900 flex items-center">
-                <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                Jenis Pemilik
-            </h4>
-        </div>
-        <div class="p-6 space-y-2">
-            <label class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-all duration-150 cursor-pointer">
-                <input type="checkbox" x-model="filters.jenisPemilik" value="perorangan" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                <span class="ml-3 text-gray-700">Perorangan</span>
-            </label>
-            <label class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-all duration-150 cursor-pointer">
-                <input type="checkbox" x-model="filters.jenisPemilik" value="badan_usaha" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                <span class="ml-3 text-gray-700">Badan Usaha</span>
-            </label>
-        </div>
-    </div>
-
-    <!-- Status Pengujian Card -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div class="bg-gray-50 px-6 py-4 border-b border-gray-100">
-            <h4 class="font-semibold text-gray-900 flex items-center">
-                <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                </svg>
-                Status Pengujian
-            </h4>
-        </div>
-        <div class="p-6 space-y-2">
-            <label class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-all duration-150 cursor-pointer">
-                <input type="checkbox" x-model="filters.statusPengujian" value="lulus" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                <span class="ml-3 text-gray-700">Lulus</span>
-            </label>
-            <label class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-all duration-150 cursor-pointer">
-                <input type="checkbox" x-model="filters.statusPengujian" value="tidak_lulus" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                <span class="ml-3 text-gray-700">Tidak Lulus</span>
-            </label>
-        </div>
-    </div>
-</div>
-@endsection --}}
