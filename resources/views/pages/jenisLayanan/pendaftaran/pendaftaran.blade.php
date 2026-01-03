@@ -32,29 +32,105 @@
         <div class="bg-white rounded-xl shadow-lg p-3 md:p-4">
             <!-- Search Section -->
             <div class="bg-white rounded-xl shadow-lg p-3 md:p-4 mb-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-4">
                     <form onsubmit="return false;">
                         @csrf
                         <div
                             class="flex justify-between items-center bg-gradient-to-r from-indigo-600 to-blue-500 rounded-lg px-2 py-1 mb-4">
-                            <h2 class="text-lg font-bold text-white">Cari Data Kendaraan</h2>
+                            <h2 class="text-lg font-bold text-white">Pencarian & Sinkronisasi Data Kendaraan</h2>
                         </div>
-                        <div class="flex gap-4 items-end">
+                        {{-- <div class="flex gap-4 items-end">
                             <div class="flex-1">
                                 <label for="search_value" class="block text-sm font-medium text-gray-700 mb-1">Nomor Uji /
                                     Rangka</label>
                                 <input type="text" id="search_value"
                                     class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"
-                                    placeholder="Masukkan nomor uji / rangka">
+                                    placeholder="Masukkan no. uji / rangka">
                             </div>
                             <button type="button" id="search-button"
                                 class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                Cari Data Kendaraan
+                                Cari Data Lokal
                             </button>
+                            <button type="button" id="search-button"
+                                class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-lg hover:from-emerald-700 hover:to-emerald-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 shadow-sm">
+                                Sync By Rangka
+                            </button>
+                            <button type="button" id="search-button"
+                                class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-purple-700 rounded-lg hover:from-purple-700 hover:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 shadow-sm">
+                                Sync By SRUT
+                            </button>
+                        </div> --}}
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                            <!-- Left Side: Main Input -->
+                            <div class="lg:col-span-5">
+                                <label for="search_value" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Nomor Uji atau Nomor Rangka
+                                </label>
+                                <div class="relative group">
+                                    <input type="text" id="search_value"
+                                        class="w-full pl-4 pr-12 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-gray-800 placeholder:text-gray-400"
+                                        placeholder="Contoh: JKT12345 / MH123...">
+                                    <div
+                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p class="mt-2 text-xs text-gray-500 italic">
+                                    {{-- *Gunakan nomor yang terdaftar di sistem master data.<br> --}}
+                                    *Bila data kendaraan tidak ditemukan, buat data
+                                    kendaraan di master data terlebih dahulu
+                                </p>
+                            </div>
+
+                            <!-- Right Side: Action Buttons -->
+                            <div class="lg:col-span-7">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Cari data dan sync
+                                    kementrian</label>
+                                <div class="flex flex-wrap gap-3">
+                                    <!-- Local Search Button -->
+                                    <button type="button" id="search-button-local"
+                                        class="inline-flex items-center gap-2 px-5 py-3 text-sm font-bold text-white bg-blue-600 rounded-xl hover:bg-blue-700 active:scale-95 transition-all shadow-md shadow-blue-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                        </svg>
+                                        Cari Data Lokal
+                                    </button>
+
+                                    {{-- <div class="h-10 w-px bg-gray-200 hidden md:block"></div> --}}
+
+                                    <!-- Sync Buttons -->
+                                    <button type="button" id="sync-rangka"
+                                        class="inline-flex items-center gap-2 px-5 py-3 text-sm font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-xl hover:bg-emerald-100 active:scale-95 transition-all">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                        </svg>
+                                        Sync By Rangka
+                                    </button>
+
+                                    <button type="button" id="sync-srut"
+                                        class="inline-flex items-center gap-2 px-5 py-3 text-sm font-bold text-purple-700 bg-purple-50 border border-purple-200 rounded-xl hover:bg-purple-100 active:scale-95 transition-all">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                        </svg>
+                                        Sync By SRUT
+                                    </button>
+                                </div>
+                            </div>
                         </div>
+                        {{--
                         <label class="block text-sm text-gray-700 mb-1 mt-1">*Bila data kendaraan tidak ditemukan, buat data
                             kendaraan di master data terlebih dahulu</label>
-                        <div id="error-message" class="mt-2 text-sm text-red-600 hidden"></div>
+                        <div id="error-message" class="mt-2 text-sm text-red-600 hidden"></div> --}}
                     </form>
                 </div>
             </div>
@@ -86,7 +162,8 @@
                                         placeholder="Masukkan nomor KTP">
                                 </div>
                                 <div class="md:col-span-2">
-                                    <label for="alamat_pemilik" class="block text-sm font-medium text-gray-700 mb-1">Alamat
+                                    <label for="alamat_pemilik"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Alamat
                                         Pemilik</label>
                                     <textarea name="alamat_pemilik" id="alamat_pemilik"
                                         class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"

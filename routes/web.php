@@ -168,3 +168,6 @@ Route::get('/pengaturanrole', function () {
 Route::get('/roleview', function () {
     return view('pages.pengaturan.roleView');
 })->name('roleview');
+Route::get('/pengaturanvendor', function () {
+    return view('pages.pengaturan.vendor');
+})->name('vendor');

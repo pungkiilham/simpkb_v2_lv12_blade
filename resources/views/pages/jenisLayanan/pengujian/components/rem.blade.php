@@ -15,103 +15,126 @@
         </div>
 
 
-        <!-- Nama Penguji -->
-        <div class="md:col-span-2 space-y-4">
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Penguji</label>
-                    <input type="text" name="penerbit_srut"
-                        class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"
-                        required>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Hasil Rem</label>
-                    <select
-                        class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2">
-                        <option value="">Pilih</option>
-                        <option value="lulus">Lulus</option>
-                        <option value="tidak">Tidak Lulus</option>
-                    </select>
-                </div>
+        <!-- Penguji & Status -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-xl border border-gray-200">
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1">Nama Penguji</label>
+                <input type="text" name="nama_penguji"
+                    class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1.5 px-3"
+                    placeholder="Masukkan nama penguji..." required>
             </div>
-        </div>
-        <!-- Keterangan Tidak Lulus -->
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Keterangan Tidak Lulus</label>
-            <textarea name="keterangan_tidak_lulus" rows="3"
-                class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"></textarea>
-        </div>
-
-        <div class="md:col-span-2 space-y-4">
-            <h2 class="text-lg font-semibold text-gray-800 mb-2">Daya Rem (KgF / Nm)</h2>
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Sumbu I</label>
-                    <input type="text" name="penerbit_srut"
-                        class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"
-                        required>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Sumbu II</label>
-                    <input type="text" name="penerbit_srut"
-                        class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"
-                        required>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Sumbu III</label>
-                    <input type="text" name="penerbit_srut"
-                        class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"
-                        required>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Sumbu IV</label>
-                    <input type="text" name="penerbit_srut"
-                        class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"
-                        required>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Sumbu Parkir</label>
-                    <input type="text" name="penerbit_srut"
-                        class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"
-                        required>
-                </div>
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1">Hasil Uji Rem</label>
+                <select name="hasil_rem"
+                    class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1.5 px-3 font-semibold">
+                    <option value="">-- Pilih Status --</option>
+                    <option value="lulus" class="text-green-600 font-bold text-sm">LULUS</option>
+                    <option value="tidak" class="text-red-600 font-bold text-sm">TIDAK LULUS</option>
+                </select>
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1">Keterangan (Jika Tidak
+                    Lulus)</label>
+                <textarea name="keterangan_tidak_lulus" rows="2"
+                    class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-2 px-3 placeholder:text-gray-400"
+                    placeholder="Berikan alasan teknis jika kendaraan tidak lulus uji rem..."></textarea>
             </div>
         </div>
 
-        <div class="md:col-span-2 space-y-4">
-            <h2 class="text-lg font-semibold text-gray-800 mb-2">Selisih Daya Rem (%)</h2>
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Sumbu I</label>
-                    <input type="text" name="penerbit_srut"
-                        class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"
-                        required>
+        <!-- Daya Rem Grid (L & R) -->
+        <div class="space-y-4">
+            <div class="flex items-center gap-2 border-b border-gray-100 pb-2">
+                <h3 class="text-md font-bold text-gray-800">Daya Rem (KgF / Nm)</h3>
+                <span
+                    class="text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-black uppercase">Technical
+                    Data</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                <!-- Sumbu I -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[10px] font-black text-gray-400 uppercase tracking-tighter mb-1">Sumbu
+                            I - L</label>
+                        <input type="number" name="daya_rem_s1_l"
+                            class="w-full rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all py-1 px-2 text-sm font-semibold">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black text-gray-400 uppercase tracking-tighter mb-1">Sumbu
+                            I - R</label>
+                        <input type="number" name="daya_rem_s1_r"
+                            class="w-full rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all py-1 px-2 text-sm font-semibold">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Sumbu II</label>
-                    <input type="text" name="penerbit_srut"
-                        class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"
-                        required>
+
+                <!-- Sumbu II -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[10px] font-black text-gray-400 uppercase tracking-tighter mb-1">Sumbu
+                            II - L</label>
+                        <input type="number" name="daya_rem_s2_l"
+                            class="w-full rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all py-1 px-2 text-sm font-semibold">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black text-gray-400 uppercase tracking-tighter mb-1">Sumbu
+                            II - R</label>
+                        <input type="number" name="daya_rem_s2_r"
+                            class="w-full rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all py-1 px-2 text-sm font-semibold">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Sumbu III</label>
-                    <input type="text" name="penerbit_srut"
-                        class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"
-                        required>
+
+                <!-- Sumbu III -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[10px] font-black text-gray-400 uppercase tracking-tighter mb-1">Sumbu
+                            III - L</label>
+                        <input type="number" name="daya_rem_s3_l"
+                            class="w-full rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all py-1 px-2 text-sm font-semibold">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black text-gray-400 uppercase tracking-tighter mb-1">Sumbu
+                            III - R</label>
+                        <input type="number" name="daya_rem_s3_r"
+                            class="w-full rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all py-1 px-2 text-sm font-semibold">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Sumbu IV</label>
-                    <input type="text" name="penerbit_srut"
-                        class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"
-                        required>
+
+                <!-- Sumbu IV -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[10px] font-black text-gray-400 uppercase tracking-tighter mb-1">Sumbu
+                            IV - L</label>
+                        <input type="number" name="daya_rem_s4_l"
+                            class="w-full rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all py-1 px-2 text-sm font-semibold">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black text-gray-400 uppercase tracking-tighter mb-1">Sumbu
+                            IV - R</label>
+                        <input type="number" name="daya_rem_s4_r"
+                            class="w-full rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition-all py-1 px-2 text-sm font-semibold">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Sumbu Parkir</label>
-                    <input type="text" name="penerbit_srut"
-                        class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"
-                        required>
+
+                <!-- Sumbu Parkir -->
+                <div class="grid grid-cols-2 gap-3 md:col-span-2 pt-2 border-t border-dashed border-gray-200">
+                    <div>
+                        <label
+                            class="block text-[10px] font-black text-indigo-500 uppercase tracking-tighter mb-1">Sumbu
+                            Parkir - L</label>
+                        <input type="number" name="daya_rem_parkir_l"
+                            class="w-full rounded-lg border-2 border-indigo-100 bg-indigo-50/30 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all py-1 px-2 text-sm font-bold text-indigo-700">
+                    </div>
+                    <div>
+                        <label
+                            class="block text-[10px] font-black text-indigo-500 uppercase tracking-tighter mb-1">Sumbu
+                            Parkir - R</label>
+                        <input type="number" name="daya_rem_parkir_r"
+                            class="w-full rounded-lg border-2 border-indigo-100 bg-indigo-50/30 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all py-1 px-2 text-sm font-bold text-indigo-700">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 </div>

@@ -18,13 +18,15 @@
                     <h1 class="text-xl md:text-2xl font-bold text-gray-800">Role Management</h1>
                 </div>
                 <div class="flex flex-wrap items-center gap-2">
-                    <a href="{{ URL::to('/') }}/pendaftaran"
-                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all shadow-sm">
-                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                        </svg>
-                        Tambah Baru
-                    </a>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <a href="{{ URL::to('/') }}/pendaftaran"
+                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all shadow-sm">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Tambah Baru
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -132,7 +134,8 @@
                     <h3 class="text-xl font-semibold text-gray-900">Role Permissions</h3>
                     <button type="button" onclick="closeAuthModal()" class="text-gray-400 hover:text-gray-500">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
@@ -144,7 +147,8 @@
                         <h4 class="font-medium text-gray-900 mb-3">Dashboard</h4>
                         <div class="space-y-2">
                             <label class="flex items-center">
-                                <input type="checkbox" name="permissions[]" value="view_dashboard" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <input type="checkbox" name="permissions[]" value="view_dashboard"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <span class="ml-2 text-sm text-gray-600">View Dashboard</span>
                             </label>
                         </div>
@@ -155,19 +159,23 @@
                         <h4 class="font-medium text-gray-900 mb-3">User Management</h4>
                         <div class="space-y-2">
                             <label class="flex items-center">
-                                <input type="checkbox" name="permissions[]" value="view_users" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <input type="checkbox" name="permissions[]" value="view_users"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <span class="ml-2 text-sm text-gray-600">View Users</span>
                             </label>
                             <label class="flex items-center">
-                                <input type="checkbox" name="permissions[]" value="create_users" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <input type="checkbox" name="permissions[]" value="create_users"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <span class="ml-2 text-sm text-gray-600">Create Users</span>
                             </label>
                             <label class="flex items-center">
-                                <input type="checkbox" name="permissions[]" value="edit_users" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <input type="checkbox" name="permissions[]" value="edit_users"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <span class="ml-2 text-sm text-gray-600">Edit Users</span>
                             </label>
                             <label class="flex items-center">
-                                <input type="checkbox" name="permissions[]" value="delete_users" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <input type="checkbox" name="permissions[]" value="delete_users"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <span class="ml-2 text-sm text-gray-600">Delete Users</span>
                             </label>
                         </div>
@@ -178,19 +186,23 @@
                         <h4 class="font-medium text-gray-900 mb-3">Role Management</h4>
                         <div class="space-y-2">
                             <label class="flex items-center">
-                                <input type="checkbox" name="permissions[]" value="view_roles" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <input type="checkbox" name="permissions[]" value="view_roles"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <span class="ml-2 text-sm text-gray-600">View Roles</span>
                             </label>
                             <label class="flex items-center">
-                                <input type="checkbox" name="permissions[]" value="create_roles" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <input type="checkbox" name="permissions[]" value="create_roles"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <span class="ml-2 text-sm text-gray-600">Create Roles</span>
                             </label>
                             <label class="flex items-center">
-                                <input type="checkbox" name="permissions[]" value="edit_roles" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <input type="checkbox" name="permissions[]" value="edit_roles"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <span class="ml-2 text-sm text-gray-600">Edit Roles</span>
                             </label>
                             <label class="flex items-center">
-                                <input type="checkbox" name="permissions[]" value="delete_roles" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <input type="checkbox" name="permissions[]" value="delete_roles"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <span class="ml-2 text-sm text-gray-600">Delete Roles</span>
                             </label>
                         </div>
@@ -201,19 +213,23 @@
                         <h4 class="font-medium text-gray-900 mb-3">Vehicle Testing</h4>
                         <div class="space-y-2">
                             <label class="flex items-center">
-                                <input type="checkbox" name="permissions[]" value="view_tests" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <input type="checkbox" name="permissions[]" value="view_tests"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <span class="ml-2 text-sm text-gray-600">View Tests</span>
                             </label>
                             <label class="flex items-center">
-                                <input type="checkbox" name="permissions[]" value="create_tests" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <input type="checkbox" name="permissions[]" value="create_tests"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <span class="ml-2 text-sm text-gray-600">Create Tests</span>
                             </label>
                             <label class="flex items-center">
-                                <input type="checkbox" name="permissions[]" value="edit_tests" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <input type="checkbox" name="permissions[]" value="edit_tests"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <span class="ml-2 text-sm text-gray-600">Edit Tests</span>
                             </label>
                             <label class="flex items-center">
-                                <input type="checkbox" name="permissions[]" value="verify_tests" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <input type="checkbox" name="permissions[]" value="verify_tests"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <span class="ml-2 text-sm text-gray-600">Verify Tests</span>
                             </label>
                         </div>
@@ -224,11 +240,13 @@
                         <h4 class="font-medium text-gray-900 mb-3">Reports</h4>
                         <div class="space-y-2">
                             <label class="flex items-center">
-                                <input type="checkbox" name="permissions[]" value="view_reports" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <input type="checkbox" name="permissions[]" value="view_reports"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <span class="ml-2 text-sm text-gray-600">View Reports</span>
                             </label>
                             <label class="flex items-center">
-                                <input type="checkbox" name="permissions[]" value="export_reports" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <input type="checkbox" name="permissions[]" value="export_reports"
+                                    class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <span class="ml-2 text-sm text-gray-600">Export Reports</span>
                             </label>
                         </div>
