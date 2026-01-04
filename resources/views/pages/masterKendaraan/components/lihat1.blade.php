@@ -147,7 +147,7 @@
                 disabled>
         </div>
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Kendaraan</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Kendaraan "tb DataVehicleType"</label>
             <select name="jenis_kendaraan_id"
                 class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
                 disabled>
@@ -159,47 +159,55 @@
                 {{-- Tambahkan semua opsi lain yang sesuai dengan ID dan deskripsi jenis kendaraan Anda --}}
             </select>
         </div>
+
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-            <select name="status"
+            <label class="block text-sm font-medium text-gray-700 mb-1">Sub Jenis Kendaraan "tb DataSubVehicle"</label>
+            <select name="jenis_kendaraan_id"
                 class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
                 disabled>
-                <option value="">Pilih Status</option>
-                <option value="Umum" {{ (isset($kendaraan->status) && $kendaraan->status == 'Umum') ? 'selected' : '' }}>Umum</option>
-                <option value="Tidak Umum" {{ (isset($kendaraan->status) && $kendaraan->status == 'Tidak Umum') ? 'selected' : '' }}>Tidak Umum</option>
+                <option value="">Pilih Jenis Kendaraan</option>
+                {{-- Anda perlu memastikan ID ini sesuai dengan data Anda di tabel 'jenis_kendaraans' --}}
+                <option value="1" {{ (isset($kendaraan->jenis_kendaraan_id) && $kendaraan->jenis_kendaraan_id == '1') ? 'selected' : '' }}>Mobil Penumpang Sedan</option>
+                <option value="2" {{ (isset($kendaraan->jenis_kendaraan_id) && $kendaraan->jenis_kendaraan_id == '2') ? 'selected' : '' }}>Mobil Penumpang Bukan Sedan</option>
+                <option value="3" {{ (isset($kendaraan->jenis_kendaraan_id) && $kendaraan->jenis_kendaraan_id == '3') ? 'selected' : '' }}>PICK UP</option>
+                {{-- Tambahkan semua opsi lain yang sesuai dengan ID dan deskripsi jenis kendaraan Anda --}}
             </select>
         </div>
+
         <div class="md:col-span-2">
             <label class="block text-sm font-medium text-gray-700 mb-1">Keterangan Jenis Kendaraan</label>
-            <textarea name="keterangan_jenis_kendaraan" rows="2"
+            <input name="keterangan_jenis_kendaraan" value="{{ $kendaraan->keterangan_jenis_kendaraan ?? '-' }}"
                 class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
-                disabled>{{ $kendaraan->keterangan_jenis_kendaraan ?? '-' }}</textarea>
+                disabled>
         </div>
+
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Merk</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Merk "tb DataBrand"</label>
             <input type="text" name="merk" value="{{ $kendaraan->merk ?? '-' }}"
                 class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
                 disabled>
         </div>
+
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Tipe</label>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Varian "tb VarianData"</label>
+            <input type="text" name="merk" value="{{ $kendaraan->merk ?? '-' }}"
+                class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
+                disabled>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Tipe "tb DataVarianType"</label>
             <input type="text" name="tipe" value="{{ $kendaraan->tipe ?? '-' }}"
                 class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
                 disabled>
         </div>
-        <div class="md:col-span-2">
+        <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Nama Importir/Pabrikan</label>
             <input type="text" name="nama_importir" value="{{ $kendaraan->nama_importir ?? '-' }}"
                 class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
                 disabled>
         </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Mati Uji</label>
-            <input type="text" name="tanggal_mati_uji"
-                value="{{ (isset($kendaraan->tanggal_mati_uji) && $kendaraan->tanggal_mati_uji && $kendaraan->tanggal_mati_uji != '0000-00-00') ? \Carbon\Carbon::parse($kendaraan->tanggal_mati_uji)->format('d/m/Y') : '-' }}"
-                class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
-                disabled>
-        </div>
+
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Asal Kendaraan</label>
             <select name="asal_kendaraan"
@@ -211,6 +219,37 @@
                 <option value="Numpang Uji" {{ (isset($kendaraan->status) && $kendaraan->status == 'Numpang') ? 'selected' : '' }}>Numpang Uji</option>
                 <option value="Mutasi Keluar" {{ (isset($kendaraan->status) && $kendaraan->status == 'Mutasi Keluar') ? 'selected' : '' }}>Mutasi Keluar</option>
             </select>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Keterangan Asal Kendaraan</label>
+            <select name="asal_kendaraan"
+                class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
+                disabled>
+                <option value="">Pilih Asal</option>
+                {{-- Asumsi 'kabupaten' adalah indikator asal kendaraan. Sesuaikan jika ada kolom 'asal_kendaraan' yang spesifik. --}}
+                <option value="Kota Batu" {{ (isset($kendaraan->kabupaten) && $kendaraan->kabupaten == 'Surabaya') ? 'selected' : '' }}>Kota Batu</option>
+                <option value="Numpang Uji" {{ (isset($kendaraan->status) && $kendaraan->status == 'Numpang') ? 'selected' : '' }}>Numpang Uji</option>
+                <option value="Mutasi Keluar" {{ (isset($kendaraan->status) && $kendaraan->status == 'Mutasi Keluar') ? 'selected' : '' }}>Mutasi Keluar</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+            <select name="status"
+                class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
+                disabled>
+                <option value="">Pilih Status</option>
+                <option value="Umum" {{ (isset($kendaraan->status) && $kendaraan->status == 'Umum') ? 'selected' : '' }}>Umum</option>
+                <option value="Tidak Umum" {{ (isset($kendaraan->status) && $kendaraan->status == 'Tidak Umum') ? 'selected' : '' }}>Tidak Umum</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Mati Uji</label>
+            <input type="text" name="tanggal_mati_uji"
+                value="{{ (isset($kendaraan->tanggal_mati_uji) && $kendaraan->tanggal_mati_uji && $kendaraan->tanggal_mati_uji != '0000-00-00') ? \Carbon\Carbon::parse($kendaraan->tanggal_mati_uji)->format('d/m/Y') : '-' }}"
+                class="w-full rounded-lg border-2 border-gray-300 bg-gray-100 cursor-not-allowed py-1 px-2"
+                disabled>
         </div>
     </div>
 </div>
