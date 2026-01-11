@@ -27,8 +27,8 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Hasil Pra Uji</label>
                     <select
-                        class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2">
-                        <option value="">Pilih</option>
+                        class="w-full rounded-lg border-4 border-red-500 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2">
+                        <option value="">Tidak Lulus</option>
                         <option value="lulus">Lulus</option>
                         <option value="tidak">Tidak Lulus</option>
                     </select>
@@ -39,7 +39,7 @@
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Keterangan Tidak Lulus</label>
             <textarea name="keterangan_tidak_lulus" rows="3"
-                class="w-full rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"></textarea>
+                class="w-full rounded-lg border-4 border-red-500 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all py-1 px-2"></textarea>
         </div>
     </div>
 </div>
