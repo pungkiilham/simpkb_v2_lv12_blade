@@ -13,8 +13,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h1 class="text-xl md:text-2xl font-bold text-gray-800">List Pengujian (Baru, Berkala, Numpang
-                            Masuk)</h1>
+                        <h1 class="text-xl md:text-2xl font-bold text-gray-800">List Pengujian (Baru, Berkala, Numpang / Mutasi Masuk)</h1>
                         <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-1 text-sm text-gray-600">
                             <div class="flex items-center gap-2">
                                 <span class="font-medium">Total:</span>
