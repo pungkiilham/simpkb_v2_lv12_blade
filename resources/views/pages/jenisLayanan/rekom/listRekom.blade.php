@@ -72,8 +72,8 @@
                                 <td class="px-2 py-2 text-sm text-gray-900 font-medium">Ahmad Subarjo</td>
                                 <td class="px-2 py-2 text-sm text-gray-900">
                                     <div class="flex flex-col space-y-1 text-center">
-                                        <span class="font-bold text-indigo-600">B 1234 ABC</span>
-                                        <span class="text-xs text-gray-500">JKT998877</span>
+                                        <span>B1234ABC</span>
+                                        <span>JKT998877</span>
                                     </div>
                                 </td>
                                 <td class="hidden md:table-cell px-2 py-2 text-sm text-gray-900 text-center">Mobil Barang
@@ -96,17 +96,13 @@
                                                     d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                             </svg>
                                         </button>
-                                        <button class="text-emerald-600 hover:text-emerald-800"><svg class="w-5 h-5"
-                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                            </svg></button>
-                                        <button class="text-red-600 hover:text-red-800"><svg class="w-5 h-5" fill="none"
-                                                stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg></button>
-                                    </div>
+                                        <a href="#" class="text-emerald-600 hover:text-emerald-800" title="Cetak">
+                                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+                                            </svg>
+                                        </a>
                                 </td>
                             </tr>
 
@@ -115,9 +111,9 @@
                                 <td class="px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">2</td>
                                 <td class="px-2 py-2 text-sm text-gray-900 font-medium">Siti Aminah</td>
                                 <td class="px-2 py-2 text-sm text-gray-900 text-center">
-                                    <div class="flex flex-col space-y-1">
+                                    <div class="flex flex-col space-y-1 text-center">
                                         <span>L 5566 XYZ</span>
-                                        <span class="text-xs text-gray-500">SBY112233</span>
+                                        <span>SBY112233</span>
                                     </div>
                                 </td>
                                 <td class="hidden md:table-cell px-2 py-2 text-sm text-gray-900 text-center">Mobil Penumpang
@@ -140,16 +136,13 @@
                                                     d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                             </svg>
                                         </button>
-                                        <button class="text-emerald-600 hover:text-emerald-800"><svg class="w-5 h-5"
-                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                            </svg></button>
-                                        <button class="text-red-600 hover:text-red-800"><svg class="w-5 h-5"
-                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg></button>
+                                        <a href="#" class="text-emerald-600 hover:text-emerald-800" title="Cetak">
+                                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
+                                            </svg>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
@@ -159,9 +152,9 @@
                                 <td class="px-2 py-2 text-sm text-gray-900 text-center whitespace-nowrap">3</td>
                                 <td class="px-2 py-2 text-sm text-gray-900 font-medium">Budi Santoso</td>
                                 <td class="px-2 py-2 text-sm text-gray-900 text-center">
-                                    <div class="flex flex-col space-y-1">
+                                    <div class="flex flex-col space-y-1 text-center">
                                         <span>N 8888 OP</span>
-                                        <span class="text-xs text-gray-500">MLG445566</span>
+                                        <span>MLG445566</span>
                                     </div>
                                 </td>
                                 <td class="hidden md:table-cell px-2 py-2 text-sm text-gray-900 text-center">Mobil Bus</td>
@@ -169,19 +162,24 @@
                                 </td>
                                 <td class="px-2 py-2 text-sm text-center whitespace-nowrap">
                                     <span
-                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Pending</span>
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Belum</span>
                                 </td>
                                 <td class="px-2 py-2 text-sm text-center whitespace-nowrap">
                                     <div class="flex justify-center items-center space-x-2">
-                                        <button
+                                        {{-- <button
                                             onclick="openRekomModal('Budi Santoso', 'N 8888 OP', 'MLG445566', 'MH3X55566677', 'Mutasi Keluar', 'confirm')"
                                             class="text-indigo-600 hover:text-indigo-800">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                             </svg>
-                                        </button>
+                                        </button> --}}
+                                        <button
+                                            onclick="openRekomModal('Budi Santoso', 'N 8888 OP', 'MLG445566', 'MH3X55566677', 'Mutasi Keluar', 'confirm')"
+                                            class="text-emerald-600 hover:text-emerald-800"><svg class="w-5 h-5"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg></button>
                                     </div>
                                 </td>
                             </tr>
