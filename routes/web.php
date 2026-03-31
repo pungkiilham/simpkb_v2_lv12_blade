@@ -91,12 +91,12 @@ Route::get('/pengujianlulus', function () {
 })->name('pengujianlulus');
 
 // rekom keluar
-Route::get('/cetakrekom', function () {
-    return view('pages.jenisLayanan.rekom.cetak');
-})->name('cetakrekom');
-Route::get('/rekom', function () {
-    return view('pages.jenisLayanan.rekom.rekom');
-})->name('rekom');
+// Route::get('/cetakrekom', function () {
+//     return view('pages.jenisLayanan.rekom.cetak');
+// })->name('cetakrekom');
+// Route::get('/rekom', function () {
+//     return view('pages.jenisLayanan.rekom.rekom');
+// })->name('rekom');
 Route::get('/listrekom', function () {
     return view('pages.jenisLayanan.rekom.listRekom');
 })->name('listrekom');
